@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danacom.mybatis.pcl.pcl_mapper">
+	
+	<!-- 메인 상단 상품분류 조회 -->
+	<select id="pclList" resultType="com.danacom.mybatis.pcl.ProClassVo" parameterType="String">
+		SELECT     /* [danacom]_[pcl]_[PclTopListCommand.getPclList]_kkomaweb_20170508 */ 
+			A.PCL_NO, A.PCL_NAME, A.PCL_STEP, A.PCL_BASIS
+			, NVL(A.PCL_UPPERNO, 'NULL') PCL_UPPERNO
+			, NVL(B.PCL_NAME, 'NULL') PA_PCL_NAME
+		FROM PRO_CLASS A, PRO_CLASS B 
+		WHERE A.PCL_UPPERNO = B.PCL_NO(+) 
+		AND A.PCL_UPPERNO = #{pcl_upperno}
+		ORDER BY A.PCL_NO
+	</select>
+	
+	<!-- 사용자 상품 리스트 상품분류명 조회 -->
+	<select id="mainPclName" resultType="String" parameterType="String">
+		SELECT     /* [danacom]_[pcl]_[ProTopSearchCommand.mainPclName]_kkomaweb_20170508 */ 
+			PCL_NAME 
+		FROM PRO_CLASS
+		WHERE PCL_NO = #{pcl_no}
+	</select>
+	
+	<select id="pclVO" resultType="com.danacom.mybatis.pcl.ProClassVo" parameterType="String">
+		SELECT     /* [danacom]_[pcl]_[PclAjaxAdminListCommand.pclVO]_kkomaweb_20170512 */ 
+			A.PCL_NO, A.PCL_NAME, A.PCL_STEP, A.PCL_BASIS
+			, NVL(A.PCL_UPPERNO, 'NULL') PCL_UPPERNO
+    		, NVL(B.PCL_NAME, 'NULL') PA_PCL_NAME
+		FROM PRO_CLASS A
+        JOIN PRO_CLASS B ON A.PCL_UPPERNO = B.PCL_NO(+)
+		WHERE A.PCL_NO = #{pcl_upperno}
+	</select>
+	
+	<select id="pclAutoPclNo" resultType="String" parameterType="String">
+		SELECT     /* [danacom]_[pcl]_[PclAutoNoCommand.pclAutoPclNo]_kkomaweb_20170513 */  
+			TO_CHAR(MAX(TO_NUMBER(pcl_no))+1) pcl_no 
+		FROM PRO_CLASS
+		WHERE PCL_UPPERNO = #{pcl_upperno}
+	</select>
+	
+	<insert id="pclInsert" parameterType="com.danacom.mybatis.pcl.ProClassVo">
+		INSERT     /* [danacom]_[pcl]_[PclInsertCommand.pclInsert]_kkomaweb_20170513 */   
+		INTO PRO_CLASS
+		(PCL_NO, PCL_NAME, PCL_STEP, PCL_BASIS, PCL_UPPERNO)
+		VALUES
+		(#{pcl_no}, #{pcl_name}, #{pcl_step}, #{pcl_basis}, #{pcl_upperno})
+	</insert>
+	
+	<update id="pclUpdate" parameterType="com.danacom.mybatis.pcl.ProClassVo">
+		UPDATE     /* [danacom]_[pcl]_[PclUpdateCommand.pclUpdate]_kkomaweb_20170513 */   
+		PRO_CLASS SET
+			PCL_NAME = #{pcl_name}
+			, PCL_BASIS = #{pcl_basis}
+		WHERE PCL_NO = #{pcl_no}
+	</update>
+	
+	<delete id="pclDelete" parameterType="String">
+		DELETE     /* [danacom]_[pcl]_[PclDeleteCommand.pclDelete]_kkomaweb_20170513 */    
+		FROM PRO_CLASS
+		WHERE PCL_NO = #{pcl_no}
+	</delete>
+	
+	<select id="nextPclVo" parameterType="com.danacom.mybatis.pro.ProTempVo" resultType="com.danacom.mybatis.pro.ProTempVo">
+		SELECT 
+		PCL_NO AS PCL_NEXT_NO, PCL_NAME AS PCL_NEXT_NAME
+		FROM PRO_DET A
+		JOIN PRO_CLASS B ON A.PDT_CONENT = B.PCL_NO
+		WHERE PDT_PRO_NO = #{pdt_pro_no}
+		AND PDT_NAME = #{pdt_name}
+		AND ROWNUM = 1
+	</select>
+	
+</mapper>
