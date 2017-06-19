@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +21,9 @@ import com.danacom.mybatis.pcl.PclDao;
 import com.danacom.mybatis.pcl.ProClassVo;
 import com.danacom.mybatis.pro.ProDao;
 import com.danacom.mybatis.pro.ProductVo;
+import com.danacom.mybatis.pro.SctDao;
+import com.danacom.mybatis.pro.SctTotPriceVO;
+import com.danacom.mybatis.pro.Shop_cart;
 import com.danacom.util.CommonUtilsController;
 
 @Controller
@@ -28,6 +32,7 @@ public class ProController {
 	@Autowired private MkrDao mkrDao; 
 	@Autowired private ProDao proDao; 
 	@Autowired private BaseDao baseDao; 
+	@Autowired private SctDao sctDao; 
 	
 	public void setPclDao(PclDao pclDao) {
 		this.pclDao = pclDao;
@@ -52,6 +57,12 @@ public class ProController {
 	}
 	public BaseDao getBaseDao() {
 		return baseDao;
+	}
+	public void setSctDao(SctDao sctDao) {
+		this.sctDao = sctDao;
+	}
+	public SctDao getSctDao() {
+		return sctDao;
 	}
 	
 	@RequestMapping(value="/pro_main_prelist.da")
@@ -137,6 +148,39 @@ public class ProController {
 	public ModelAndView ajax_pro_pclSearch(HttpServletRequest request, HttpServletResponse response){
 		
 		return ajax_pro_list(request, response);
+	}
+	
+	@RequestMapping(value="/ajax_sct_list.da")
+	public ModelAndView ajax_sct_list(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("");
+		
+		String sct_part = request.getParameter("sct_part");
+		List<Shop_cart> sctList = sctDao.getSctList(sctCommand.getSct_mem_no());
+		
+		SctTotPriceVO sctTotPrivceVo = new SctTotPriceVO();
+		int tempPrice = 0;
+		for(int i = 0; i<sctList.size(); i++){
+			Shop_cart temp = (Shop_cart) sctList.get(i);
+			
+			temp.setSct_proVO(sctDao.getSctProVo(temp));
+			tempPrice = sctTotPrivceVo.getSct_tot_milege() +  temp.getSct_proVO().getPro_tot_milege();
+			sctTotPrivceVo.setSct_tot_milege(tempPrice);
+			tempPrice = 0;
+			tempPrice = sctTotPrivceVo.getSct_tot_disprice() + temp.getSct_proVO().getPro_tot_price();
+			sctTotPrivceVo.setSct_tot_disprice(tempPrice);
+			tempPrice = 0;
+		}
+		sctTotPrivceVo = sctDao.getSctTotPrice(sctTotPrivceVo);
+		
+		String returnUrl = "sct/ajax_sct_list";
+		if(sct_part != null && sct_part.equals("1")) returnUrl = "sct/mini_sct_list";
+		
+		mv.addObject("sctList", sctList);
+		mv.addObject("sctTotPrivceVo", sctTotPrivceVo);
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
 	}
 
 }

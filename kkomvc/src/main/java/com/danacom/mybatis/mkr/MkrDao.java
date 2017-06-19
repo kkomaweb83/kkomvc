@@ -27,7 +27,6 @@ public class MkrDao extends BaseDao {
      */
 	public void mkrInsert(MakerVo mkrCom) {
 		template.insert("mkrInsert", mkrCom);
-		template.commit();
 	}
 	
 	/**
@@ -48,7 +47,6 @@ public class MkrDao extends BaseDao {
      */
 	public void mkrUpdate(MakerVo mkrCom) {
 		template.insert("mkrUpdate", mkrCom);
-		template.commit();
 	}
 	
 	/**
@@ -59,7 +57,6 @@ public class MkrDao extends BaseDao {
      */
 	public void mkrDelete(String mkr_no) {
 		template.delete("mkrDelete", mkr_no);
-		template.commit();
 	}
 		
 }

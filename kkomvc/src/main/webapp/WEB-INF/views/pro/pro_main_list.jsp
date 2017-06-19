@@ -62,7 +62,7 @@
 				$("#miniSctListDiv").html(data);
 			},
 			error : function() {
-				alert("실패");
+				alert("실패9");
 			}
 		});
 		</c:if>

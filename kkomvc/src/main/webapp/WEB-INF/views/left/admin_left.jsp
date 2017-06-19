@@ -17,9 +17,9 @@
 <span class="box_button2">☞ 상품관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/PclController?dana=pcl_list">- 상품분류 관리</a></li>
-		<li><a href="<%=cp %>/MkrController?dana=mkr_list&mkr_insert=y&mkr_pcl_no=0101">- 제조사 관리</a></li>
-		<li><a href="<%=cp %>/ProAdminController?dana=pro_admin_list">- 상품 리스트</a></li>
+		<li><a href="<%=cp %>/pcl_list.da?dana=pcl_list">- 상품분류 관리</a></li>
+		<li><a href="<%=cp %>/mkr_list.da?dana=mkr_list&mkr_insert=y&mkr_pcl_no=0101">- 제조사 관리</a></li>
+		<li><a href="<%=cp %>/pro_admin_list.da?dana=pro_admin_list">- 상품 리스트</a></li>
 	</ul>
 </nav>
 

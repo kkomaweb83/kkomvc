@@ -11,8 +11,8 @@
 <title>컴퓨터 쇼핑몰의 최강자 DanaCom</title>
 <script type="text/javascript">
 	$(function() {
-		if("${login_chk_msg}"){
-			alert("${login_chk_msg}");
+		if("${param.login_chk_msg}"){
+			alert("${param.login_chk_msg}");
 		}
 	});
 	
@@ -21,11 +21,11 @@
 	}
 	
 	function goMemLoginChk(){
-		document.memLoginChk.action = "<%=cp %>/LoginController?dana=loginChk";
+		document.memLoginChk.action = "<%=cp %>/loginChk.da?dana=loginChk";
 		document.memLoginChk.submit();
 	}
 	function goMemLoginOut(){
-		location.href = "<%=cp %>/LoginController?dana=logout";
+		location.href = "<%=cp %>/logout.da?dana=logout";
 	}
 </script>
 </head>
@@ -38,7 +38,7 @@
 <c:if test="${login.mem_admin_autho =='y'}">
 <nav id="top_ltb">
 	<ul>
-		<li><a href="<%=cp %>/PclController?dana=pcl_list">관리자모드</a></li>
+		<li><a href="<%=cp %>/pcl_list.da?dana=pcl_list">관리자모드</a></li>
 	</ul>	
 </nav>
 </c:if>
@@ -92,7 +92,7 @@
 		</span>
 		</form>
 		</li>
-		<li><a href="<%=cp %>/PclController?dana=member_prejoin">회원가입</a></li>
+		<li><a href="<%=cp %>/member_prejoin.da?dana=member_prejoin">회원가입</a></li>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">장바구니</a></c:if>
 		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/ProController?dana=sct_main_prelist">장바구니</a></c:if>

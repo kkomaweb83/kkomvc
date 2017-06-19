@@ -40,17 +40,14 @@ public class PclDao extends BaseDao {
 
 	public void pclInsert(ProClassVo pclVO) {
 		template.insert("pclInsert", pclVO);
-		template.commit();
 	}
 	
 	public void pclUpdate(ProClassVo pclVO) {
 		template.update("pclUpdate", pclVO);
-		template.commit();
 	}
 	
 	public void pclDelete(String pcl_no) {
 		template.delete("pclDelete", pcl_no);
-		template.commit();
 	}
 
 	public ProTempVo getNextPclVo(ProTempVo proTempVO) {
