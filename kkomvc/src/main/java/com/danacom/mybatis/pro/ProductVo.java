@@ -2,6 +2,8 @@ package com.danacom.mybatis.pro;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductVo {
 
 	private int pro_no;
@@ -28,6 +30,10 @@ public class ProductVo {
 	
 	private String[] pdt_step51_sy;
 	private String[] mkr_no_sy;
+	
+	private MultipartFile pmg_file_s1_mp;
+	private MultipartFile pmg_file_s2_mp;
+	
 	private String pmg_file_s1;
 	private String pmg_file_s2;
 	private String ppt_pro_name;
@@ -241,6 +247,7 @@ public class ProductVo {
 		this.pmg_file_s2 = pmg_file_s2;
 	}
 
+
 	public String getPpt_pro_name() {
 		return ppt_pro_name;
 	}
@@ -383,6 +390,22 @@ public class ProductVo {
 
 	public void setTot_cont(int tot_cont) {
 		this.tot_cont = tot_cont;
+	}
+
+	public MultipartFile getPmg_file_s1_mp() {
+		return pmg_file_s1_mp;
+	}
+
+	public void setPmg_file_s1_mp(MultipartFile pmg_file_s1_mp) {
+		this.pmg_file_s1_mp = pmg_file_s1_mp;
+	}
+
+	public MultipartFile getPmg_file_s2_mp() {
+		return pmg_file_s2_mp;
+	}
+
+	public void setPmg_file_s2_mp(MultipartFile pmg_file_s2_mp) {
+		this.pmg_file_s2_mp = pmg_file_s2_mp;
 	}
 	
 }
