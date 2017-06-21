@@ -20,6 +20,7 @@ import com.danacom.mybatis.mkr.MkrDao;
 import com.danacom.mybatis.pcl.PclDao;
 import com.danacom.mybatis.pcl.ProClassVo;
 import com.danacom.mybatis.pro.ProDao;
+import com.danacom.mybatis.pro.ProTempVo;
 import com.danacom.mybatis.pro.ProductVo;
 import com.danacom.mybatis.pro.SctDao;
 import com.danacom.mybatis.pro.SctTotPriceVO;
@@ -179,6 +180,144 @@ public class ProController {
 		mv.addObject("sctTotPrivceVo", sctTotPrivceVo);
 		
 		mv.setViewName(returnUrl);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajax_pro_mainView.da")
+	public ModelAndView ajax_pro_mainView(@ModelAttribute("proCom")ProductVo proCom, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("");
+		
+		ProductVo proVo = proDao.getProVo(proCom.getPro_no());
+		
+		ProClassVo pclVO = null;
+		List<ProClassVo> tempList = null;
+		List<ProClassVo> pclList = pclDao.getPclList(proCom.getPro_pcl_no());
+		if(pclList != null){
+			for(int i=0; i < pclList.size(); i++){
+				pclVO = (ProClassVo)pclList.get(i);
+				pclVO.setPcl_list(pclDao.getPclList(pclVO.getPcl_no()));
+				tempList = pclVO.getPcl_list();
+				if(tempList != null){
+					for(int j=0; j < tempList.size(); j++){
+						ProTempVo proTempVO = new ProTempVo();
+						pclVO = (ProClassVo)tempList.get(j);
+						pclVO.setPcl_list(pclDao.getPclList(pclVO.getPcl_no()));
+						proTempVO.setPdt_name(pclVO.getPcl_no());
+						
+						proTempVO.setPdt_pro_no(proCom.getPro_no());
+						proTempVO = pclDao.getNextPclVo(proTempVO);
+						if(proTempVO != null){
+							pclVO.setPcl_next_no(proTempVO.getPcl_next_no());
+							pclVO.setPcl_next_name(proTempVO.getPcl_next_name());
+						}
+					}
+				}
+			}
+		}
+		
+		String returnUrl = "pro/ajax_pro_main_view";
+		String view_area = request.getParameter("view_area");
+		if(view_area != null && view_area.equals("2")){
+			returnUrl = "sct/ajax_pro_dlg_view";
+		}
+		
+		mv.addObject("proVo", proVo);
+		mv.addObject("pclList", pclList);
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/sct_main_prelist.da")
+	public ModelAndView sct_main_prelist(){
+		return new ModelAndView("sct/sct_main_list");
+	}
+	
+	@RequestMapping(value="/ajax_sct_insert.da")
+	public ModelAndView ajax_sct_insert(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("");
+		
+		String sct_part = request.getParameter("sct_part");
+		
+		sctCommand.setSct_count(1);
+		int chk = sctDao.sctInsertChk(sctCommand);
+		if(chk == 0) sctDao.sctInsert(sctCommand);
+		else sctDao.sctCountUpdate(sctCommand);
+		
+		String returnUrl = "redirect:/sct_main_prelist.da?dana=sct_main_prelist";
+		if(sct_part != null && sct_part.equals("1")) returnUrl = "redirect:/ajax_sct_list.da?dana=ajax_sct_list";
+		
+		mv.setViewName(returnUrl);
+		mv.addObject("sct_part", sct_part);
+		mv.addObject("sct_pro_no", sctCommand.getSct_pro_no());
+		mv.addObject("sct_mem_no", sctCommand.getSct_mem_no());
+		mv.addObject("sct_pro_part", sctCommand.getSct_pro_no());
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajax_sct_update.da")
+	public ModelAndView ajax_sct_update(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		
+		sctDao.sctUpdate(sctCommand);
+		
+		mv.addObject("sct_part", request.getParameter("sct_part"));
+		mv.addObject("sct_no", sctCommand.getSct_no());
+		mv.addObject("sct_mem_no", sctCommand.getSct_mem_no());
+		mv.addObject("sct_count", sctCommand.getSct_count());
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajax_sct_delete.da")
+	public ModelAndView ajax_sct_delete(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		
+		sctDao.sctDelete(sctCommand.getSct_no());
+		
+		mv.addObject("sct_part", request.getParameter("sct_part"));
+		mv.addObject("sct_no", sctCommand.getSct_no());
+		mv.addObject("sct_mem_no", sctCommand.getSct_mem_no());
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajax_sct_alldelete.da")
+	public ModelAndView ajax_sct_alldelete(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		
+		sctDao.sctAllDelete(sctCommand.getSct_mem_no());
+		
+		mv.addObject("sct_part", request.getParameter("sct_part"));
+		mv.addObject("sct_mem_no", sctCommand.getSct_mem_no());
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajax_sct_multi_insert.da")
+	public ModelAndView ajax_sct_multi_insert(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("redirect:/sct_main_prelist.da?dana=sct_main_prelist");
+		
+		String[] temp = sctCommand.getPst_pro_no();
+		String pst_pro_no = "";
+		String pst_quantity = "";
+		for(int i=0; i<temp.length ; i++){
+			Shop_cart temp3 = new Shop_cart();
+			pst_pro_no = temp[i];
+			pst_quantity = request.getParameter("cnt_" + pst_pro_no);
+			temp3.setSct_pro_no(Integer.parseInt(pst_pro_no));
+			temp3.setSct_count(Integer.parseInt(pst_quantity));
+			temp3.setSct_pro_part(sctCommand.getSct_pro_part());
+			temp3.setSct_pro_muti(sctCommand.getSct_pro_muti());
+			temp3.setSct_mem_no(sctCommand.getVbl_mem_no());
+			
+			int chk = sctDao.sctInsertChk(temp3);
+			if(chk == 0) sctDao.sctInsert(temp3);
+			else sctDao.sctCountUpdate(temp3);
+		}
 		
 		return mv;
 	}
