@@ -112,13 +112,13 @@ ${bean.sct_proVO.pro_ch_milege }
 </div>
 
 <div style="text-align: right; padding-right: 10px; height: 70px;">
-<a href="${ct_path}/ProController?dana=pro_main_prelist&pro_pcl_no=0101"> 
+<a href="${ct_path}/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no=0101"> 
 <img src="${ct_path}/img/btn_shoppingContinue.gif" style="border: 0px;"></a>&nbsp;
 
 <c:if test="${not empty sctList}">
 <a href="javascript:goSctAllDelete(${login.mem_no},0);">
 <img src="${ct_path}/img/btn_emptyCart.gif" style="border: 0px;"></a>&nbsp;
-<a href="${ct_path}/ProController?dana=sct_odr_doc&sct_mem_no=${login.mem_no }&sct_pro_muti=1">
+<a href="${ct_path}/sct_odr_doc.da?dana=sct_odr_doc&sct_mem_no=${login.mem_no }&sct_pro_muti=1">
 <img src="${ct_path}/img/btn_buy2.gif" style="border: 0px;"></a>
 </c:if>
 

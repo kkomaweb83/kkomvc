@@ -26,21 +26,21 @@
 <span class="box_button2">☞ 주문관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/ProController?dana=orders_admin_list&reurl=admin">- 주문 리스트</a></li>
+		<li><a href="<%=cp %>/orders_admin_list.da?dana=orders_admin_list&reurl=admin">- 주문 리스트</a></li>
 	</ul>
 </nav>
 
 <span class="box_button2">☞ 회원관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/ProAdminController?dana=mem_admin_list">- 회원 리스트</a></li>
+		<li><a href="<%=cp %>/mem_admin_list.da?dana=mem_admin_list">- 회원 리스트</a></li>
 	</ul>
 </nav>
 
 <span class="box_button2">☞ 베틀관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/VblController?dana=btl_admin_list">- 베틀 리스트</a></li>
+		<li><a href="<%=cp %>/btl_admin_list.da?dana=btl_admin_list">- 베틀 리스트</a></li>
 	</ul>
 </nav>
 

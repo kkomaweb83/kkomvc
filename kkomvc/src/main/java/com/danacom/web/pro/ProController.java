@@ -1,5 +1,6 @@
 package com.danacom.web.pro;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,9 @@ import com.danacom.mybatis.mkr.MakerVo;
 import com.danacom.mybatis.mkr.MkrDao;
 import com.danacom.mybatis.pcl.PclDao;
 import com.danacom.mybatis.pcl.ProClassVo;
+import com.danacom.mybatis.pro.MpVo;
+import com.danacom.mybatis.pro.OdrDet;
+import com.danacom.mybatis.pro.OdrDocVo;
 import com.danacom.mybatis.pro.ProDao;
 import com.danacom.mybatis.pro.ProTempVo;
 import com.danacom.mybatis.pro.ProductVo;
@@ -320,6 +324,315 @@ public class ProController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/sct_odr_doc.da")
+	public ModelAndView sct_odr_doc(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("sct/odr_doc");
+		
+		int sctProMuti = sctCommand.getSct_pro_muti();
+		List<Shop_cart> sctList = null;
+		
+		if(sctProMuti == 1){
+			sctList = sctDao.getSctList(sctCommand.getSct_mem_no());
+		}else if(sctProMuti == 2){
+			sctList = new ArrayList<>();
+			Shop_cart temp2 = new Shop_cart();
+			temp2.setSct_pro_no(sctCommand.getSct_pro_no());
+			temp2.setSct_count(1);
+			temp2.setSct_pro_part(sctCommand.getSct_pro_part());
+			temp2.setSct_pro_muti(sctProMuti);
+			temp2.setSct_mem_no(sctCommand.getSct_mem_no());
+			sctList.add(temp2);
+		}else if(sctProMuti == 3){
+			sctList = new ArrayList<>();
+			String[] temp = sctCommand.getPst_pro_no();
+			String pst_pro_no = "";
+			String pst_quantity = "";
+			for(int i=0; i<temp.length ; i++){
+				Shop_cart temp3 = new Shop_cart();
+				pst_pro_no = temp[i];
+				pst_quantity = request.getParameter("cnt_" + pst_pro_no);
+				temp3.setSct_pro_no(Integer.parseInt(pst_pro_no));
+				temp3.setSct_count(Integer.parseInt(pst_quantity));
+				temp3.setSct_pro_part(sctCommand.getSct_pro_part());
+				temp3.setSct_pro_muti(sctProMuti);
+				temp3.setSct_mem_no(sctCommand.getSct_mem_no());
+				sctList.add(temp3);
+			}
+		}
+		
+		SctTotPriceVO sctTotPrivceVo = new SctTotPriceVO();
+		int tempPrice = 0;
+		for(int i = 0; i<sctList.size(); i++){
+			Shop_cart temp = (Shop_cart) sctList.get(i);
+			
+			temp.setSct_proVO(sctDao.getSctProVo(temp));
+			tempPrice = sctTotPrivceVo.getSct_tot_milege() +  temp.getSct_proVO().getPro_tot_milege();
+			sctTotPrivceVo.setSct_tot_milege(tempPrice);
+			tempPrice = 0;
+			tempPrice = sctTotPrivceVo.getSct_tot_disprice() + temp.getSct_proVO().getPro_tot_price();
+			sctTotPrivceVo.setSct_tot_disprice(tempPrice);
+			tempPrice = 0;
+		}
+		sctTotPrivceVo = sctDao.getSctTotPrice(sctTotPrivceVo);
+		
+		SctTotPriceVO userMil = sctDao.getMemMilege(sctCommand.getSct_mem_no());
+		
+		mv.addObject("sctList", sctList);
+		mv.addObject("sctTotPrivceVo", sctTotPrivceVo);
+		mv.addObject("myCoupon", null);		
+		mv.addObject("userMil", userMil);		
+		mv.addObject("sctProMuti", sctProMuti);		
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/odr_doc.da")
+	public ModelAndView odr_doc(@ModelAttribute("doc")OdrDocVo doc, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
+		
+		doc.setOdr_condition(1);
+		
+		String[] s_pro_no = request.getParameterValues("s_pro_no");
+		int[] s_pro_no_i = new int[s_pro_no.length];
+		for(int i = 0; i<s_pro_no.length; i++){
+			s_pro_no_i[i] = Integer.parseInt(s_pro_no[i]);
+		}
+		doc.setS_pro_no(s_pro_no_i);
+		
+		String[] s_odt_count = request.getParameterValues("s_odt_count");
+		int[] s_odt_count_i = new int[s_pro_no.length];
+		for(int i = 0; i<s_odt_count.length; i++){
+			s_odt_count_i[i] = Integer.parseInt(s_odt_count[i]);
+		}
+		doc.setS_odt_count(s_odt_count_i);
+		
+		String[] s_pro_disprice = request.getParameterValues("s_pro_disprice");
+		int[] s_pro_disprice_i = new int[s_pro_no.length];
+		for(int i = 0; i<s_pro_disprice.length; i++){
+			s_pro_disprice_i[i] = Integer.parseInt(s_pro_disprice[i]);
+		}
+		doc.setS_pro_disprice(s_pro_disprice_i);
+		
+		String[] s_pro_milege = request.getParameterValues("s_pro_milege");
+		int[] s_pro_milege_i = new int[s_pro_no.length];
+		for(int i = 0; i<s_pro_milege.length; i++){
+			s_pro_milege_i[i] = Integer.parseInt(s_pro_milege[i]);
+		}
+		doc.setS_pro_milege(s_pro_milege_i);
+		
+		String[] s_odt_pro_part = request.getParameterValues("s_odt_pro_part");
+		int[] s_odt_pro_part_i = new int[s_pro_no.length];
+		for(int i = 0; i<s_odt_pro_part.length; i++){
+			s_odt_pro_part_i[i] = Integer.parseInt(s_odt_pro_part[i]);
+		}
+		doc.setS_odt_pro_part(s_odt_pro_part_i);
+		
+		String odr_no_max = sctDao.getOdrMaxNo();
+		doc.setOdr_no_max(odr_no_max);
+		
+		sctDao.odrInsert(doc);
+		
+		String del_no_max = sctDao.getDlvMaxNo();
+		doc.setDel_no_max(del_no_max);
+		
+		sctDao.dlvInsert(doc);
+		
+		for(int i=0; i < doc.getS_pro_no().length; i++){
+			OdrDet odtVo = new OdrDet(); 
+			odtVo.setS_pro_no(doc.getS_pro_no()[i]);
+			odtVo.setS_odt_count(doc.getS_odt_count()[i]);
+			odtVo.setS_pro_disprice(doc.getS_pro_disprice()[i]);
+			odtVo.setS_pro_milege(doc.getS_pro_milege()[i]);
+			odtVo.setS_odt_pro_part(doc.getS_odt_pro_part()[i]);
+			odtVo.setOdr_no_max(odr_no_max);
+			odtVo.setDel_no_max(del_no_max);
+			sctDao.odtInsert(odtVo);
+			
+			Map<String, Object> stockcount_map = new HashMap<>();
+			stockcount_map.put("s_pro_no", doc.getS_pro_no()[i]);
+			stockcount_map.put("s_count", doc.getS_odt_count()[i]);
+			sctDao.proCountUpdate(stockcount_map);
+		}
+		
+		sctDao.editMileage(doc);
+		
+		sctDao.memMilAdd(doc);
+		
+		// 장바구니 초기화
+		if(doc.getSct_pro_muti() == 1){
+			sctDao.sctAllDelete(doc.getMem_no());
+		}
+		
+		//String returnUrl = "sct/odr_result.jsp?odr_no_max="+odr_no_max;
+		
+		mv.setViewName("sct/odr_result");
+		mv.addObject("odr_no_max", odr_no_max);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/orders_list.da")
+	public ModelAndView orders_list(){
+		return new ModelAndView("sct/orders_list");
+	}
+	
+	@RequestMapping(value="/ajax_orders_list.da")
+	public ModelAndView ajax_orders_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		int total_cnt = 0;
+		Map<String, Object> requestMap = new HashMap<>();
+		if(reurl == null || !reurl.equals("admin")){
+			requestMap.put("ord_mem_no", request.getParameter("ord_mem_no"));
+		}
+		
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
+		List<MpVo> orders_list = sctDao.getOrdersList(requestMap);
+		
+		if(orders_list != null && orders_list.size() > 0){
+			total_cnt = ((MpVo)orders_list.get(0)).getTot_cont();
+			if(total_cnt == -999){
+				total_cnt = baseDao.get_found_rows();
+			}
+			requestMap.put("total_cnt", total_cnt);
+		}
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		mv.addObject("orders_list", orders_list);
+		mv.addObject("total_cnt", total_cnt);
+		
+		String returnUrl = "sct/ajax_orders_list";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "sct/ajax_orders_admin_list";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/orders_det_list.da")
+	public ModelAndView orders_det_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("sct/orders_det_list");
+		
+		String odr_no = request.getParameter("odr_no");
+		MpVo mpCommand = sctDao.getOrdersDetList(odr_no);
+		
+		List<Shop_cart> odtList = sctDao.getOdcOdtList(odr_no);
+		
+		SctTotPriceVO sctTotPrivceVo = new SctTotPriceVO();
+		int tempPrice = 0;
+		for(int i = 0; i<odtList.size(); i++){
+			Shop_cart temp = (Shop_cart) odtList.get(i);
+			
+			temp.setSct_proVO(sctDao.getSctProVo(temp));
+			tempPrice = sctTotPrivceVo.getSct_tot_milege() +  temp.getSct_proVO().getPro_tot_milege();
+			sctTotPrivceVo.setSct_tot_milege(tempPrice);
+			tempPrice = 0;
+			tempPrice = sctTotPrivceVo.getSct_tot_disprice() + temp.getSct_proVO().getPro_tot_price();
+			sctTotPrivceVo.setSct_tot_disprice(tempPrice);
+			tempPrice = 0;
+		}
+		sctTotPrivceVo = sctDao.getSctTotPrice(sctTotPrivceVo);
+		
+		mv.addObject("odtList", odtList);
+		mv.addObject("sctTotPrivceVo", sctTotPrivceVo);
+		mv.addObject("mpCommand", mpCommand);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/orders_admin_list.da")
+	public ModelAndView orders_admin_list(){
+		return new ModelAndView("sct/orders_admin_list");
+	}
+	
+	@RequestMapping(value="/ajax_orders_admin_list.da")
+	public ModelAndView ajax_orders_admin_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		int total_cnt = 0;
+		Map<String, Object> requestMap = new HashMap<>();
+		if(reurl == null || !reurl.equals("admin")){
+			requestMap.put("ord_mem_no", request.getParameter("ord_mem_no"));
+		}
+		
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
+		List<MpVo> orders_list = sctDao.getOrdersList(requestMap);
+		
+		if(orders_list != null && orders_list.size() > 0){
+			total_cnt = ((MpVo)orders_list.get(0)).getTot_cont();
+			if(total_cnt == -999){
+				total_cnt = baseDao.get_found_rows();
+			}
+			requestMap.put("total_cnt", total_cnt);
+		}
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		mv.addObject("orders_list", orders_list);
+		mv.addObject("total_cnt", total_cnt);
+		
+		String returnUrl = "sct/ajax_orders_list";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "sct/ajax_orders_admin_list";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/orders_admin_det_list.da")
+	public ModelAndView orders_admin_det_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("sct/orders_admin_det_list");
+		
+		String odr_no = request.getParameter("odr_no");
+		MpVo mpCommand = sctDao.getOrdersDetList(odr_no);
+		
+		List<Shop_cart> odtList = sctDao.getOdcOdtList(odr_no);
+		
+		SctTotPriceVO sctTotPrivceVo = new SctTotPriceVO();
+		int tempPrice = 0;
+		for(int i = 0; i<odtList.size(); i++){
+			Shop_cart temp = (Shop_cart) odtList.get(i);
+			
+			temp.setSct_proVO(sctDao.getSctProVo(temp));
+			tempPrice = sctTotPrivceVo.getSct_tot_milege() +  temp.getSct_proVO().getPro_tot_milege();
+			sctTotPrivceVo.setSct_tot_milege(tempPrice);
+			tempPrice = 0;
+			tempPrice = sctTotPrivceVo.getSct_tot_disprice() + temp.getSct_proVO().getPro_tot_price();
+			sctTotPrivceVo.setSct_tot_disprice(tempPrice);
+			tempPrice = 0;
+		}
+		sctTotPrivceVo = sctDao.getSctTotPrice(sctTotPrivceVo);
+		
+		mv.addObject("odtList", odtList);
+		mv.addObject("sctTotPrivceVo", sctTotPrivceVo);
+		mv.addObject("mpCommand", mpCommand);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/odr_condition.da")
+	public ModelAndView odr_condition(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("redirect:/orders_admin_det_list.da?dana=orders_admin_det_list&reurl=admin");
+		
+		OdrDocVo doc = new OdrDocVo();
+		doc.setOdr_no(request.getParameter("odr_no"));
+		doc.setOdr_condition(Integer.parseInt(request.getParameter("odr_condition")));
+		
+		sctDao.conditionUpdate(doc);
+		
+		mv.addObject("odr_no", request.getParameter("odr_no"));
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/mem_preUpdate.da")
+	public ModelAndView mem_preUpdate(){
+		return new ModelAndView("pcl/mem_update");
 	}
 
 }

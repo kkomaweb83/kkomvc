@@ -20,7 +20,7 @@
 	<ul>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">주문 리스트</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/ProController?dana=orders_list">주문 리스트</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/orders_list.da?dana=orders_list">주문 리스트</a></c:if>
 		<li>
 	</ul>
 </nav>
@@ -30,7 +30,7 @@
 	<ul>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">회원정보 수정</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/ProController?dana=mem_preUpdate">회원정보 수정</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/mem_preUpdate.da?dana=mem_preUpdate">회원정보 수정</a></c:if>
 		<li>
 	</ul>
 </nav>
