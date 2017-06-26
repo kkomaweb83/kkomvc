@@ -22,6 +22,7 @@ import com.danacom.mybatis.mkr.MakerVo;
 import com.danacom.mybatis.mkr.MkrDao;
 import com.danacom.mybatis.pcl.PclDao;
 import com.danacom.mybatis.pcl.ProClassVo;
+import com.danacom.mybatis.pro.MemComVo;
 import com.danacom.mybatis.pro.ProDao;
 import com.danacom.mybatis.pro.ProTempVo;
 import com.danacom.mybatis.pro.Pro_detVo;
@@ -326,5 +327,30 @@ public class ProAdminController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="/mem_admin_list.da")
+	public ModelAndView mem_admin_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("pro/mem_admin_list");
+		
+		int total_cnt = 0;
+		Map<String, Object> requestMap = new HashMap<>();
+		
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
+		List<MemComVo> mem_list = proDao.getMemAdminList(requestMap);
+		
+		if(mem_list != null && mem_list.size() > 0){
+			total_cnt = ((MemComVo)mem_list.get(0)).getTot_cont();
+			if(total_cnt == -999){
+				total_cnt = baseDao.get_found_rows();
+			}
+			requestMap.put("total_cnt", total_cnt);
+		}
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		mv.addObject("mem_list", mem_list);
+		mv.addObject("total_cnt", total_cnt);
+		
+		return mv;
+	}		
 	
 }
