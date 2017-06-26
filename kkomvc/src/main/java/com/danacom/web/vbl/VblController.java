@@ -23,6 +23,7 @@ import com.danacom.mybatis.pro.MemComVo;
 import com.danacom.mybatis.pro.ProDao;
 import com.danacom.mybatis.pro.ProductVo;
 import com.danacom.mybatis.pro.Shop_cart;
+import com.danacom.mybatis.vbl.BtlVo;
 import com.danacom.mybatis.vbl.VbbVo;
 import com.danacom.mybatis.vbl.VblDao;
 import com.danacom.mybatis.vbl.VblDetVo;
@@ -481,5 +482,218 @@ public class VblController {
 	
 		return mv;
 	}	
+	
+	@RequestMapping(value="/btl_admin_list.da")
+	public ModelAndView btl_admin_list(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		int total_cnt = 0;
+		Map<String, Object> requestMap = new HashMap<>();
+		
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
+		List<BtlVo> btlList = vblDao.getBtlList(requestMap);
+		
+		if(btlList != null && btlList.size() > 0){
+			total_cnt = ((BtlVo)btlList.get(0)).getTot_cont();
+			if(total_cnt == -999){
+				total_cnt = baseDao.get_found_rows();
+			}
+			requestMap.put("total_cnt", total_cnt);
+		}
+		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		mv.addObject("btlList", btlList);
+		mv.addObject("total_cnt", total_cnt);
+		
+		String returnUrl = "vbl/btl_admin_list";
+		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/btl_main_list";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}			
+	
+	@RequestMapping(value="/btl_admin_preInsert.da")
+	public ModelAndView btl_admin_preInsert(){
+		return new ModelAndView("vbl/btl_admin_insert");
+	}
+	
+	@RequestMapping(value="/btl_admin_insert.da")
+	public ModelAndView btl_admin_insert(@ModelAttribute("btl_Command")BtlVo btl_Command, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("redirect:/btl_admin_list.da?dana=btl_admin_list");
+		
+		vblDao.btlInsert(btl_Command);
+		
+		return mv;
+	}		
+	
+	@RequestMapping(value="/btlDetList.da")
+	public ModelAndView btlDetList(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setBtl_no(request.getParameter("btl_no"));
+		
+		BtlVo btl = vblDao.getBtlView(btl_Command);
+		List<BtlVo> btlDetList = vblDao.getBtlDetList(btl_Command);
+		
+		mv.addObject("btl", btl);
+		mv.addObject("btlDetList", btlDetList);
+		
+		String returnUrl = "vbl/btl_det_list";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "vbl/ajaxBtlJoinList";
+		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/ajaxBtlJoinList_main";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}		
+	
+	@RequestMapping(value="/btlDetPrejoin.da")
+	public ModelAndView btlDetPrejoin(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setBtl_no(request.getParameter("btl_no"));
+		
+		BtlVo btl = vblDao.getBtlView(btl_Command);
+		
+		request.setAttribute("btl", btl);
+		
+		String returnUrl = "vbl/btlDetPrejoin";
+		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/btlDetPrejoin_main";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/ajaxVbbList.da")
+	public ModelAndView ajaxVbbList(HttpServletRequest request, HttpServletResponse response){
+		return ajax_vbb_list(request, response);
+	}
+	
+	@RequestMapping(value="/ajaxBtlDetList.da")
+	public ModelAndView ajaxBtlDetList(HttpServletRequest request, HttpServletResponse response){
+		return btlDetList(request, response);
+	}
+	
+	@RequestMapping(value="/btl_main_list.da")
+	public ModelAndView btl_main_list(HttpServletRequest request, HttpServletResponse response){
+		return btl_admin_list(request, response);
+	}
+	
+	@RequestMapping(value="/ajaxVbbRead.da")
+	public ModelAndView ajaxVbbRead(HttpServletRequest request, HttpServletResponse response){
+		return vbb_view(request, response);
+	}
+	
+	@RequestMapping(value="/ajaxBtlDetJoin.da")
+	public ModelAndView ajaxBtlDetJoin(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setVbb_no(request.getParameter("vbb_no"));
+		btl_Command.setBtl_no(request.getParameter("btl_no"));
+		
+		int vbjMaxNo = vblDao.getVbjMaxNo();
+		btl_Command.setVbj_no(vbjMaxNo+"");
+		
+		vblDao.answerVbbUpdate(btl_Command);
+		vblDao.vbjInsert(btl_Command);
+
+		List<BtlVo> vds_no_list = vblDao.getVdsNoList(btl_Command);
+		for (BtlVo vo : vds_no_list) {
+			btl_Command.setVbd_no(vo.getVds_no());
+			btl_Command.setVbd_quantity(vo.getVds_quantity());
+			btl_Command.setVbd_pro_no(vo.getVbd_pro_no());
+			vblDao.vbdInsert(btl_Command);
+		}
+		
+		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		
+		mv.setViewName(returnUrl);
+		mv.addObject("vbb_no", request.getParameter("vbb_no"));
+		mv.addObject("btl_no", request.getParameter("btl_no"));
+		
+		return mv;
+	}		
+	
+	@RequestMapping(value="/ajaxBtlJoinDetList.da")
+	public ModelAndView ajaxBtlJoinDetList(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setVbj_no(request.getParameter("vbj_no"));
+		
+		BtlVo btlJoinContent = vblDao.getBtlJoinContent(btl_Command);
+		List<BtlVo> btlJoinDetList = vblDao.getBtlJoinDetList(btl_Command);
+		mv.addObject("btlJoinContent", btlJoinContent);
+		mv.addObject("btlJoinDetList", btlJoinDetList);
+		
+		String returnUrl = "vbl/ajaxBtlJoinDetList";
+		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/ajaxBtlJoinDetList_main";
+		
+		mv.setViewName(returnUrl);
+		
+		return mv;
+	}		
+	
+	@RequestMapping(value="/ajaxBtlDetUnjoin.da")
+	public ModelAndView ajaxBtlDetUnjoin(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setVbj_no(request.getParameter("vbj_no"));
+		btl_Command.setBtl_no(request.getParameter("btl_no"));
+		
+		vblDao.vbdDelete(btl_Command);
+		vblDao.vbjDelete(btl_Command);
+		
+		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		
+		mv.setViewName(returnUrl);
+		mv.addObject("vbj_no", request.getParameter("vbj_no"));
+		mv.addObject("btl_no", request.getParameter("btl_no"));
+		
+		return mv;
+	}		
+	
+	@RequestMapping(value="/ajaxBtlJoinDowngrade.da")
+	public ModelAndView ajaxBtlJoinDowngrade(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		String reurl = request.getParameter("reurl");
+		
+		BtlVo btl_Command = new BtlVo();
+		btl_Command.setVbj_no(request.getParameter("vbj_no"));
+		btl_Command.setBtl_no(request.getParameter("btl_no"));
+		btl_Command.setVbj_title(request.getParameter("vbj_title"));
+		
+		vblDao.gradeVbjUpdate(btl_Command);
+		
+		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		
+		mv.setViewName(returnUrl);
+		mv.addObject("vbj_no", request.getParameter("vbj_no"));
+		mv.addObject("btl_no", request.getParameter("btl_no"));
+		
+		return mv;
+	}
 	
 }
