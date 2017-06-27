@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +41,7 @@ public class VblController {
 	@Autowired private PclDao pclDao;
 	@Autowired private MkrDao mkrDao;
 	@Autowired private ProDao proDao; 
+	@Autowired private PlatformTransactionManager transactionManager;
 	
 	public void setVblDao(VblDao vblDao) {
 		this.vblDao = vblDao;
@@ -69,6 +73,12 @@ public class VblController {
 	public ProDao getProDao() {
 		return proDao;
 	}
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+	public PlatformTransactionManager getTransactionManager() {
+		return transactionManager;
+	}
 	
 	@RequestMapping(value="/vbl_main_prelist.da")
 	public ModelAndView vbl_main_prelist(){
@@ -83,6 +93,9 @@ public class VblController {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("vbl_mem_no", request.getParameter("vbl_mem_no"));
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<VirBillVo> vbl_list = vblDao.getVblList(requestMap);
 		
@@ -94,6 +107,8 @@ public class VblController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("pro_list", vbl_list);
 		mv.addObject("total_cnt", total_cnt);
@@ -181,6 +196,9 @@ public class VblController {
 		requestMap.put("pdt_step51_sy", pdt_step51_sy);
 		requestMap.put("searchValue", searchValue);
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<ProductVo> pro_list = proDao.getProMainList(requestMap);
 		
@@ -192,6 +210,8 @@ public class VblController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("proMainList", pro_list);
 		mv.addObject("mainPclNo", pcl_no);
@@ -346,6 +366,9 @@ public class VblController {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("vbb_mem_no", request.getParameter("vbb_mem_no"));
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<VbbVo> vbb_list = vblDao.getVbbList(requestMap);
 		
@@ -357,6 +380,8 @@ public class VblController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		request.setAttribute("pro_list", vbb_list);
 		request.setAttribute("total_cnt", total_cnt);
@@ -492,6 +517,9 @@ public class VblController {
 		int total_cnt = 0;
 		Map<String, Object> requestMap = new HashMap<>();
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<BtlVo> btlList = vblDao.getBtlList(requestMap);
 		
@@ -503,6 +531,8 @@ public class VblController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("btlList", btlList);
 		mv.addObject("total_cnt", total_cnt);

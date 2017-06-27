@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<bean id= "transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		<property name= "dataSource" ref = "dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager ="transactionManager" proxy-target-class="true" />
 
 	<!-- DB연결 -->
 	<!-- 오라클 연결 -->
@@ -11,21 +22,21 @@
 		<property name="username" value="danacom" />
 		<property name="password" value="oracle" />
 	</bean>	
-	
+
 	<!-- 오라클 - Mybatis 연결 : config역할 -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath*:com/danacom/sqlmap/**/*_mapper.xml" />
 	</bean>
-	
+
 	<!-- 스프링 Mybatis -->
 	<bean id="template" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactoryBean" />
-	</bean> 
-	
+	</bean>
+
 	<!-- 사용자가 스프링 사용 -->
 	<bean id="baseDao" class="com.danacom.mybatis.base.BaseDao">
 		<property name="template" ref="template" />
 	</bean>
-		
+
 </beans>

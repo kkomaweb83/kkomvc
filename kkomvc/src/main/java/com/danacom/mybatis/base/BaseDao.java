@@ -18,7 +18,6 @@ public class BaseDao {
 	}
 	
 	public int get_found_rows() {
-		template.commit();
 		return template.selectOne("found_rows");
 	}
 

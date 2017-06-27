@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +39,7 @@ public class ProAdminController {
 	@Autowired private BaseDao baseDao;
 	@Autowired private MkrDao mkrDao;
 	@Autowired private PclDao pclDao;
+	@Autowired private PlatformTransactionManager transactionManager;
 	
 	public void setProDao(ProDao proDao) {
 		this.proDao = proDao;
@@ -61,6 +65,12 @@ public class ProAdminController {
 	public PclDao getPclDao() {
 		return pclDao;
 	}
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+	public PlatformTransactionManager getTransactionManager() {
+		return transactionManager;
+	}
 	
 	@RequestMapping(value="/pro_admin_list.da")
 	public ModelAndView pro_admin_list(HttpServletRequest request, HttpServletResponse response){
@@ -69,6 +79,9 @@ public class ProAdminController {
 		int total_cnt = 0;
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("pro_pcl_no", request.getParameter("pro_pcl_no"));
+		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
 		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<ProductVo> pro_list = proDao.getProAdminList(requestMap);
@@ -81,6 +94,8 @@ public class ProAdminController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("pro_list", pro_list);
 		mv.addObject("total_cnt", total_cnt);
@@ -335,6 +350,9 @@ public class ProAdminController {
 		int total_cnt = 0;
 		Map<String, Object> requestMap = new HashMap<>();
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<MemComVo> mem_list = proDao.getMemAdminList(requestMap);
 		
@@ -346,6 +364,8 @@ public class ProAdminController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("mem_list", mem_list);
 		mv.addObject("total_cnt", total_cnt);

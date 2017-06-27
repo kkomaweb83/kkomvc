@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danacom.mybatis.vbl.vbl_mapper_ms">
+	
+	<select id="vblList" resultType="com.danacom.mybatis.vbl.VirBillVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			t1.*
+			, @ROWNUM := @ROWNUM + 1 AS rm
+			, -999 AS tot_cont
+		FROM
+		(
+			SELECT 
+				VBL_NO
+				, VBL_MEM_NO
+				, VBL_BOR_ANSWER
+				, VBL_TITLE
+				, DATE_FORMAT(VBL_DATE, '%Y/%c/%d') VBL_DATE
+			FROM VIR_BILL
+			WHERE VBL_MEM_NO = #{vbl_mem_no}
+			ORDER BY VBL_NO DESC
+		) t1 , (select @ROWNUM := 0) A
+		) t2
+		LIMIT #{begin_ms},#{numPerPage}
+	</select>
+	
+	<select id="vblMaxNo" resultType="int">
+		SELECT IFNULL(MAX(VBL_NO), 0)+1 FROM VIR_BILL
+	</select>
+	
+	<insert id="vblInsert" parameterType="com.danacom.mybatis.vbl.VirBillVo">
+		INSERT 
+		INTO VIR_BILL
+		(VBL_NO, VBL_MEM_NO, VBL_BOR_ANSWER, VBL_TITLE, VBL_DATE)
+		VALUES
+		(#{vbl_no}, #{vbl_mem_no}, #{vbl_bor_answer}, #{vbl_title}, sysdate())
+	</insert>	
+	
+	<insert id="vdtInsert" parameterType="com.danacom.mybatis.vbl.VblDetVo">
+		INSERT 
+		INTO VBL_DET
+		(VDT_NO, VDT_VBL_NO, VDT_QUANTITY, VDT_PRO_NO)
+		VALUES
+		((SELECT IFNULL(MAX(VDT_NO), 0)+1 FROM VBL_DET a)
+		, #{vdt_vbl_no}, #{vdt_quantity}, #{vdt_pro_no})
+	</insert>
+	
+	<select id="vblVo" resultType="com.danacom.mybatis.vbl.VirBillVo" parameterType="int">
+		SELECT 
+			VBL_NO, VBL_MEM_NO, VBL_BOR_ANSWER
+			, VBL_TITLE
+			, DATE_FORMAT(VBL_DATE, '%Y/%c/%d') VBL_DATE
+		FROM VIR_BILL
+		WHERE VBL_NO = #{vbl_no}
+		LIMIT 0,1
+	</select>
+	
+	<select id="vblProVo" resultType="com.danacom.mybatis.pro.ProductVo" parameterType="com.danacom.mybatis.pcl.ProClassVo">
+		SELECT 
+			PRO_NO, PRO_DISPRICE
+			, CONCAT(CONCAT(FORMAT(PRO_DISPRICE, 0)),'원') PRO_CH_PRICE
+			, FORMAT(PRO_DISPRICE, 0) PRO_CH2_PRICE
+			, PRO_PCL_NO
+			, PRO_NAME
+			, VDT_QUANTITY AS PST_QUANTITY
+		FROM PRODUCT, VBL_DET 
+		WHERE VDT_PRO_NO = PRO_NO AND VDT_VBL_NO = #{ppt_no} 
+		AND PRO_NO IN (SELECT VDT_PRO_NO FROM VBL_DET WHERE VDT_VBL_NO = #{ppt_no}) 
+		AND PRO_PCL_NO = #{pcl_no} 
+	</select>
+	
+	<update id="vblUpdate" parameterType="com.danacom.mybatis.vbl.VirBillVo">
+		UPDATE 
+		VIR_BILL SET
+			VBL_TITLE = #{vbl_title}
+			, VBL_BOR_ANSWER = #{vbl_bor_answer}
+		WHERE VBL_NO = #{vbl_no}	
+	</update> 	
+	
+	<delete id="vdtDelete" parameterType="int">
+		DELETE 
+		FROM VBL_DET 
+		WHERE VDT_VBL_NO = #{vblMaxNo}
+	</delete>
+	
+	<delete id="vblDelete" parameterType="int">
+		DELETE 
+		FROM VIR_BILL
+		WHERE VBL_NO = #{vblMaxNo}
+	</delete>
+	
+	<select id="vbbMaxNo" resultType="int">
+		SELECT IFNULL(MAX(VBB_NO), 0)+1 FROM VIR_BILL_BOARD
+	</select>
+	
+	<insert id="vbbInsert" parameterType="com.danacom.mybatis.vbl.VirBillVo">
+		INSERT 
+		INTO VIR_BILL_BOARD
+		(VBB_NO, VBB_CONTENT, VBB_MEM_NO, VBB_DATE, VBB_RECOMM
+		, VBB_COUNT, VBB_BTR_ANSWER, VBB_TITLE)
+		VALUES
+		(#{vbb_no}, #{vbl_title}, #{vbl_mem_no}, sysdate(), 0, 0, 'n', #{vbl_title})
+	</insert>
+	
+	<insert id="vdsInsert" parameterType="com.danacom.mybatis.vbl.VblDetVo">
+		INSERT 
+		INTO VBL_DET_SHARE
+		(VDS_NO, VDS_VBB_NO, VDS_QUANTITY, VDS_PRO_NO)
+		VALUES
+		((SELECT IFNULL(MAX(VDS_NO), 0)+1 FROM VBL_DET_SHARE a)
+		, #{vds_vbb_no}, #{vdt_quantity}, #{vdt_pro_no})
+	</insert>
+	
+	<select id="vbbList" resultType="com.danacom.mybatis.vbl.VbbVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			t1.*
+			, @ROWNUM := @ROWNUM + 1 AS rm
+			, -999 AS tot_cont
+		FROM
+		(
+			SELECT 
+				VBB.VBB_NO, VBB.VBB_CONTENT, MEM.MEM_ID,
+				DATE_FORMAT(VBB.VBB_DATE, '%Y-%c-%d') AS VBB_DATE,
+				VBB.VBB_RECOMM, VBB.VBB_COUNT, VBB.VBB_BTR_ANSWER, VBB.VBB_TITLE
+			FROM VIR_BILL_BOARD VBB, MEM_COM MEM 
+			WHERE VBB.VBB_MEM_NO = MEM.MEM_NO
+			<if test="vbb_mem_no != null">
+			AND VBB.VBB_MEM_NO = #{vbb_mem_no}
+			</if>
+			ORDER BY VBB.VBB_NO DESC
+		) t1, (select @ROWNUM := 0) A
+		) t2
+		LIMIT #{begin_ms},#{numPerPage}
+	</select>
+	
+	<update id="countUpVbbContent" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		UPDATE 
+		VIR_BILL_BOARD
+		SET
+			VBB_COUNT = VBB_COUNT + 1
+		WHERE VBB_NO = #{vbb_no}
+	</update>
+	
+	<select id="getVbbContent" resultType="com.danacom.mybatis.vbl.VbbVo" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		SELECT
+			VBB.VBB_NO,
+			VBB.VBB_CONTENT,
+			MEM.MEM_ID,
+			DATE_FORMAT(VBB.VBB_DATE, '%Y-%c-%d') AS VBB_DATE,
+			VBB.VBB_RECOMM,
+			VBB.VBB_COUNT,
+			VBB.VBB_BTR_ANSWER,
+			VBB.VBB_TITLE
+		FROM VIR_BILL_BOARD VBB
+		JOIN MEM_COM MEM ON VBB.VBB_MEM_NO = MEM.MEM_NO
+		WHERE VBB.VBB_NO = #{vbb_no}
+		ORDER BY VBB.VBB_NO DESC
+	</select>
+	
+	<select id="getVbbContentPro" resultType="com.danacom.mybatis.vbl.VbsVo" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		select 
+			VDS.VDS_NO,
+			VDS.VDS_QUANTITY,
+			PRO.PRO_NO,
+			PRO.PRO_NAME,
+			FORMAT(PRO.PRO_DISPRICE, 0) PRO_DISPRICE,
+			PRO.PRO_MILEGE,
+			DATE_FORMAT(PRO.PRO_REGDATE, '%Y-%c-%d') pro_regdate,
+			MKR.MKR_NAME,
+			PCL.PCL_NAME,
+			PCL.PCL_NO,
+			PSM.PSM_CONENT,
+			PMG.PMG_FILE
+		FROM VBL_DET_SHARE VDS
+			JOIN PRODUCT PRO ON VDS.VDS_PRO_NO = PRO.PRO_NO
+			JOIN MAKER MKR ON PRO.PRO_MKR_NO = MKR.MKR_NO
+			JOIN PRO_CLASS PCL ON PRO.PRO_PCL_NO = PCL.PCL_NO
+			JOIN PRO_SUMM PSM ON PRO.PRO_NO = PSM.PSM_PRO_NO
+			JOIN PRO_IMG PMG ON PRO.PRO_NO = PMG.PMG_PRO_NO
+		WHERE VDS_VBB_NO = #{vbb_no}
+			AND PMG.PMG_IDT_NO = 1
+		ORDER BY PCL.PCL_NO
+	</select>
+	
+	<select id="getVbrList" resultType="com.danacom.mybatis.vbl.VbbVo" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		SELECT 
+			VBR.VBR_NO,
+			VBR.VBR_CONTENT,
+			DATE_FORMAT(VBR.VBR_RDATE, '%Y-%c-%d') VBR_RDATE,
+			VBR.VBR_TITLE,
+			MEM.MEM_ID
+		FROM VBB_REPLY VBR
+		JOIN MEM_COM MEM ON VBR.VBR_MEM_NO = MEM.MEM_NO 
+		WHERE VBR_VBB_NO = #{vbb_no}
+		ORDER BY VBR.VBR_NO DESC
+	</select>
+	
+	<update id="recommVbbContent" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		UPDATE 
+		VIR_BILL_BOARD SET 
+			VBB_RECOMM = VBB_RECOMM + 1
+		WHERE VBB_NO = #{vbb_no}
+	</update>
+	
+	<insert id="replyInsert" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		INSERT 
+		INTO VBB_REPLY
+			(VBR_NO
+			,VBR_CONTENT
+			,VBR_RDATE
+			,VBR_VBB_NO
+			,VBR_MEM_NO
+			,VBR_TITLE)
+		VALUES
+			((SELECT IFNULL(max(VBR_NO),0)+1 FROM VBB_REPLY a)
+			,#{vbr_content}
+			,sysdate()
+			,#{vbb_no}
+			,#{mem_no}
+			,'사용안함')
+	</insert>
+	
+	<delete id="replyDelete" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		DELETE 
+		FROM VBB_REPLY
+		WHERE VBR_NO = #{vbr_no}
+	</delete>
+	
+	<update id="replyUpdate" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		UPDATE 
+		VBB_REPLY SET
+			VBR_CONTENT = #{vbr_content}
+		WHERE VBR_NO = #{vbr_no}
+	</update>
+	
+	<select id="btlList" resultType="com.danacom.mybatis.vbl.BtlVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			t1.*
+			, @ROWNUM := @ROWNUM + 1 AS rm
+			, -999 AS tot_cont
+		FROM
+		(
+			SELECT
+				BTL_NO,
+				DATE_FORMAT(BTL_SDATE, '%Y-%c-%d') as BTL_SDATE,
+				DATE_FORMAT(BTL_CDATE, '%Y-%c-%d') as BTL_CDATE,
+				BTL_TITLE
+			FROM BATTLE
+			ORDER BY BTL_NO DESC
+		) t1, (select @ROWNUM := 0) A
+		) t2
+		LIMIT #{begin_ms},#{numPerPage}
+	</select>
+	
+	<insert id="btlInsert" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		INSERT 
+		INTO BATTLE
+			(BTL_NO
+			,BTL_SDATE
+			,BTL_CDATE
+			,BTL_CONTENT
+			,BTL_TITLE
+			)
+		VALUES
+			((SELECT IFNULL(max(BTL_NO),0)+1 FROM BATTLE a)
+			,DATE_FORMAT(#{btl_sdate},'%Y-%c-%d')
+			,DATE_FORMAT(#{btl_cdate},'%Y-%c-%d')
+			,#{btl_content}
+			,#{btl_title}
+			)
+	</insert>
+	
+	<select id="getBtlView" resultType="com.danacom.mybatis.vbl.BtlVo" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		SELECT
+			BTL_NO,
+			DATE_FORMAT(BTL_SDATE, '%Y-%c-%d') AS BTL_SDATE,
+			DATE_FORMAT(BTL_CDATE, '%Y-%c-%d') AS BTL_CDATE,
+			BTL_CONTENT,
+			BTL_TITLE
+		FROM BATTLE
+		WHERE BTL_NO = #{btl_no}
+		LIMIT 0,1
+	</select>
+	
+	<select id="getBtlDetList" resultType="com.danacom.mybatis.vbl.BtlVo" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		SELECT
+			VBJ.VBJ_NO,
+			VBJ.VBJ_TITLE,
+			VBJ.VBJ_GRADE,
+			MEM.MEM_ID,
+			(select sum(PRO.PRO_DISPRICE * VBD.VBD_QUANTITY)
+            	FROM VBJ_DET VBD
+            	JOIN PRODUCT PRO ON VBD.VBD_PRO_NO = PRO.PRO_NO) AS TOTDISPRICE
+		FROM VBL_BTL_JOIN VBJ
+		JOIN MEM_COM MEM ON VBJ.VBJ_MEM_NO = MEM.MEM_NO
+        WHERE VBJ.VBJ_BTL_NO = #{btl_no}
+		ORDER BY VBJ.VBJ_GRADE DESC
+	</select>
+	
+	<update id="answerVbbUpdate" parameterType="com.danacom.mybatis.vbl.VbbVo">
+		UPDATE 
+		VIR_BILL_BOARD SET 
+			VBB_BTR_ANSWER = 'y'
+		WHERE VBB_NO = #{vbb_no}
+	</update>
+	
+	<select id="vbjMaxNo" resultType="int">
+		SELECT IFNULL(MAX(VBJ_NO), 0)+1 FROM VBL_BTL_JOIN
+	</select>
+	
+	<insert id="vbjInsert" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		INSERT 
+		INTO VBL_BTL_JOIN
+		(
+			VBJ_NO
+			,VBJ_BTL_NO
+			,VBJ_GRADE
+			,VBJ_MEM_NO
+			,VBJ_TITLE
+		)
+		VALUES
+		(
+			#{vbj_no}
+			,#{btl_no}
+			,(select
+				(VBB_RECOMM * 3 + VBB_COUNT)
+				FROM VIR_BILL_BOARD WHERE VBB_NO = #{vbb_no})
+			,(SELECT VBB_MEM_NO FROM VIR_BILL_BOARD WHERE VBB_NO = #{vbb_no})
+			,(SELECT VBB_TITLE FROM VIR_BILL_BOARD WHERE VBB_NO = #{vbb_no})
+		)
+	</insert>
+	
+	<insert id="vbdInsert" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		INSERT 
+		INTO VBJ_DET
+		(
+			VBD_NO
+			,VBD_QUANTITY
+			,VBD_VBJ_NO
+			,VBD_PRO_NO
+		)
+		VALUES
+		(
+			(SELECT IFNULL(max(VBD_NO),0)+1 FROM VBJ_DET a)
+			,#{vbd_quantity}
+			,#{vbj_no}
+			,#{vbd_pro_no}
+		)
+	</insert>
+	
+	<select id="getVdsNoList" parameterType="com.danacom.mybatis.vbl.BtlVo" resultType="com.danacom.mybatis.vbl.BtlVo">
+		SELECT 
+			VDS_NO
+			, VDS_QUANTITY
+			, VDS_PRO_NO AS VBD_PRO_NO 
+		FROM VBL_DET_SHARE 
+		WHERE VDS_VBB_NO = #{vbb_no}
+	</select>
+	
+	<select id="getBtlJoinContent" parameterType="com.danacom.mybatis.vbl.BtlVo" resultType="com.danacom.mybatis.vbl.BtlVo">
+		SELECT
+			VBJ.VBJ_NO,
+			VBJ.VBJ_TITLE,
+			VBJ.VBJ_GRADE,
+			VBJ.VBJ_BTL_NO,
+			MEM.MEM_ID,
+			FORMAT(
+				(SELECT sum(PRO.PRO_DISPRICE * VBD.VBD_QUANTITY)
+            	FROM VBJ_DET VBD
+            	JOIN PRODUCT PRO ON VBD.VBD_PRO_NO = PRO.PRO_NO
+                WHERE VBD.VBD_VBJ_NO = #{vbj_no}),0) AS TOTDISPRICE
+		FROM VBL_BTL_JOIN VBJ
+		JOIN MEM_COM MEM ON VBJ.VBJ_MEM_NO = MEM.MEM_NO
+        WHERE VBJ.VBJ_NO = #{vbj_no}
+        LIMIT 0,1
+	</select>
+	
+	<select id="getBtlJoinDetList" parameterType="com.danacom.mybatis.vbl.BtlVo" resultType="com.danacom.mybatis.vbl.BtlVo">
+		SELECT 
+			VBD.VBD_NO,
+			VBD.VBD_QUANTITY,
+			PRO.PRO_NO,
+			PRO.PRO_NAME,
+			FORMAT(PRO.PRO_DISPRICE,0) AS PRO_DISPRICE,
+			PRO.PRO_MILEGE,
+			DATE_FORMAT(PRO.PRO_REGDATE, '%Y/%c/%d') AS pro_regdate,
+			MKR.MKR_NAME,
+			PCL.PCL_NAME,
+			PSM.PSM_CONENT,
+			PMG.PMG_FILE
+		FROM VBJ_DET VBD
+			JOIN PRODUCT PRO ON VBD.VBD_PRO_NO = PRO.PRO_NO
+			JOIN MAKER MKR ON PRO.PRO_MKR_NO = MKR.MKR_NO
+			JOIN PRO_CLASS PCL ON PRO.PRO_PCL_NO = PCL.PCL_NO
+			JOIN PRO_SUMM PSM ON PRO.PRO_NO = PSM.PSM_PRO_NO
+			JOIN PRO_IMG PMG ON PRO.PRO_NO = PMG.PMG_PRO_NO
+		WHERE VBD.VBD_VBJ_NO = #{vbj_no}
+		AND PMG.PMG_IDT_NO = 1
+		ORDER BY PCL.PCL_NO
+	</select>
+	
+	<delete id="vbdDelete" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		DELETE VBJ_DET
+		WHERE VBD_VBJ_NO = #{vbj_no}
+	</delete>
+	<delete id="vbjDelete" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		DELETE VBL_BTL_JOIN
+		WHERE VBJ_NO = #{vbj_no}
+	</delete>
+	
+	<update id="gradeVbjUpdate" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		UPDATE 
+		VBL_BTL_JOIN SET
+			<if test='vbj_title == "up"'>
+			VBJ_GRADE = VBJ_GRADE + 5
+			</if>
+			<if test='vbj_title == "down"'>
+			VBJ_GRADE = VBJ_GRADE - 5
+			</if>
+		WHERE VBJ_NO = #{vbj_no}
+	</update>
+	
+</mapper>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danacom.mybatis.pro.pro_mapper_ms">
+
+	<select id="found_rows" resultType="int">
+		SELECT FOUND_ROWS() AS tot_cont
+	</select>
+	
+	<select id="proAdminPclList" resultType="com.danacom.mybatis.pro.ProductVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			T1.*
+		    , @ROWNUM := @ROWNUM + 1 AS rm
+            , -999 AS tot_cont
+		FROM
+		(
+			SELECT 
+				PRO_NO
+				, PRO_DISPRICE
+				, CONCAT(CONCAT(FORMAT(PRO_DISPRICE, 0)),'원') PRO_CH_PRICE
+				, PCL_NAME, PRO_PCL_NO, PRO_STOCKCOUNT
+				, PRO_NAME
+			FROM PRODUCT A
+			JOIN PRO_CLASS B ON A.PRO_PCL_NO = B.PCL_NO
+			<if test="pro_pcl_no != null">
+				<if test="pro_pcl_no != 'all'">
+				WHERE PRO_PCL_NO = #{pro_pcl_no}
+				</if>
+			</if>
+			ORDER BY PRO_NO DESC
+		) T1, (select @ROWNUM := 0) A
+		) T2
+		LIMIT #{begin_ms},#{numPerPage} 
+	</select>
+	
+	<select id="proMainList" resultType="com.danacom.mybatis.pro.ProductVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			T1.*
+		    , @ROWNUM := @ROWNUM + 1 AS rm
+            , -999 AS tot_cont
+		FROM
+		(
+			SELECT 
+				PRO_NO, PRO_NAME, PRO_DISPRICE, PRO_REALPRICE
+				, CONCAT(CONCAT(FORMAT(PRO_DISPRICE, 0)),'원') PRO_CH_PRICE
+				, FORMAT(PRO_DISPRICE, 0) PRO_CH2_PRICE
+				, DATE_FORMAT(PRO_REGDATE, '%Y/%c/%d') PRO_REGDATE
+				, PSM_CONENT
+				, PMG_FILE
+				, PRO_PCL_NO
+				, PRO_MKR_NO
+				, PRO_NAME AS PPT_PRO_NAME
+				, 1 AS ODT_COUNT
+			FROM PRODUCT, PRO_SUMM, PRO_IMG 
+			WHERE PRO_NO = PSM_PRO_NO 
+			AND PRO_NO = PMG_PRO_NO 
+			AND PRO_PCL_NO = #{pro_pcl_no}
+			AND PMG_IDT_NO = 1
+			
+			<if test="mkr_no_sy != null">
+				<foreach item="item" index="index" collection="mkr_no_sy" open="AND PRO_MKR_NO IN(" close=")" separator=",">
+				#{item}
+				</foreach>
+			</if>
+			<if test="pdt_step51_sy != null">
+				<foreach item="item" index="index" collection="pdt_step51_sy" 
+						open="AND PRO_NO IN(SELECT PDT_PRO_NO FROM PRO_DET WHERE PDT_CONENT IN(" close="))" separator=",">
+				#{item}
+				</foreach>
+			</if>
+			
+			<if test="searchValue != null">
+			<if test="searchValue != ''">
+				AND PRO_NO IN (
+					        SELECT PRO_NO FROM PRODUCT WHERE PRO_NAME LIKE '%'||#{searchValue}||'%'
+					        UNION
+					        SELECT PSM_PRO_NO FROM PRO_SUMM
+					        WHERE PSM_CONENT LIKE '%'||#{searchValue}||'%' AND PSM_PRO_NO != 0
+					        UNION
+					        SELECT PRO_NO FROM PRODUCT 
+					        WHERE PRO_PCL_NO IN(SELECT MKR_PCL_NO FROM MAKER
+					        					 WHERE MKR_NAME LIKE '%'||#{searchValue}||'%')
+				        )
+			</if>
+			</if>			
+			
+			<if test="proOrderCode != ''">
+				<if test='proOrderCode == "1"'>
+					ORDER BY ODT_COUNT DESC, PRO_NO
+				</if>
+				<if test='proOrderCode == "2"'>
+					ORDER BY PRO_NO DESC
+				</if>
+				<if test='proOrderCode == "3"'>
+					ORDER BY PRO_DISPRICE ASC
+				</if>
+				<if test='proOrderCode == "4"'>
+					ORDER BY PRO_DISPRICE DESC
+				</if>
+			</if>
+		) T1, (select @ROWNUM := 0) A
+		) T2
+		LIMIT #{begin_ms},#{numPerPage}
+	</select>
+	
+	<select id="proMaxNO" resultType="int">
+		SELECT IFNULL(MAX(PRO_NO), 0)+1 FROM PRODUCT
+	</select>
+	
+	<insert id="proInsert" parameterType="com.danacom.mybatis.pro.ProductVo">
+		INSERT 
+		INTO PRODUCT
+		(PRO_NO, PRO_NAME, PRO_REALPRICE, PRO_DISPRICE
+		, PRO_REGDATE, PRO_MILEGE, PRO_STOCKCOUNT
+		, PRO_PCL_NO, PRO_MKR_NO)
+		VALUES
+		(#{pro_no}
+		, #{pro_name}
+		, #{pro_disprice}, #{pro_disprice}, sysdate()
+		, FLOOR(#{pro_disprice}*0.005) 
+		, #{pro_stockcount}, #{pro_pcl_no}, #{pro_mkr_no})
+	</insert>
+	
+	<insert id="psmInsert" parameterType="com.danacom.mybatis.pro.ProductVo">
+		INSERT 
+		INTO PRO_SUMM
+		(PSM_NO, PSM_CONENT, PSM_PRO_NO)
+		VALUES
+		((SELECT IFNULL(MAX(PSM_NO), 0)+1 FROM PRO_SUMM a)
+		, #{psm_conent}
+		, #{pro_no})
+	</insert>
+	
+	<insert id="pmgInsert" parameterType="com.danacom.mybatis.pro.Pro_imgVo">
+		INSERT 
+		INTO PRO_IMG
+		(PMG_NO, PMG_FILE, PMG_PRO_NO, PMG_IDT_NO)
+		VALUES
+		((SELECT IFNULL(MAX(PMG_NO), 0)+1 FROM PRO_IMG a)
+		, #{pmg_file}, #{pmg_pro_no}, #{pmg_idt_no})
+	</insert>
+	
+	<insert id="pdtInsert" parameterType="com.danacom.mybatis.pro.Pro_detVo">
+		INSERT 
+		INTO PRO_DET
+		(PDT_NO, PDT_NAME, PDT_CONENT, PDT_STEP, PDT_PRO_NO)
+		VALUES
+		((SELECT IFNULL(MAX(PDT_NO), 0)+1 FROM PRO_DET a)
+        , #{pdt_name}, #{pdt_conent}, 5, #{pdt_pro_no})
+	</insert>
+	
+	<select id="proVo" resultType="com.danacom.mybatis.pro.ProductVo" parameterType="int">
+		SELECT 
+			PRO_NO, PRO_NAME, PRO_DISPRICE, PRO_REALPRICE, PRO_MILEGE
+			, CONCAT(CONCAT(FORMAT(PRO_DISPRICE, 0)),'원') PRO_CH_PRICE
+			, DATE_FORMAT(PRO_REGDATE, '%Y/%c/%d') PRO_REGDATE
+			, PSM_CONENT
+			, PMG_FILE
+            , MKR_NAME
+            , PRO_PCL_NO
+            , PRO_MKR_NO
+            , PRO_STOCKCOUNT
+		FROM PRODUCT
+		JOIN PRO_SUMM ON PRO_NO = PSM_PRO_NO
+		JOIN PRO_IMG ON PRO_NO = PMG_PRO_NO
+        JOIN MAKER ON PRO_MKR_NO = MKR_NO
+		WHERE PRO_NO = #{pro_no}
+		AND PMG_IDT_NO = 2
+	</select>
+	
+	<select id="pmgFile" resultType="string" parameterType="int">
+		SELECT 
+		PMG_FILE FROM PRO_IMG
+		WHERE PMG_PRO_NO = #{pro_no}
+		AND PMG_IDT_NO = #{idt_no}
+	</select>
+	
+	<update id="proUpdate" parameterType="com.danacom.mybatis.pro.ProductVo">
+		UPDATE 
+		PRODUCT SET
+		PRO_NAME = #{pro_name}
+		, PRO_REALPRICE = #{pro_disprice}
+		, PRO_DISPRICE= #{pro_disprice}
+		, PRO_MILEGE = FLOOR(#{pro_disprice}*0.005) 
+		, PRO_MKR_NO = #{pro_mkr_no}
+		, PRO_STOCKCOUNT = #{pro_stockcount}
+		WHERE PRO_NO = #{pro_no}
+	</update>
+	
+	<update id="psmUpdate" parameterType="com.danacom.mybatis.pro.ProductVo">
+		UPDATE 
+		PRO_SUMM SET
+		PSM_CONENT = #{psm_conent}
+		WHERE PSM_PRO_NO = #{pro_no}
+	</update>
+	
+	<update id="pmgUpdate" parameterType="com.danacom.mybatis.pro.Pro_imgVo">
+		UPDATE 
+		PRO_IMG SET
+		PMG_FILE = #{pmg_file}
+		WHERE PMG_PRO_NO = #{pmg_pro_no} AND PMG_IDT_NO = #{pmg_idt_no}
+	</update>
+	
+	<delete id="pdtDelete" parameterType="int">
+		DELETE 
+		FROM PRO_DET
+		WHERE PDT_PRO_NO = #{proMaxNo}
+	</delete>
+	
+	<delete id="pmgDelete" parameterType="int">
+		DELETE 
+		FROM PRO_IMG
+		WHERE PMG_PRO_NO = #{proMaxNo}
+	</delete>
+	
+	<delete id="psmDelete" parameterType="int">
+		DELETE 
+		FROM PRO_SUMM
+		WHERE PSM_PRO_NO = #{proMaxNo}
+	</delete>
+	
+	<delete id="proDelete" parameterType="int">
+		DELETE 
+		FROM PRODUCT
+		WHERE PRO_NO = #{proMaxNo}
+	</delete>
+	
+	<select id="getMemAdminList" resultType="com.danacom.mybatis.pro.MemComVo" parameterType="hashmap">
+		SELECT 
+			SQL_CALC_FOUND_ROWS *
+		FROM
+		(
+		SELECT 
+			T1.*
+			, @ROWNUM := @ROWNUM + 1 AS rm
+            , -999 AS tot_cont
+		FROM
+		(
+			SELECT 
+				MEM_NO
+				, MEM_ID
+				, MEM_PASS
+				, MEM_NAME
+				, MEM_EMAIL
+				, MEM_HP
+				, MEM_TEL
+				, MEM_ZONECODE
+				, MEM_ADDR
+				, MEM_ADDR2
+				, MEM_MIL
+				, DATE_FORMAT(MEM_RDATE, '%Y-%c-%d') AS DATE_DESC
+				, MEM_ADMIN_AUTHO
+			FROM MEM_COM
+			ORDER BY MEM_NO DESC
+		) T1, (select @ROWNUM := 0) A
+		) T2
+		LIMIT #{begin_ms},#{numPerPage} 
+	</select>
+	
+</mapper>

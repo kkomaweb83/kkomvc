@@ -11,6 +11,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,7 +42,8 @@ public class ProController {
 	@Autowired private MkrDao mkrDao; 
 	@Autowired private ProDao proDao; 
 	@Autowired private BaseDao baseDao; 
-	@Autowired private SctDao sctDao; 
+	@Autowired private SctDao sctDao;
+	@Autowired private PlatformTransactionManager transactionManager;
 	
 	public void setPclDao(PclDao pclDao) {
 		this.pclDao = pclDao;
@@ -68,6 +74,12 @@ public class ProController {
 	}
 	public SctDao getSctDao() {
 		return sctDao;
+	}
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+	public PlatformTransactionManager getTransactionManager() {
+		return transactionManager;
 	}
 	
 	@RequestMapping(value="/pro_main_prelist.da")
@@ -120,6 +132,7 @@ public class ProController {
 	}
 	
 	@RequestMapping(value="/ajax_pro_list.da")
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public ModelAndView ajax_pro_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/ajax_pro_main_list");
 		
@@ -129,6 +142,9 @@ public class ProController {
 		requestMap.put("proOrderCode", request.getParameter("proOrderCode"));
 		requestMap.put("mkr_no_sy", request.getParameterValues("mkr_no_sy"));
 		requestMap.put("pdt_step51_sy", request.getParameterValues("pdt_step51_sy"));
+		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
 		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<ProductVo> pro_list = proDao.getProMainList(requestMap);
@@ -141,6 +157,8 @@ public class ProController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("proMainList", pro_list);
 		mv.addObject("total_cnt", total_cnt);
@@ -490,6 +508,9 @@ public class ProController {
 			requestMap.put("ord_mem_no", request.getParameter("ord_mem_no"));
 		}
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<MpVo> orders_list = sctDao.getOrdersList(requestMap);
 		
@@ -501,6 +522,8 @@ public class ProController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("orders_list", orders_list);
 		mv.addObject("total_cnt", total_cnt);
@@ -561,6 +584,9 @@ public class ProController {
 			requestMap.put("ord_mem_no", request.getParameter("ord_mem_no"));
 		}
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+		
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징1
 		List<MpVo> orders_list = sctDao.getOrdersList(requestMap);
 		
@@ -572,6 +598,8 @@ public class ProController {
 			requestMap.put("total_cnt", total_cnt);
 		}
 		CommonUtilsController.setPageSetting(requestMap, request); // 페이징2
+		
+		transactionManager.commit(status);
 		
 		mv.addObject("orders_list", orders_list);
 		mv.addObject("total_cnt", total_cnt);

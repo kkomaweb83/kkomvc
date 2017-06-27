@@ -41,12 +41,6 @@ public class CommonUtilsController {
     	request.setAttribute("p_totalPage", totalPage);
     	request.setAttribute("p_nowPage", nowPage);
     	request.setAttribute("p_pagePerBlock", pagePerBlock);
-    	//BaseDao.commit();
-    	try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     }
 
 }
