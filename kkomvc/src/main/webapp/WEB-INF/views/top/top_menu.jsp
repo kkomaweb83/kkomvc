@@ -17,28 +17,28 @@
 	});
 	
 	function goProList(pro_pcl_no){
-		location.href = "<%=cp %>/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no="+pro_pcl_no;
+		location.href = "<%=cp %>/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no="+pro_pcl_no;
 	}
 	
 	function goMemLoginChk(){
-		document.memLoginChk.action = "<%=cp %>/loginChk.da?dana=loginChk";
+		document.memLoginChk.action = "<%=cp %>/loginChk.do?dana=loginChk";
 		document.memLoginChk.submit();
 	}
 	function goMemLoginOut(){
-		location.href = "<%=cp %>/logout.da?dana=logout";
+		location.href = "<%=cp %>/logout.do?dana=logout";
 	}
 </script>
 </head>
 <body>
 
 <div id="top_title">
-<a href="<%=cp %>/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no=0101"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
+<a href="<%=cp %>/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
 </div>
 
 <c:if test="${login.mem_admin_autho =='y'}">
 <nav id="top_ltb">
 	<ul>
-		<li><a href="<%=cp %>/pcl_list.da?dana=pcl_list">관리자모드</a></li>
+		<li><a href="<%=cp %>/pcl_list.do?dana=pcl_list">관리자모드</a></li>
 	</ul>	
 </nav>
 </c:if>
@@ -62,15 +62,15 @@
 	<ul>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">가상견적서</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/vbl_main_prelist.da?dana=vbl_main_prelist">가상견적서</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/vbl_main_prelist.do?dana=vbl_main_prelist">가상견적서</a></c:if>
 		</li>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">공유견적서</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/vbb_prelist.da?dana=vbb_prelist">공유견적서</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/vbb_prelist.do?dana=vbb_prelist">공유견적서</a></c:if>
 		</li>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">베틀견적서</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/btl_main_list.da?dana=btl_main_list&reurl=main">베틀견적서</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/btl_main_list.do?dana=btl_main_list&reurl=main">베틀견적서</a></c:if>
 		</li>
 	</ul>
 </nav>
@@ -92,14 +92,14 @@
 		</span>
 		</form>
 		</li>
-		<li><a href="<%=cp %>/member_prejoin.da?dana=member_prejoin">회원가입</a></li>
+		<li><a href="<%=cp %>/member_prejoin.do?dana=member_prejoin">회원가입</a></li>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">장바구니</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/sct_main_prelist.da?dana=sct_main_prelist">장바구니</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/sct_main_prelist.do?dana=sct_main_prelist">장바구니</a></c:if>
 		</li>
 		<li>
 		<c:if test="${login.cmd != 101}"><a href="#">마이페이지</a></c:if>
-		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/orders_list.da?dana=orders_list">마이페이지</a></c:if>
+		<c:if test="${login.cmd == 101}"><a href="<%=cp %>/orders_list.do?dana=orders_list">마이페이지</a></c:if>
 		</li>
 	</ul>
 </nav>

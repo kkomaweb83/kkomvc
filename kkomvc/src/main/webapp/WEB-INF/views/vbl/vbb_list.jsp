@@ -22,7 +22,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_vbb_list.da",
+			url : "${ct_path}/ajax_vbb_list.do",
 			type : "post",
 			data : {dana:'ajax_vbb_list'},
 			dataType : "html",
@@ -36,7 +36,7 @@
 	}
 	function doList(page){
 		$.ajax({
-			url : "${ct_path}/ajax_vbb_list.da",
+			url : "${ct_path}/ajax_vbb_list.do",
 			type : "post",
 			data : {dana:'ajax_vbb_list',cPage:page},
 			dataType : "html",

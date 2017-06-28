@@ -34,7 +34,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",
@@ -50,7 +50,7 @@
 	function updateOdr_condition(){
 		var newCondition = document.getElementsByName("odr_condition")[0].value;
 		var odr_no = document.getElementsByName("odr_no")[0].value;
-		location.href = "${ct_path}/odr_condition.da?dana=odr_condition&odr_condition="+newCondition+"&odr_no="+odr_no;
+		location.href = "${ct_path}/odr_condition.do?dana=odr_condition&odr_condition="+newCondition+"&odr_no="+odr_no;
 	}
 </script>
 </head>

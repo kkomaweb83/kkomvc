@@ -72,7 +72,7 @@
 		<span class="box_button5">바로구매</span>
 		</c:if>
 		<c:if test="${login.cmd == 101}">
-		<a href="${ct_path}/sct_odr_doc.da?dana=sct_odr_doc&sct_pro_no=${bean.pro_no }&sct_pro_part=1&sct_pro_muti=2&sct_mem_no=${login.mem_no }" class="box_button5">바로구매</a>
+		<a href="${ct_path}/sct_odr_doc.do?dana=sct_odr_doc&sct_pro_no=${bean.pro_no }&sct_pro_part=1&sct_pro_muti=2&sct_mem_no=${login.mem_no }" class="box_button5">바로구매</a>
 		</c:if>
 		
 		<c:if test="${login.cmd != 101}">

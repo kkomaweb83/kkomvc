@@ -27,7 +27,7 @@ public class PclController {
 		return pclDao;
 	}
 	
-	@RequestMapping(value="/pcl_list.da")
+	@RequestMapping(value="/pcl_list.do")
 	public ModelAndView pcl_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pcl/pcl_list");
 		
@@ -39,7 +39,7 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_pcl_list.da")
+	@RequestMapping(value="/ajax_pcl_list.do")
 	public ModelAndView ajax_pcl_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pcl/ajax_pcl_list");
 		
@@ -99,9 +99,9 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pcl_auto_no.da")
+	@RequestMapping(value="/pcl_auto_no.do")
 	public ModelAndView pcl_auto_no(HttpServletRequest request, HttpServletResponse response){
-		//ModelAndView mv = new ModelAndView("ajax_pcl_list.da");
+		//ModelAndView mv = new ModelAndView("ajax_pcl_list.do");
 		
 		String pcl_uppercode = request.getParameter("pcl_upperno");
 		String pcl_ord_no = "";
@@ -125,7 +125,7 @@ public class PclController {
 		return ajax_pcl_list(request, response);
 	}
 	
-	@RequestMapping(value="/pcl_preUpdate.da")
+	@RequestMapping(value="/pcl_preUpdate.do")
 	public ModelAndView pcl_preUpdate(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pcl/ajax_pcl_list");
 		
@@ -143,9 +143,9 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pcl_insert.da")
+	@RequestMapping(value="/pcl_insert.do")
 	public ModelAndView pcl_insert(@ModelAttribute("pclVO")ProClassVo pclVO, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.da?dana=ajax_pcl_list&insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.do?dana=ajax_pcl_list&insert=y");
 		
 		pclDao.pclInsert(pclVO);
 		
@@ -162,9 +162,9 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pcl_update.da")
+	@RequestMapping(value="/pcl_update.do")
 	public ModelAndView pcl_update(@ModelAttribute("pclVO")ProClassVo pclVO, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.da?dana=ajax_pcl_list&insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.do?dana=ajax_pcl_list&insert=y");
 		
 		pclDao.pclUpdate(pclVO);
 		
@@ -175,9 +175,9 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pcl_delete.da")
+	@RequestMapping(value="/pcl_delete.do")
 	public ModelAndView pcl_delete(@ModelAttribute("pclVO")ProClassVo pclVO, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.da?dana=ajax_pcl_list&insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_pcl_list.do?dana=ajax_pcl_list&insert=y");
 		
 		pclDao.pclDelete(pclVO.getPcl_no());
 		
@@ -188,7 +188,7 @@ public class PclController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/member_prejoin.da")
+	@RequestMapping(value="/member_prejoin.do")
 	public ModelAndView member_prejoin(){
 		return new ModelAndView("pcl/member_prejoin");
 	}

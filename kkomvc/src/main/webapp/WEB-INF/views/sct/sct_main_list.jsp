@@ -22,7 +22,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_sct_list.da",
+			url : "${ct_path}/ajax_sct_list.do",
 			type : "post",
 			data : {dana:'ajax_sct_list',sct_mem_no:'${login.mem_no}'},
 			dataType : "html",
@@ -47,7 +47,7 @@
 		}
 		
 		$.ajax({
-			url : "${ct_path}/ajax_sct_update.da",
+			url : "${ct_path}/ajax_sct_update.do",
 			type : "post",
 			data : {dana:'ajax_sct_update',sct_no:sct_no, sct_count: temp, sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -61,7 +61,7 @@
 	}
 	function goSctDelete(sct_no, mem_no, sct_part){
 		$.ajax({
-			url : "${ct_path}/ajax_sct_delete.da",
+			url : "${ct_path}/ajax_sct_delete.do",
 			type : "post",
 			data : {dana:'ajax_sct_delete',sct_no:sct_no, sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -75,7 +75,7 @@
 	}
 	function goSctAllDelete(mem_no, sct_part){
 		$.ajax({
-			url : "${ct_path}/ajax_sct_alldelete.da",
+			url : "${ct_path}/ajax_sct_alldelete.do",
 			type : "post",
 			data : {dana:'ajax_sct_alldelete',sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -99,7 +99,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",

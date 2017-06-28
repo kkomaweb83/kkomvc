@@ -80,12 +80,12 @@ public class VblController {
 		return transactionManager;
 	}
 	
-	@RequestMapping(value="/vbl_main_prelist.da")
+	@RequestMapping(value="/vbl_main_prelist.do")
 	public ModelAndView vbl_main_prelist(){
 		return new ModelAndView("vbl/vbl_list");
 	}
 	
-	@RequestMapping(value="/ajax_vbl_list.da")
+	@RequestMapping(value="/ajax_vbl_list.do")
 	public ModelAndView ajax_vbl_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("vbl/ajax_vbl_list");
 		
@@ -116,12 +116,12 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_vbl_preInsert.da")
+	@RequestMapping(value="/ajax_vbl_preInsert.do")
 	public ModelAndView ajax_vbl_preInsert(){
 		return new ModelAndView("vbl/vbl_insert");
 	}
 	
-	@RequestMapping(value="/ajax_vbl_inMkrPcl.da")
+	@RequestMapping(value="/ajax_vbl_inMkrPcl.do")
 	public ModelAndView ajax_vbl_inMkrPcl(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("vbl/ajax_vbl_inMkrPcl");
 		
@@ -158,7 +158,7 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_vbl_inProList.da")
+	@RequestMapping(value="/ajax_vbl_inProList.do")
 	public ModelAndView ajax_vbl_inProList(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("vbl/ajax_vbl_inProList");
 		
@@ -221,9 +221,9 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/ajax_vbl_insert.da")
+	@RequestMapping(value="/ajax_vbl_insert.do")
 	public ModelAndView ajax_vbl_insert(@ModelAttribute("vblCommand")VirBillVo vblCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.da?dana=vbl_main_prelist");
+		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.do?dana=vbl_main_prelist");
 		
 		int vblMaxNo= vblDao.getVblMaxNo();
 		vblCommand.setVbl_no(vblMaxNo);
@@ -246,7 +246,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/vbl_view.da")
+	@RequestMapping(value="/vbl_view.do")
 	public ModelAndView vbl_view(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("vbl/vbl_view");
 		
@@ -278,9 +278,9 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_vbl_update.da")
+	@RequestMapping(value="/ajax_vbl_update.do")
 	public ModelAndView ajax_vbl_update(@ModelAttribute("vblCommand")VirBillVo vblCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.da?dana=vbl_main_prelist");
+		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.do?dana=vbl_main_prelist");
 		
 		int vblMaxNo= vblCommand.getVbl_no();
 		vblCommand.setVbl_bor_answer("N");
@@ -305,9 +305,9 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_vbl_delete.da")
+	@RequestMapping(value="/ajax_vbl_delete.do")
 	public ModelAndView ajax_vbl_delete(@ModelAttribute("vblCommand")VirBillVo vblCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.da?dana=vbl_main_prelist");
+		ModelAndView mv = new ModelAndView("redirect:/vbl_main_prelist.do?dana=vbl_main_prelist");
 		
 		int vblMaxNo= vblCommand.getVbl_no();
 			
@@ -318,9 +318,9 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_vbb_insert.da")
+	@RequestMapping(value="/ajax_vbb_insert.do")
 	public ModelAndView ajax_vbb_insert(@ModelAttribute("vblCommand")VirBillVo vblCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/vbb_prelist.da?dana=vbb_prelist");	
+		ModelAndView mv = new ModelAndView("redirect:/vbb_prelist.do?dana=vbb_prelist");	
 		
 		int vblMaxNo= vblCommand.getVbl_no();
 		int vbbMaxNo = vblDao.getVbbMaxNo();
@@ -351,12 +351,12 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/vbb_prelist.da")
+	@RequestMapping(value="/vbb_prelist.do")
 	public ModelAndView vbb_prelist(){
 		return new ModelAndView("vbl/vbb_list");
 	}
 	
-	@RequestMapping(value="/ajax_vbb_list.da")
+	@RequestMapping(value="/ajax_vbb_list.do")
 	public ModelAndView ajax_vbb_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -394,7 +394,7 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/vbb_view.da")
+	@RequestMapping(value="/vbb_view.do")
 	public ModelAndView vbb_view(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -432,9 +432,9 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/vbb_reply_insert.da")
+	@RequestMapping(value="/vbb_reply_insert.do")
 	public ModelAndView vbb_reply_insert(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/vbb_view.da?dana=vbb_view");
+		ModelAndView mv = new ModelAndView("redirect:/vbb_view.do?dana=vbb_view");
 		
 		VbbVo vbb_Command = new VbbVo();
 		vbb_Command.setVbb_no(request.getParameter("vbb_no"));
@@ -449,9 +449,9 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/vbb_reply_update.da")
+	@RequestMapping(value="/vbb_reply_update.do")
 	public ModelAndView vbb_reply_update(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/vbb_view.da?dana=vbb_view");
+		ModelAndView mv = new ModelAndView("redirect:/vbb_view.do?dana=vbb_view");
 		
 		VbbVo vbb_Command = new VbbVo();
 		vbb_Command.setVbr_no(request.getParameter("vbr_no"));
@@ -466,9 +466,9 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/vbb_reply_delete.da")
+	@RequestMapping(value="/vbb_reply_delete.do")
 	public ModelAndView vbb_reply_delete(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/vbb_view.da?dana=vbb_view");
+		ModelAndView mv = new ModelAndView("redirect:/vbb_view.do?dana=vbb_view");
 		
 		VbbVo vbb_Command = new VbbVo();
 		vbb_Command.setVbr_no(request.getParameter("vbr_no"));
@@ -482,7 +482,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/vbb_recomm.da")
+	@RequestMapping(value="/vbb_recomm.do")
 	public ModelAndView vbb_recomm(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("vbl/vbb_view");
 		
@@ -508,7 +508,7 @@ public class VblController {
 		return mv;
 	}	
 	
-	@RequestMapping(value="/btl_admin_list.da")
+	@RequestMapping(value="/btl_admin_list.do")
 	public ModelAndView btl_admin_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -545,21 +545,21 @@ public class VblController {
 		return mv;
 	}			
 	
-	@RequestMapping(value="/btl_admin_preInsert.da")
+	@RequestMapping(value="/btl_admin_preInsert.do")
 	public ModelAndView btl_admin_preInsert(){
 		return new ModelAndView("vbl/btl_admin_insert");
 	}
 	
-	@RequestMapping(value="/btl_admin_insert.da")
+	@RequestMapping(value="/btl_admin_insert.do")
 	public ModelAndView btl_admin_insert(@ModelAttribute("btl_Command")BtlVo btl_Command, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/btl_admin_list.da?dana=btl_admin_list");
+		ModelAndView mv = new ModelAndView("redirect:/btl_admin_list.do?dana=btl_admin_list");
 		
 		vblDao.btlInsert(btl_Command);
 		
 		return mv;
 	}		
 	
-	@RequestMapping(value="/btlDetList.da")
+	@RequestMapping(value="/btlDetList.do")
 	public ModelAndView btlDetList(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -583,7 +583,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/btlDetPrejoin.da")
+	@RequestMapping(value="/btlDetPrejoin.do")
 	public ModelAndView btlDetPrejoin(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -604,27 +604,27 @@ public class VblController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajaxVbbList.da")
+	@RequestMapping(value="/ajaxVbbList.do")
 	public ModelAndView ajaxVbbList(HttpServletRequest request, HttpServletResponse response){
 		return ajax_vbb_list(request, response);
 	}
 	
-	@RequestMapping(value="/ajaxBtlDetList.da")
+	@RequestMapping(value="/ajaxBtlDetList.do")
 	public ModelAndView ajaxBtlDetList(HttpServletRequest request, HttpServletResponse response){
 		return btlDetList(request, response);
 	}
 	
-	@RequestMapping(value="/btl_main_list.da")
+	@RequestMapping(value="/btl_main_list.do")
 	public ModelAndView btl_main_list(HttpServletRequest request, HttpServletResponse response){
 		return btl_admin_list(request, response);
 	}
 	
-	@RequestMapping(value="/ajaxVbbRead.da")
+	@RequestMapping(value="/ajaxVbbRead.do")
 	public ModelAndView ajaxVbbRead(HttpServletRequest request, HttpServletResponse response){
 		return vbb_view(request, response);
 	}
 	
-	@RequestMapping(value="/ajaxBtlDetJoin.da")
+	@RequestMapping(value="/ajaxBtlDetJoin.do")
 	public ModelAndView ajaxBtlDetJoin(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -648,8 +648,8 @@ public class VblController {
 			vblDao.vbdInsert(btl_Command);
 		}
 		
-		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
-		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		String returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=admin";
 		
 		mv.setViewName(returnUrl);
 		mv.addObject("vbb_no", request.getParameter("vbb_no"));
@@ -658,7 +658,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/ajaxBtlJoinDetList.da")
+	@RequestMapping(value="/ajaxBtlJoinDetList.do")
 	public ModelAndView ajaxBtlJoinDetList(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -680,7 +680,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/ajaxBtlDetUnjoin.da")
+	@RequestMapping(value="/ajaxBtlDetUnjoin.do")
 	public ModelAndView ajaxBtlDetUnjoin(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -693,8 +693,8 @@ public class VblController {
 		vblDao.vbdDelete(btl_Command);
 		vblDao.vbjDelete(btl_Command);
 		
-		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
-		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		String returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=admin";
 		
 		mv.setViewName(returnUrl);
 		mv.addObject("vbj_no", request.getParameter("vbj_no"));
@@ -703,7 +703,7 @@ public class VblController {
 		return mv;
 	}		
 	
-	@RequestMapping(value="/ajaxBtlJoinDowngrade.da")
+	@RequestMapping(value="/ajaxBtlJoinDowngrade.do")
 	public ModelAndView ajaxBtlJoinDowngrade(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -716,8 +716,8 @@ public class VblController {
 		
 		vblDao.gradeVbjUpdate(btl_Command);
 		
-		String returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=main";
-		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.da?dana=ajaxBtlDetList&reurl=admin";
+		String returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=main";
+		if(reurl != null && reurl.equals("admin")) returnUrl = "redirect:/ajaxBtlDetList.do?dana=ajaxBtlDetList&reurl=admin";
 		
 		mv.setViewName(returnUrl);
 		mv.addObject("vbj_no", request.getParameter("vbj_no"));

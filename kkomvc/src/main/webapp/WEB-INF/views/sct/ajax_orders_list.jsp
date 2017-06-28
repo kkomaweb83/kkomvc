@@ -43,7 +43,7 @@
 		<c:forEach var="vo" items="${orders_list}">
 		<tr>
 		<td  align="center" class="table_content2">
-		<a href="${ct_path}/orders_det_list.da?dana=orders_det_list&odr_no=${vo.odr_no }">${vo.odr_no }</a></td>
+		<a href="${ct_path}/orders_det_list.do?dana=orders_det_list&odr_no=${vo.odr_no }">${vo.odr_no }</a></td>
 		<td  align="center" class="table_content2">${vo.odr_mileage }</td>
 		<td  align="center" class="table_content2"><fmt:formatNumber value="${vo.odr_amount}" pattern="###,###,###,###" /></td>
 		<td  align="center" class="table_content2">${vo.odr_way }</td>

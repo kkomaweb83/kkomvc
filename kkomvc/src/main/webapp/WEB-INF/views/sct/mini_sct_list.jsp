@@ -76,7 +76,7 @@
 
 <c:if test="${not empty sctList}">
 <span><a href="javascript:goSctAllDelete(${login.mem_no},1);"><img src="${ct_path}/img/btn_emptyCart.gif" /></a></span>
-<span><a href="${ct_path}/sct_odr_doc.da?dana=sct_odr_doc&sct_mem_no=${login.mem_no }&sct_pro_muti=1"><img src="${ct_path}/img/btn_buy2.gif" /></a></span>
+<span><a href="${ct_path}/sct_odr_doc.do?dana=sct_odr_doc&sct_mem_no=${login.mem_no }&sct_pro_muti=1"><img src="${ct_path}/img/btn_buy2.gif" /></a></span>
 </c:if>
 
 </div>

@@ -31,7 +31,7 @@
 	 	
 		$("#dana").val("sct_odr_doc");
 	 	
-		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.da";
+		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.do";
 		document.vblPro_Search.submit();	
 	}
 
@@ -44,7 +44,7 @@
 	 	
 		$("#dana").val("ajax_vbl_insert");
 	 	
-		document.vblPro_Search.action = "${ct_path}/ajax_vbl_insert.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_vbl_insert.do";
 		document.vblPro_Search.submit();
 	}
 
@@ -56,7 +56,7 @@
 		
 		$("#dana").val("ajax_sct_multi_insert");
 	 	
-		document.vblPro_Search.action = "${ct_path}/ajax_sct_multi_insert.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_sct_multi_insert.do";
 		document.vblPro_Search.submit();	
 	}
 	function search_keyword(){
@@ -74,7 +74,7 @@
 		
 		$("#dana").val("ajax_vbl_inProList");
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : $('#vblPro_Search').serialize(),
 			dataType : "html",
@@ -98,7 +98,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",
@@ -111,7 +111,7 @@
 		});
 	}
 	function goVbbRecomm(){
-		location.href = "${ct_path}/vbb_recomm.da?dana=vbb_recomm&vbb_no=${vbbContent.vbb_no}";
+		location.href = "${ct_path}/vbb_recomm.do?dana=vbb_recomm&vbb_no=${vbbContent.vbb_no}";
 	}
 </script>	
 </head>
@@ -235,7 +235,7 @@
 		</tr>
 	</table>
 </c:forEach>
-<form action="${ct_path}/vbb_reply_insert.da?dana=vbb_reply_insert&vbb_no=${vbbContent.vbb_no}" method="post">
+<form action="${ct_path}/vbb_reply_insert.do?dana=vbb_reply_insert&vbb_no=${vbbContent.vbb_no}" method="post">
 <table class="lngTable" style="width: 100%;">
 	<tr>
 		<th width="10%">내용</th>
@@ -259,7 +259,7 @@
 	</tr>
 	</c:if>
 	<c:forEach var="vbr" items="${vbrList}">
-		<form action="${ct_path}/vbb_reply_update.da?dana=vbb_reply_update&vbr_no=${vbr.vbr_no}&vbb_no=${vbbContent.vbb_no}" method="post">
+		<form action="${ct_path}/vbb_reply_update.do?dana=vbb_reply_update&vbr_no=${vbr.vbr_no}&vbb_no=${vbbContent.vbb_no}" method="post">
 		<c:if test="${login.mem_id != vbr.mem_id}">
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${vbr.vbr_no}</td>
@@ -274,7 +274,7 @@
 				<td><textarea rows="5" name="vbr_content">${vbr.vbr_content}</textarea></td>
 				<td style="vertical-align: middle;">
 					${vbr.mem_id}<br />
-					<a href="${ct_path}/vbb_reply_delete.da?dana=vbb_reply_delete&vbr_no=${vbr.vbr_no}&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_delete.gif" border=0 /></a>
+					<a href="${ct_path}/vbb_reply_delete.do?dana=vbb_reply_delete&vbr_no=${vbr.vbr_no}&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_delete.gif" border=0 /></a>
 					<input type="image" src="${ct_path}/img/btn_update.gif"/>
 				</td>
 				<td style="vertical-align: middle;">${vbr.vbr_rdate}</td>
@@ -285,10 +285,10 @@
 </table>
 <div style="text-align: center; display: none;">
 <a href="${ct_path}/vbb/list.ama"><img src="${ct_path}/img/btn_list.gif" border=0 /></a>
-<a href="${ct_path}/vbb_recomm.da?dana=vbb_recomm&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_good.gif" border=0 /></a>
+<a href="${ct_path}/vbb_recomm.do?dana=vbb_recomm&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_good.gif" border=0 /></a>
 <c:if test="${login.mem_id == vbbContent.mem_id}">
-	<a href="${ct_path}/vbb_preupdate.da?dana=vbb_preupdate&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_update.gif" border="0"/></a>
-	<a href="${ct_path}/vbb_delete.da?dana=vbb_delete&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_delete.gif" border=0 /></a>
+	<a href="${ct_path}/vbb_preupdate.do?dana=vbb_preupdate&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_update.gif" border="0"/></a>
+	<a href="${ct_path}/vbb_delete.do?dana=vbb_delete&vbb_no=${vbbContent.vbb_no}"><img src="${ct_path}/img/btn_delete.gif" border=0 /></a>
 </c:if>
 </div>
 

@@ -25,7 +25,7 @@
 	
 	function init(pcl_no){
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inMkrPcl.da",
+			url : "${ct_path}/ajax_vbl_inMkrPcl.do",
 			type : "post",
 			data : {dana:'ajax_vbl_inMkrPcl',pcl_no:pcl_no},
 			dataType : "html",
@@ -38,7 +38,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : {dana:'ajax_vbl_inProList',pcl_no:pcl_no, proOrderCode:1},
 			dataType : "html",
@@ -55,7 +55,7 @@
 		
 		$("#dana").val("ajax_vbl_inProList");
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : $('#vblPro_Search').serialize(),
 			dataType : "html",
@@ -74,7 +74,7 @@
 		
 		$("#dana").val("ajax_vbl_inProList");
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : $('#vblPro_Search').serialize(),
 			dataType : "html",
@@ -92,7 +92,7 @@
 		
 		$("#dana").val("ajax_vbl_inProList");
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : $('#vblPro_Search').serialize(),
 			dataType : "html",
@@ -225,7 +225,7 @@
 	 	
 	 	$("#dana").val("ajax_vbl_update");
 
-		document.vblPro_Search.action = "${ct_path}/ajax_vbl_update.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_vbl_update.do";
 		document.vblPro_Search.submit();
 		
 	}
@@ -234,7 +234,7 @@
 		
 		$("#dana").val("ajax_vbl_delete");
 		
-		document.vblPro_Search.action = "${ct_path}/ajax_vbl_delete.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_vbl_delete.do";
 		document.vblPro_Search.submit();
 	}
 
@@ -252,7 +252,7 @@
 	 	
 	 	$("#dana").val("ajax_vbb_insert");
 	 	
-		document.vblPro_Search.action = "${ct_path}/ajax_vbb_insert.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_vbb_insert.do";
 		document.vblPro_Search.submit();	
 	}
 	function search_keyword(){
@@ -270,7 +270,7 @@
 		
 		$("#dana").val("ajax_vbl_inProList");
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_inProList.da",
+			url : "${ct_path}/ajax_vbl_inProList.do",
 			type : "post",
 			data : $('#vblPro_Search').serialize(),
 			dataType : "html",
@@ -291,7 +291,7 @@
 		
 		$("#dana").val("sct_odr_doc");
 	 	
-		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.da";
+		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.do";
 		document.vblPro_Search.submit();	
 	}
 	function goSctmultiInsert(){
@@ -302,7 +302,7 @@
 		
 		$("#dana").val("ajax_sct_multi_insert");
 	 	
-		document.vblPro_Search.action = "${ct_path}/ajax_sct_multi_insert.da";
+		document.vblPro_Search.action = "${ct_path}/ajax_sct_multi_insert.do";
 		document.vblPro_Search.submit();	
 	}
 	function goProDlgView(pro_no, pro_pcl_no, sct_pro_part){
@@ -317,7 +317,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",

@@ -23,7 +23,7 @@
 	
 	function ajaxBtlJoinDetList(vbj_no){
 		$.ajax({
-			url : "${ct_path}/ajaxBtlJoinDetList.da",
+			url : "${ct_path}/ajaxBtlJoinDetList.do",
 			type : "post",
 			data : {dana:'ajaxBtlJoinDetList',vbj_no:vbj_no},
 			dataType : "html",
@@ -38,7 +38,7 @@
 	
 	function getAjaxVbbList(){
 		$.ajax({
-			url : "${ct_path}/ajaxVbbList.da",
+			url : "${ct_path}/ajaxVbbList.do",
 			type : "post",
 			data : {dana:'ajaxVbbList',reurl:'admin'},
 			dataType : "html",
@@ -52,7 +52,7 @@
 	}
 	function doList(page){
 		$.ajax({
-			url : "${ct_path}/ajaxVbbList.da",
+			url : "${ct_path}/ajaxVbbList.do",
 			type : "post",
 			data : {dana:'ajaxVbbList',cPage:page,reurl:'admin'},
 			dataType : "html",
@@ -66,7 +66,7 @@
 	}
 	function getAjaxVbbRead(vbb_no){
 		$.ajax({
-			url : "${ct_path}/ajaxVbbRead.da",
+			url : "${ct_path}/ajaxVbbRead.do",
 			type : "post",
 			data : {dana:'ajaxVbbRead',vbb_no:vbb_no,reurl:'btl'},
 			dataType : "html",
@@ -89,7 +89,7 @@
 		tabs.tabs({ active: 0 });
 		
 		$.ajax({
-			url : "${ct_path}/ajaxBtlDetJoin.da",
+			url : "${ct_path}/ajaxBtlDetJoin.do",
 			type : "post",
 			data : {dana:'ajaxBtlDetJoin',vbb_no:vbb_no,btl_no:'${btl.btl_no}',reurl:'admin'},
 			dataType : "html",
@@ -109,7 +109,7 @@
 		tabs.tabs({ active: 0 });
 		
 		$.ajax({
-			url : "${ct_path}/ajaxBtlDetUnjoin.da",
+			url : "${ct_path}/ajaxBtlDetUnjoin.do",
 			type : "post",
 			data : {dana:'ajaxBtlDetUnjoin',vbj_no:vbj_no,btl_no:'${btl.btl_no}',reurl:'admin'},
 			dataType : "html",
@@ -127,7 +127,7 @@
 		getAjaxVbbList();
 		
 		$.ajax({
-			url : "${ct_path}/ajaxBtlDetList.da",
+			url : "${ct_path}/ajaxBtlDetList.do",
 			type : "post",
 			data : {dana:'ajaxBtlDetList',btl_no:'${btl.btl_no}',reurl:'admin'},
 			dataType : "html",

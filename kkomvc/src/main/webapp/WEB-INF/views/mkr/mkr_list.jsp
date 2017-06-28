@@ -21,7 +21,7 @@
 	});
 	
 	function chkPclList(mk_pcl_no){
-		location.href = "${ct_path}/mkr_list.da?dana=mkr_list&mkr_insert=y&mkr_pcl_no="+mk_pcl_no.value;
+		location.href = "${ct_path}/mkr_list.do?dana=mkr_list&mkr_insert=y&mkr_pcl_no="+mk_pcl_no.value;
 	}
 
 	function selPclList(mk_pcl_no){
@@ -42,7 +42,7 @@
 	 	}
 
 		document.mkr_insert.mkr_no.value = 12;
-		document.mkr_insert.action = "${ct_path}/mkr_insert.da?dana=mkr_insert";
+		document.mkr_insert.action = "${ct_path}/mkr_insert.do?dana=mkr_insert";
 		document.mkr_insert.submit();
 	}
 
@@ -53,12 +53,12 @@
 	        return;
 	 	}
 		
-		document.mkr_insert.action = "${ct_path}/mkr_update.da?dana=mkr_update";
+		document.mkr_insert.action = "${ct_path}/mkr_update.do?dana=mkr_update";
 		document.mkr_insert.submit();	
 	}
 
 	function doMkrDelete(){
-		document.mkr_insert.action = "${ct_path}/mkr_delete.da?dana=mkr_delete";
+		document.mkr_insert.action = "${ct_path}/mkr_delete.do?dana=mkr_delete";
 		document.mkr_insert.submit();	
 	}
 </script>
@@ -172,7 +172,7 @@
 			<tr>
 			<td class="table_content2">${bean.mkr_no}</td>
 			<td class="table_content1">
-			<a href="${ct_path}/mkr_preUpdate.da?dana=mkr_preUpdate&mkr_no=${bean.mkr_no}&mkr_pcl_no=${bean.mkr_pcl_no}&mkr_insert=n">${bean.mkr_name }</a>
+			<a href="${ct_path}/mkr_preUpdate.do?dana=mkr_preUpdate&mkr_no=${bean.mkr_no}&mkr_pcl_no=${bean.mkr_pcl_no}&mkr_insert=n">${bean.mkr_name }</a>
 			</td>
 			<td class="table_content2">${bean.pcl_name}</td>
 			</tr>

@@ -22,10 +22,10 @@
 	});
 	
 	function doList(page){
-		location.href = "${ct_path}/btl_admin_list.da?dana=btl_admin_list&cPage="+page;
+		location.href = "${ct_path}/btl_admin_list.do?dana=btl_admin_list&cPage="+page;
 	}
 	function doPreInsert(){
-		location.href = "${ct_path}/btl_admin_preInsert.da?dana=btl_admin_preInsert";
+		location.href = "${ct_path}/btl_admin_preInsert.do?dana=btl_admin_preInsert";
 	}
 </script>
 </head>
@@ -75,7 +75,7 @@
 	<tr>
 		<td>${btl.btl_no}</td>
 		<td><%-- <a href="/VblController?dana=btlDetList&btl_no=${btl.btl_no}"> --%>
-		<a href="${ct_path}/btlDetPrejoin.da?dana=btlDetPrejoin&btl_no=${btl.btl_no}">${btl.btl_title}</a>
+		<a href="${ct_path}/btlDetPrejoin.do?dana=btlDetPrejoin&btl_no=${btl.btl_no}">${btl.btl_title}</a>
 		</td>
 		<td>${btl.btl_sdate}</td>
 		<td>${btl.btl_cdate}</td>

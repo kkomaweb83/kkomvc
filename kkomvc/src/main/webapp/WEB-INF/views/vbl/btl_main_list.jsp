@@ -22,7 +22,7 @@
 	});
 	
 	function doList(page){
-		location.href = "${ct_path}/VblController?dana=btl_main_list&cPage="+page;
+		location.href = "${ct_path}/btl_main_list.do?dana=btl_main_list&cPage="+page;
 	}
 </script>
 </head>
@@ -66,7 +66,7 @@
 	<c:forEach var="btl" items="${btlList}">
 	<tr>
 		<td>${btl.btl_no}</td>
-		<td><a href="${ct_path}/btlDetPrejoin.da?dana=btlDetPrejoin&btl_no=${btl.btl_no}&reurl=main">${btl.btl_title}</a></td>
+		<td><a href="${ct_path}/btlDetPrejoin.do?dana=btlDetPrejoin&btl_no=${btl.btl_no}&reurl=main">${btl.btl_title}</a></td>
 		<td>${btl.btl_sdate}</td>
 		<td>${btl.btl_cdate}</td>
 	</tr>

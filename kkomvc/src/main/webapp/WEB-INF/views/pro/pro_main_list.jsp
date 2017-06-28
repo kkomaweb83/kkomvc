@@ -27,7 +27,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_pro_topSearch.da",
+			url : "${ct_path}/ajax_pro_topSearch.do",
 			type : "post",
 			data : {dana:'ajax_pro_topSearch',pro_pcl_no:'${param.pro_pcl_no}'},
 			dataType : "html",
@@ -40,7 +40,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_list.da",
+			url : "${ct_path}/ajax_pro_list.do",
 			type : "post",
 			data : {dana:'ajax_pro_list',pro_pcl_no:'${param.pro_pcl_no}',proOrderCode:'1'},
 			dataType : "html",
@@ -54,7 +54,7 @@
 		
 		<c:if test="${login.cmd == 101}">
 		$.ajax({
-			url : "${ct_path}/ajax_sct_list.da",
+			url : "${ct_path}/ajax_sct_list.do",
 			type : "post",
 			data : {dana:'ajax_sct_list',sct_mem_no:'${login.mem_no }',sct_part:1},
 			dataType : "html",
@@ -71,7 +71,7 @@
 		$("#cPage").val(page);
 		$("#dana").val("ajax_pro_list");
 		$.ajax({
-			url : "${ct_path}/ajax_pro_list.da",
+			url : "${ct_path}/ajax_pro_list.do",
 			type : "post",
 			data : $('#pro_pclSearch').serialize(),
 			dataType : "html",
@@ -109,7 +109,7 @@
 		$("#cPage").val(1);
 		$("#dana").val("ajax_pro_pclSearch");
 		$.ajax({
-			url : "${ct_path}/ajax_pro_pclSearch.da",
+			url : "${ct_path}/ajax_pro_pclSearch.do",
 			type : "post",
 			data : $('#pro_pclSearch').serialize(),
 			dataType : "html",
@@ -124,7 +124,7 @@
 	
 	function goProMainView(pro_no, pro_pcl_no){
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no,pro_pcl_no:pro_pcl_no},
 			dataType : "html",
@@ -142,7 +142,7 @@
 		if(sct_part == 1) sctDiv = "miniSctListDiv"; 
 		
 		$.ajax({
-			url : "${ct_path}/ajax_sct_insert.da",
+			url : "${ct_path}/ajax_sct_insert.do",
 			type : "post",
 			data : {dana:'ajax_sct_insert',sct_pro_no:pro_no,sct_mem_no:mem_no,sct_pro_part:sct_pro_part,sct_part:sct_part},
 			dataType : "html",
@@ -207,7 +207,7 @@
 		}
 		
 		$.ajax({
-			url : "${ct_path}/ajax_sct_update.da",
+			url : "${ct_path}/ajax_sct_update.do",
 			type : "post",
 			data : {dana:'ajax_sct_update',sct_no:sct_no, sct_count: temp, sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -225,7 +225,7 @@
 		if(sct_part == 1) sctDiv = "miniSctListDiv";
 		
 		$.ajax({
-			url : "${ct_path}/ajax_sct_delete.da",
+			url : "${ct_path}/ajax_sct_delete.do",
 			type : "post",
 			data : {dana:'ajax_sct_delete',sct_no:sct_no, sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -243,7 +243,7 @@
 		if(sct_part == 1) sctDiv = "miniSctListDiv";
 		
 		$.ajax({
-			url : "${ct_path}/ajax_sct_alldelete.da",
+			url : "${ct_path}/ajax_sct_alldelete.do",
 			type : "post",
 			data : {dana:'ajax_sct_alldelete',sct_mem_no: mem_no, sct_part:sct_part},
 			dataType : "html",
@@ -267,7 +267,7 @@
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",

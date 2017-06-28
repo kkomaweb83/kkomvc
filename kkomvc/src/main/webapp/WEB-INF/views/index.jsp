@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<td align="center">
-					<a href="${ct_path}/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
+					<a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
 				</td>
 			</tr>
 		</tbody>

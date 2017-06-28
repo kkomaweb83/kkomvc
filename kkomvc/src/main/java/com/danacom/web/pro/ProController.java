@@ -82,7 +82,7 @@ public class ProController {
 		return transactionManager;
 	}
 	
-	@RequestMapping(value="/pro_main_prelist.da")
+	@RequestMapping(value="/pro_main_prelist.do")
 	public ModelAndView pro_main_prelist(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/pro_main_list");
 		
@@ -98,7 +98,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_pro_topSearch.da")
+	@RequestMapping(value="/ajax_pro_topSearch.do")
 	public ModelAndView ajax_pro_topSearch(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/ajax_pro_main_topSearch");
 		
@@ -131,7 +131,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_pro_list.da")
+	@RequestMapping(value="/ajax_pro_list.do")
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public ModelAndView ajax_pro_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/ajax_pro_main_list");
@@ -167,13 +167,13 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_pro_pclSearch.da")
+	@RequestMapping(value="/ajax_pro_pclSearch.do")
 	public ModelAndView ajax_pro_pclSearch(HttpServletRequest request, HttpServletResponse response){
 		
 		return ajax_pro_list(request, response);
 	}
 	
-	@RequestMapping(value="/ajax_sct_list.da")
+	@RequestMapping(value="/ajax_sct_list.do")
 	public ModelAndView ajax_sct_list(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("");
 		
@@ -206,7 +206,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_pro_mainView.da")
+	@RequestMapping(value="/ajax_pro_mainView.do")
 	public ModelAndView ajax_pro_mainView(@ModelAttribute("proCom")ProductVo proCom, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("");
 		
@@ -252,12 +252,12 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/sct_main_prelist.da")
+	@RequestMapping(value="/sct_main_prelist.do")
 	public ModelAndView sct_main_prelist(){
 		return new ModelAndView("sct/sct_main_list");
 	}
 	
-	@RequestMapping(value="/ajax_sct_insert.da")
+	@RequestMapping(value="/ajax_sct_insert.do")
 	public ModelAndView ajax_sct_insert(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("");
 		
@@ -268,8 +268,8 @@ public class ProController {
 		if(chk == 0) sctDao.sctInsert(sctCommand);
 		else sctDao.sctCountUpdate(sctCommand);
 		
-		String returnUrl = "redirect:/sct_main_prelist.da?dana=sct_main_prelist";
-		if(sct_part != null && sct_part.equals("1")) returnUrl = "redirect:/ajax_sct_list.da?dana=ajax_sct_list";
+		String returnUrl = "redirect:/sct_main_prelist.do?dana=sct_main_prelist";
+		if(sct_part != null && sct_part.equals("1")) returnUrl = "redirect:/ajax_sct_list.do?dana=ajax_sct_list";
 		
 		mv.setViewName(returnUrl);
 		mv.addObject("sct_part", sct_part);
@@ -280,9 +280,9 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_sct_update.da")
+	@RequestMapping(value="/ajax_sct_update.do")
 	public ModelAndView ajax_sct_update(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.do?dana=ajax_sct_list");
 		
 		sctDao.sctUpdate(sctCommand);
 		
@@ -294,9 +294,9 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_sct_delete.da")
+	@RequestMapping(value="/ajax_sct_delete.do")
 	public ModelAndView ajax_sct_delete(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.do?dana=ajax_sct_list");
 		
 		sctDao.sctDelete(sctCommand.getSct_no());
 		
@@ -307,9 +307,9 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_sct_alldelete.da")
+	@RequestMapping(value="/ajax_sct_alldelete.do")
 	public ModelAndView ajax_sct_alldelete(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.da?dana=ajax_sct_list");
+		ModelAndView mv = new ModelAndView("redirect:/ajax_sct_list.do?dana=ajax_sct_list");
 		
 		sctDao.sctAllDelete(sctCommand.getSct_mem_no());
 		
@@ -319,9 +319,9 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/ajax_sct_multi_insert.da")
+	@RequestMapping(value="/ajax_sct_multi_insert.do")
 	public ModelAndView ajax_sct_multi_insert(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/sct_main_prelist.da?dana=sct_main_prelist");
+		ModelAndView mv = new ModelAndView("redirect:/sct_main_prelist.do?dana=sct_main_prelist");
 		
 		String[] temp = sctCommand.getPst_pro_no();
 		String pst_pro_no = "";
@@ -344,7 +344,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/sct_odr_doc.da")
+	@RequestMapping(value="/sct_odr_doc.do")
 	public ModelAndView sct_odr_doc(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("sct/odr_doc");
 		
@@ -406,7 +406,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/odr_doc.da")
+	@RequestMapping(value="/odr_doc.do")
 	public ModelAndView odr_doc(@ModelAttribute("doc")OdrDocVo doc, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView();
 		
@@ -491,12 +491,12 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/orders_list.da")
+	@RequestMapping(value="/orders_list.do")
 	public ModelAndView orders_list(){
 		return new ModelAndView("sct/orders_list");
 	}
 	
-	@RequestMapping(value="/ajax_orders_list.da")
+	@RequestMapping(value="/ajax_orders_list.do")
 	public ModelAndView ajax_orders_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -536,7 +536,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/orders_det_list.da")
+	@RequestMapping(value="/orders_det_list.do")
 	public ModelAndView orders_det_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("sct/orders_det_list");
 		
@@ -567,12 +567,12 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/orders_admin_list.da")
+	@RequestMapping(value="/orders_admin_list.do")
 	public ModelAndView orders_admin_list(){
 		return new ModelAndView("sct/orders_admin_list");
 	}
 	
-	@RequestMapping(value="/ajax_orders_admin_list.da")
+	@RequestMapping(value="/ajax_orders_admin_list.do")
 	public ModelAndView ajax_orders_admin_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		
@@ -612,7 +612,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/orders_admin_det_list.da")
+	@RequestMapping(value="/orders_admin_det_list.do")
 	public ModelAndView orders_admin_det_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("sct/orders_admin_det_list");
 		
@@ -643,9 +643,9 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/odr_condition.da")
+	@RequestMapping(value="/odr_condition.do")
 	public ModelAndView odr_condition(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/orders_admin_det_list.da?dana=orders_admin_det_list&reurl=admin");
+		ModelAndView mv = new ModelAndView("redirect:/orders_admin_det_list.do?dana=orders_admin_det_list&reurl=admin");
 		
 		OdrDocVo doc = new OdrDocVo();
 		doc.setOdr_no(request.getParameter("odr_no"));
@@ -658,7 +658,7 @@ public class ProController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/mem_preUpdate.da")
+	@RequestMapping(value="/mem_preUpdate.do")
 	public ModelAndView mem_preUpdate(){
 		return new ModelAndView("pcl/mem_update");
 	}

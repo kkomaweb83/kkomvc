@@ -43,7 +43,7 @@
 		<tr>
 		<td class="table_content2">${no.count+(5*(p_nowPage-1))}</td>
 		<td class="table_content1">
-			<a href="${ct_path}/vbl_view.da?dana=vbl_view&vbl_no=${bean.vbl_no}">${bean.vbl_title }</a>
+			<a href="${ct_path}/vbl_view.do?dana=vbl_view&vbl_no=${bean.vbl_no}">${bean.vbl_title }</a>
 		</td>
 		<td class="table_content2">${bean.vbl_bor_answer}</td>
 		<td class="table_content2">${bean.vbl_date}</td>

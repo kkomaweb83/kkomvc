@@ -25,7 +25,7 @@ public class LoginController {
 		return loginDao;
 	}
 	
-	@RequestMapping(value="/loginChk.da")
+	@RequestMapping(value="/loginChk.do")
 	public ModelAndView loginChk(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("");
 		
@@ -33,7 +33,7 @@ public class LoginController {
 		
 		String mem_id = request.getParameter("mem_id");
 		String mem_pass = request.getParameter("mem_pass");
-		String url = "redirect:/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no=0101";
+		String url = "redirect:/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101";
 		
 		List<MemComVo> list = loginDao.getLoginChk(mem_id);
 		
@@ -48,7 +48,7 @@ public class LoginController {
 				
 				request.getSession().setAttribute("login", login);
 				if(login.getMem_admin_autho().equals("y")){
-					url = "redirect:/pcl_list.da?dana=pcl_list";
+					url = "redirect:/pcl_list.do?dana=pcl_list";
 				}
 			}else{
 				login.setMsg("해당 PW가 같지 않습니다.");
@@ -67,10 +67,10 @@ public class LoginController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/logout.da")
+	@RequestMapping(value="/logout.do")
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("");
-		String url = "redirect:/pro_main_prelist.da?dana=pro_main_prelist&pro_pcl_no=0101";
+		String url = "redirect:/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101";
 				
 		request.getSession().removeAttribute("login");
 		

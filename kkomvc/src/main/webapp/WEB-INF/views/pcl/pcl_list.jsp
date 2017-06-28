@@ -22,7 +22,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_pcl_list.da",
+			url : "${ct_path}/ajax_pcl_list.do",
 			type : "post",
 			data : {dana:'ajax_pcl_list',pcl_upperno:'NULL',insert:'y',step:1, pcl_old_upperno:'NO'},
 			dataType : "html",
@@ -40,12 +40,11 @@
 			return;
 		}
 		$.ajax({
-			url : "${ct_path}/ajax_pcl_list.da",
+			url : "${ct_path}/ajax_pcl_list.do",
 			type : "post",
 			data : {dana:'ajax_pcl_list',pcl_upperno:pcl_no,insert:'y',step:step, pcl_old_upperno:pcl_upperno, pcl_session:'y'},
 			dataType : "html",
 			success : function(data) {
-				alert(data);
 				$("#pclListDiv").html(data);
 			},
 			error : function() {
@@ -56,7 +55,7 @@
 	function goPclAutoNo(){
 		$("#dana").val("pcl_auto_no");
 		$.ajax({
-			url : "${ct_path}/pcl_auto_no.da",
+			url : "${ct_path}/pcl_auto_no.do",
 			type : "post",
 			data : $('#pcl_insert').serialize(),
 			dataType : "html",
@@ -70,7 +69,7 @@
 	}
 	function chkPclList(obj, pcl_upperno, step){
 		$.ajax({
-			url : "${ct_path}/ajax_pcl_list.da",
+			url : "${ct_path}/ajax_pcl_list.do",
 			type : "post",
 			data : {dana:'ajax_pcl_list',pcl_upperno:obj.value,insert:'y',step:step, pcl_old_upperno:pcl_upperno, objsetp:step, pcl_session:'y'},
 			dataType : "html",
@@ -84,7 +83,7 @@
 	}
 	function goPclListName(pcl_no, pcl_upperno){
 		$.ajax({
-			url : "${ct_path}/pcl_preUpdate.da",
+			url : "${ct_path}/pcl_preUpdate.do",
 			type : "post",
 			data : {dana:'pcl_preUpdate',pcl_no:pcl_no,pcl_upperno:pcl_upperno,insert:'n'},
 			dataType : "html",
@@ -108,7 +107,7 @@
 		
 		$("#dana").val("pcl_insert");
 		$.ajax({
-			url : "${ct_path}/pcl_insert.da",
+			url : "${ct_path}/pcl_insert.do",
 			type : "post",
 			data : $('#pcl_insert').serialize(),
 			dataType : "html",
@@ -130,7 +129,7 @@
 		$("#dana").val("pcl_update");
 		$("#insert","#pcl_insert").val("y");
 		$.ajax({
-			url : "${ct_path}/pcl_update.da",
+			url : "${ct_path}/pcl_update.do",
 			type : "post",
 			data : $('#pcl_insert').serialize(),
 			dataType : "html",
@@ -146,7 +145,7 @@
 		$("#dana").val("pcl_delete");
 		$("#insert","#pcl_insert").val("y");
 		$.ajax({
-			url : "${ct_path}/pcl_delete.da",
+			url : "${ct_path}/pcl_delete.do",
 			type : "post",
 			data : $('#pcl_insert').serialize(),
 			dataType : "html",

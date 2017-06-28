@@ -22,14 +22,14 @@
 	});
 	
 	function chkPclList(pro_pcl_no){
-		location.href = "${ct_path}/pro_admin_list.da?dana=pro_admin_list&pro_pcl_no="+pro_pcl_no.value;
+		location.href = "${ct_path}/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+pro_pcl_no.value;
 	}
 	function doList(page){
 		var pcl_no = document.getElementsByName("pcl_list_step")[0].value;
-		location.href = "${ct_path}/pro_admin_list.da?dana=pro_admin_list&pro_pcl_no="+pcl_no+"&cPage="+page;
+		location.href = "${ct_path}/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+pcl_no+"&cPage="+page;
 	}
 	function doPreInsert(){
-		location.href = "${ct_path}/pro_preInsert.da?dana=pro_preInsert";
+		location.href = "${ct_path}/pro_preInsert.do?dana=pro_preInsert";
 	}
 </script>
 </head>
@@ -95,7 +95,7 @@
 		<tr>
 		<td class="table_content2">${bean.pro_no}</td>
 		<td class="table_content1">
-		<a href="${ct_path}/pro_admin_view.da?dana=pro_admin_view&pro_no=${bean.pro_no}&pro_pcl_no=${bean.pro_pcl_no}">${bean.pro_name }</a>
+		<a href="${ct_path}/pro_admin_view.do?dana=pro_admin_view&pro_no=${bean.pro_no}&pro_pcl_no=${bean.pro_pcl_no}">${bean.pro_name }</a>
 		</td>
 		<td class="table_content2" style="text-align: right;">${bean.pro_ch_price}</td>
 		<td class="table_content2">${bean.pcl_name}</td>

@@ -72,7 +72,7 @@ public class ProAdminController {
 		return transactionManager;
 	}
 	
-	@RequestMapping(value="/pro_admin_list.da")
+	@RequestMapping(value="/pro_admin_list.do")
 	public ModelAndView pro_admin_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/pro_admin_list");
 		
@@ -103,14 +103,14 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pro_preInsert.da")
+	@RequestMapping(value="/pro_preInsert.do")
 	public ModelAndView pro_preInsert(){
 		return new ModelAndView("pro/pro_preInsert");
 	}
 	
-	@RequestMapping(value="/pro_insert.da", method=RequestMethod.POST)
+	@RequestMapping(value="/pro_insert.do", method=RequestMethod.POST)
 	public ModelAndView pro_insert(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.da?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
+		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		try {
 			int proMaxNo= proDao.getProMaxNo();
@@ -176,7 +176,7 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/propdtpresel.da")
+	@RequestMapping(value="/propdtpresel.do")
 	public ModelAndView propdtpresel(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/pro_preInsert");
 		
@@ -211,7 +211,7 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pro_admin_view.da")
+	@RequestMapping(value="/pro_admin_view.do")
 	public ModelAndView pro_admin_view(@ModelAttribute("proCom")ProductVo proCom, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("pro/pro_admin_view");
 		
@@ -260,9 +260,9 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pro_update.da", method=RequestMethod.POST)
+	@RequestMapping(value="/pro_update.do", method=RequestMethod.POST)
 	public ModelAndView pro_update(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.da?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
+		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		try {
 			int proMaxNo= proCommand.getPro_no();
@@ -329,9 +329,9 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/pro_delete.da", method=RequestMethod.POST)
+	@RequestMapping(value="/pro_delete.do", method=RequestMethod.POST)
 	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.da?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
+		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		int proMaxNo = proCommand.getPro_no();
 		
@@ -343,7 +343,7 @@ public class ProAdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/mem_admin_list.da")
+	@RequestMapping(value="/mem_admin_list.do")
 	public ModelAndView mem_admin_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/mem_admin_list");
 		

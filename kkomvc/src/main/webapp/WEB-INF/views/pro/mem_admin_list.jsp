@@ -22,7 +22,7 @@
 
 	});
 	function doList(page){
-		location.href = "${ct_path}/mem_admin_list.da?dana=mem_admin_list&cPage="+page;
+		location.href = "${ct_path}/mem_admin_list.do?dana=mem_admin_list&cPage="+page;
 	}
 	
 </script>

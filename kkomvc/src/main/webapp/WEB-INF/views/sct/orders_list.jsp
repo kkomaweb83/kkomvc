@@ -22,7 +22,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_orders_list.da",
+			url : "${ct_path}/ajax_orders_list.do",
 			type : "post",
 			data : {dana:'ajax_orders_list',ord_mem_no:'${login.mem_no}'},
 			dataType : "html",
@@ -36,7 +36,7 @@
 	}
 	function doList(page){
 		$.ajax({
-			url : "${ct_path}/ajax_orders_list.da",
+			url : "${ct_path}/ajax_orders_list.do",
 			type : "post",
 			data : {dana:'ajax_orders_list',cPage:page,ord_mem_no:'${login.mem_no}'},
 			dataType : "html",

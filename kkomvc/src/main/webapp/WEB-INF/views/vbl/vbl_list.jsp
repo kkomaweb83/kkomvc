@@ -22,7 +22,7 @@
 	
 	function init(){
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_list.da",
+			url : "${ct_path}/ajax_vbl_list.do",
 			type : "post",
 			data : {dana:'ajax_vbl_list',vbl_mem_no:'${login.mem_no}'},
 			dataType : "html",
@@ -36,7 +36,7 @@
 	}
 	function doList(page){
 		$.ajax({
-			url : "${ct_path}/ajax_vbl_list.da",
+			url : "${ct_path}/ajax_vbl_list.do",
 			type : "post",
 			data : {dana:'ajax_vbl_list',vbl_mem_no:'${login.mem_no}',cPage:page},
 			dataType : "html",
@@ -50,7 +50,7 @@
 	}
 	
 	function goPptPreInsert(){
-		location.href = "${ct_path}/ajax_vbl_preInsert.da?dana=ajax_vbl_preInsert";
+		location.href = "${ct_path}/ajax_vbl_preInsert.do?dana=ajax_vbl_preInsert";
 	}
 </script>
 </head>

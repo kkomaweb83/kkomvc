@@ -42,7 +42,7 @@
 		<tr>
 		<td class="table_content2">${bean.vbb_no}</td>
 		<td class="table_content1">
-			<a href="${ct_path}/vbb_view.da?dana=vbb_view&vbb_no=${bean.vbb_no}">${bean.vbb_title }</a>
+			<a href="${ct_path}/vbb_view.do?dana=vbb_view&vbb_no=${bean.vbb_no}">${bean.vbb_title }</a>
 		</td>
 		<td class="table_content2">${bean.mem_id}</td>
 		<td class="table_content2">${bean.vbb_date}</td>

@@ -17,30 +17,30 @@
 <span class="box_button2">☞ 상품관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/pcl_list.da?dana=pcl_list">- 상품분류 관리</a></li>
-		<li><a href="<%=cp %>/mkr_list.da?dana=mkr_list&mkr_insert=y&mkr_pcl_no=0101">- 제조사 관리</a></li>
-		<li><a href="<%=cp %>/pro_admin_list.da?dana=pro_admin_list">- 상품 리스트</a></li>
+		<li><a href="<%=cp %>/pcl_list.do?dana=pcl_list">- 상품분류 관리</a></li>
+		<li><a href="<%=cp %>/mkr_list.do?dana=mkr_list&mkr_insert=y&mkr_pcl_no=0101">- 제조사 관리</a></li>
+		<li><a href="<%=cp %>/pro_admin_list.do?dana=pro_admin_list">- 상품 리스트</a></li>
 	</ul>
 </nav>
 
 <span class="box_button2">☞ 주문관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/orders_admin_list.da?dana=orders_admin_list&reurl=admin">- 주문 리스트</a></li>
+		<li><a href="<%=cp %>/orders_admin_list.do?dana=orders_admin_list&reurl=admin">- 주문 리스트</a></li>
 	</ul>
 </nav>
 
 <span class="box_button2">☞ 회원관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/mem_admin_list.da?dana=mem_admin_list">- 회원 리스트</a></li>
+		<li><a href="<%=cp %>/mem_admin_list.do?dana=mem_admin_list">- 회원 리스트</a></li>
 	</ul>
 </nav>
 
 <span class="box_button2">☞ 베틀관리</span>
 <nav id="admin_menu_lnb">
 	<ul>
-		<li><a href="<%=cp %>/btl_admin_list.da?dana=btl_admin_list">- 베틀 리스트</a></li>
+		<li><a href="<%=cp %>/btl_admin_list.do?dana=btl_admin_list">- 베틀 리스트</a></li>
 	</ul>
 </nav>
 

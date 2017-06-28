@@ -44,7 +44,7 @@ var dlv_msg = document.getElementsByName("dlv_msg");
 		});
 		
 		$.ajax({
-			url : "${ct_path}/ajax_pro_mainView.da",
+			url : "${ct_path}/ajax_pro_mainView.do",
 			type : "post",
 			data : {dana:'ajax_pro_mainView',pro_no:pro_no, pro_pcl_no:pro_pcl_no, view_area:2},
 			dataType : "html",
@@ -198,7 +198,7 @@ var dlv_msg = document.getElementsByName("dlv_msg");
 	
 	<!-- 전체 -->
 	<div id="proMainViewDiv" style="width: 960px; margin-left: auto; margin-right: auto;">
-	<form action="${ct_path}/odr_doc.da?dana=odr_doc" method="post" name="odr_doc_form" onsubmit="return doChk();">
+	<form action="${ct_path}/odr_doc.do?dana=odr_doc" method="post" name="odr_doc_form" onsubmit="return doChk();">
 		<input type="hidden" value="${login.mem_no }" name="mem_no" />
 		<input type="hidden" value="${sctProMuti }" name="sct_pro_muti" />
 	

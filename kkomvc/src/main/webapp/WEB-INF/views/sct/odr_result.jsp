@@ -60,7 +60,7 @@
 		</tr>
 		<tr>
 			<td colspan="4" align="center">
-				<div class="box_button1"><a href="${ct_path}/orders_det_list.da?dana=orders_det_list&odr_no=${odr_no_max}">주문내역 확인</a></div>
+				<div class="box_button1"><a href="${ct_path}/orders_det_list.do?dana=orders_det_list&odr_no=${odr_no_max}">주문내역 확인</a></div>
 			</td>
 		</tr>
 	</table>

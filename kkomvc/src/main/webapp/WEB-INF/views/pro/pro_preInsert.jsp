@@ -24,7 +24,7 @@
 	
 	function selProPclList(sel_pcl_no){
 		if(sel_pcl_no.value.length > 3){  
-			location.href = "${ct_path}/propdtpresel.da?dana=propdtpresel&pcl_no="+sel_pcl_no.value;
+			location.href = "${ct_path}/propdtpresel.do?dana=propdtpresel&pcl_no="+sel_pcl_no.value;
 		}
 	}
 	function selProMkr(sel_pcl_mkr){
@@ -85,7 +85,7 @@
 	 	
 	 	removeCommaAll();
 
-		document.pro_insert.action = "${ct_path}/pro_insert.da?dana=pro_insert";
+		document.pro_insert.action = "${ct_path}/pro_insert.do?dana=pro_insert";
 		document.pro_insert.submit();
 	}
 </script>

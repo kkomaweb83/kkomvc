@@ -46,7 +46,7 @@
 	        return;
 	 	}
 		
-		document.btl_insert.action = "${ct_path}/btl_admin_insert.da?dana=btl_admin_insert";
+		document.btl_insert.action = "${ct_path}/btl_admin_insert.do?dana=btl_admin_insert";
 		document.btl_insert.submit();
 	}
 </script>

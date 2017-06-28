@@ -24,7 +24,7 @@
 	
 	function selProPclList(sel_pcl_no){
 		if(sel_pcl_no.value.length > 3){  
-			location.href = "${ct_path}/propdtpresel.da?dana=propdtpresel&pcl_no="+sel_pcl_no.value;
+			location.href = "${ct_path}/propdtpresel.do?dana=propdtpresel&pcl_no="+sel_pcl_no.value;
 		}
 	}
 	function selProMkr(sel_pcl_mkr){
@@ -73,8 +73,8 @@
 	 	
 	 	removeCommaAll();
 
-		if(part == 1) document.pro_insert.action = "${ct_path}/pro_update.da?dana=pro_update";
-		else if(part == 2) document.pro_insert.action = "${ct_path}/pro_delete.da?dana=pro_delete";
+		if(part == 1) document.pro_insert.action = "${ct_path}/pro_update.do?dana=pro_update";
+		else if(part == 2) document.pro_insert.action = "${ct_path}/pro_delete.do?dana=pro_delete";
 		document.pro_insert.submit();
 	}
 </script>

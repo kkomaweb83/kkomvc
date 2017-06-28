@@ -25,7 +25,7 @@ public class MkrController {
 		return mkrDao;
 	}
 	
-	@RequestMapping(value="/mkr_list.da")
+	@RequestMapping(value="/mkr_list.do")
 	public ModelAndView mkr_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("mkr/mkr_list");
 		
@@ -43,7 +43,7 @@ public class MkrController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/mkr_preUpdate.da")
+	@RequestMapping(value="/mkr_preUpdate.do")
 	public ModelAndView mkr_preUpdate(HttpServletRequest request, HttpServletResponse response){
 		//ModelAndView mv = new ModelAndView("mkr/mkr_list");
 		
@@ -59,9 +59,9 @@ public class MkrController {
 		return mkr_list(request, response);
 	}
 	
-	@RequestMapping(value="/mkr_insert.da")
+	@RequestMapping(value="/mkr_insert.do")
 	public ModelAndView mkr_insert(@ModelAttribute("mkrCom")MakerVo mkrCom, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/mkr_list.da?dana=mkr_list&mkr_insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/mkr_list.do?dana=mkr_list&mkr_insert=y");
 		
 		mkrDao.mkrInsert(mkrCom);
 		
@@ -70,9 +70,9 @@ public class MkrController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/mkr_update.da")
+	@RequestMapping(value="/mkr_update.do")
 	public ModelAndView mkr_update(@ModelAttribute("mkrCom")MakerVo mkrCom, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/mkr_list.da?dana=mkr_list&mkr_insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/mkr_list.do?dana=mkr_list&mkr_insert=y");
 		
 		mkrDao.mkrUpdate(mkrCom);
 		
@@ -81,9 +81,9 @@ public class MkrController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/mkr_delete.da")
+	@RequestMapping(value="/mkr_delete.do")
 	public ModelAndView mkr_delete(@ModelAttribute("mkrCom")MakerVo mkrCom, HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("redirect:/mkr_list.da?dana=mkr_list&mkr_insert=y");
+		ModelAndView mv = new ModelAndView("redirect:/mkr_list.do?dana=mkr_list&mkr_insert=y");
 		
 		mkrDao.mkrDelete(String.valueOf(mkrCom.getMkr_no()));
 		

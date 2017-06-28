@@ -92,7 +92,7 @@
 <div style="width: 800px;">
 
 	<div style="text-align: left; height: 30px;">
-		<a href="${ct_path}/pcl_list.da?dana=pcl_list">최상위분류</a>
+		<a href="${ct_path}/pcl_list.do?dana=pcl_list">최상위분류</a>
 		<c:if test="${!empty old_list}">
 		<c:forEach var="bean" items="${old_list}">
 			<span id="spcl_list_step"  style="display: inline;">
