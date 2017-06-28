@@ -19,4 +19,8 @@ public class LoginDao extends BaseDao {
 		return template.selectList("loginChk", mem_id);
 	}
 
+	public void memInsert(MemComVo memComVo) {
+		template.insert("memInsert", memComVo);
+	}
+
 }

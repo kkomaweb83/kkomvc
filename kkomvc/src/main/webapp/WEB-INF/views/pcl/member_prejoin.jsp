@@ -48,6 +48,12 @@ input {
 	    	alert('아이디는 5~10자 의 영문,숫자 만 입력해 주세요');
 	    	return false;
 	    }
+	    if(f.mem_chk.value == "N"){
+	    	f.mem_id.focus();
+	    	alert('사용할수 없는 아이디 입니다.');
+	    	return false;
+	    }
+	    	
 	    var val3 = /(^[0-9a-zA-Z\s]{5,10}$)/;
 	    if(!val3.test(f.mem_pass.value)){
 	    	f.mem_pass.value = "";
@@ -91,7 +97,34 @@ input {
 	    	return false;
 	    }
 	    
-	    alert("회원가입은 2017년 6월 19일 open 예정입니다. 감사합니다.");
+	    f.action = "${ct_path}/mem_join.do?dana=mem_join";
+		f.submit();
+	}
+	function chkMemId(obj){
+		$.ajax({
+			url : "${ct_path}/chk_mem_id.do",
+			type : "post",
+			data : {dana:'chk_mem_id',chk_mem_id:obj.value},
+			dataType : "json",
+			success : function(data) {
+				$("#mem_chk_desc").text("사용불가");
+				$("#mem_chk").val("N");
+				if(data.chk == "N"){
+					if(data.msg != ""){
+						$("#mem_chk_desc").text(data.msg);
+					}
+				}else if(data.chk == "Y"){
+					var val_chk = /(^[0-9a-zA-Z\s]{5,10}$)/;
+				    if(val_chk.test(obj.value)){
+						$("#mem_chk").val("Y");
+						$("#mem_chk_desc").text("사용가능");
+				    }
+				}
+			},
+			error : function() {
+				alert("실패");
+			}
+		});
 	}
 	
 </script>
@@ -109,6 +142,7 @@ input {
 	<div id="proMainViewDiv" style="width: 960px; margin-left: 5px;">
 	
 	<form method="post" name="mem_form">
+	<input name="mem_chk" id="mem_chk" type="hidden" value="N" />
 	
 	<table style="border: 1px dotted black; border-spacing:0px; padding: 10px 5px 20px 5px; margin: auto;">
 	<tr>
@@ -150,8 +184,13 @@ input {
 				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">회원 아이디</span></font></b></p></td>
 			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
 				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="15" name="mem_id" maxlength="30" /></p></td>
+				<input type="text" onkeyup="chkMemId(this);" 
+					style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
+						border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="15" name="mem_id" maxlength="30" />
+				<span>5~10자 의 영문,숫자</span>
+				<span id="mem_chk_desc" style="margin-left: 50px; color: red;"></span>
+				</p>
+			</td>
 		</tr>
 		<tr>
 			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
@@ -162,7 +201,10 @@ input {
 			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
 				<p align="left">&nbsp;&nbsp;
 				<input style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="19" name="mem_pass" type="password" maxlength="30" /></p></td>
+					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="19" name="mem_pass" type="password" maxlength="30" />
+				<span>5~10자 의 영문,숫자</span>
+				</p>
+			</td>
 		</tr>
 		<tr>
 			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
