@@ -1,6 +1,7 @@
 package com.danacom.web.pro;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,7 @@ public class ProAdminController {
 			
 			String pdt_name = ""; 
 			String pdt_conent = "";
+			String img_path = "/resources/product_img";
 			
 			proDao.proInsert(proCommand);
 			proDao.psmInsert(proCommand);
@@ -127,7 +129,12 @@ public class ProAdminController {
 			Pro_imgVo pmgCommand = new Pro_imgVo(); 
 			pmgCommand.setPmg_pro_no(proMaxNo);
 			
-			String path = request.getSession().getServletContext().getRealPath("/resources/product_img");
+			InetAddress ip = InetAddress.getLocalHost();
+			if("183.111.100.173".equals(ip.getHostAddress())){
+				img_path = "/product_img";
+			}
+			
+			String path = request.getSession().getServletContext().getRealPath(img_path);
 			
 			MultipartFile file_s1 = proCommand.getPmg_file_s1_mp();
 			MultipartFile file_s2 = proCommand.getPmg_file_s2_mp();
@@ -271,6 +278,7 @@ public class ProAdminController {
 			
 			String pdt_name = ""; 
 			String pdt_conent = "";
+			String img_path = "/resources/product_img";
 			
 			proDao.proUpdate(proCommand);
 			proDao.psmUpdate(proCommand);
@@ -278,7 +286,12 @@ public class ProAdminController {
 			Pro_imgVo pmgCommand = new Pro_imgVo(); 
 			pmgCommand.setPmg_pro_no(proMaxNo);
 			
-			String path = request.getSession().getServletContext().getRealPath("/resources/product_img");
+			InetAddress ip = InetAddress.getLocalHost();
+			if("183.111.100.173".equals(ip.getHostAddress())){
+				img_path = "/product_img";
+			}
+			
+			String path = request.getSession().getServletContext().getRealPath(img_path);
 			
 			MultipartFile file_s1 = proCommand.getPmg_file_s1_mp();
 			MultipartFile file_s2 = proCommand.getPmg_file_s2_mp();

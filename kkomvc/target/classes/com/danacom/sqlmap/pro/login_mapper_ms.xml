@@ -24,4 +24,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MEM_ID = #{mem_id}
 	</select>
 	
+	<insert id="memInsert" parameterType="com.danacom.mybatis.pro.MemComVo">
+		INSERT 
+		INTO MEM_COM
+		(
+			MEM_NO
+			,MEM_ID
+			,MEM_PASS
+			,MEM_NAME
+			,MEM_EMAIL
+			,MEM_HP
+			,MEM_MIL
+			,MEM_RDATE
+			,MEM_ADMIN_AUTHO
+			,MEM_ZONECODE
+			,MEM_ADDR
+			,MEM_ADDR2
+			,MEM_TEL
+		) 
+		VALUES
+		(
+			(SELECT IFNULL(MAX(MEM_NO), 0)+1 FROM MEM_COM a)
+			,#{mem_id}
+			,#{mem_pass}
+			,#{mem_name}
+			,#{mem_email}
+			,#{mem_hp}
+			,#{mem_mil}
+			,sysdate()
+			,'n'
+			,#{mem_zonecode}
+			,#{mem_addr}
+			,#{mem_addr2}
+			,#{mem_tel}
+		)
+	</insert>
+	
 </mapper>
