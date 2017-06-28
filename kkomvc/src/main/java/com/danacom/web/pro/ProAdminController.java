@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -263,6 +265,7 @@ public class ProAdminController {
 		mv.addObject("mkrVo", mkrVo);
 		mv.addObject("pmg_file_s", pmg_file_s);
 		mv.addObject("pmg_file_b", pmg_file_b);
+		mv.addObject("odt_cont", proVo.getTot_cont()); // 주문여부 확인 : 존재하면 삭제불가
 		
 		return mv;
 	}
@@ -343,15 +346,32 @@ public class ProAdminController {
 	}
 	
 	@RequestMapping(value="/pro_delete.do", method=RequestMethod.POST)
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		int proMaxNo = proCommand.getPro_no();
+		TransactionStatus status = null;
 		
-		proDao.pdtDelete(proMaxNo);
-		proDao.pmgDelete(proMaxNo);
-		proDao.psmDelete(proMaxNo);
-		proDao.proDelete(proMaxNo);
+		try{
+		
+			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+	        status = transactionManager.getTransaction(def);
+			
+			proDao.pdtDelete(proMaxNo);
+			proDao.pmgDelete(proMaxNo);
+			proDao.psmDelete(proMaxNo);
+			proDao.proDelete(proMaxNo);
+			
+			transactionManager.commit(status);
+		
+		}catch (Exception e) {
+			transactionManager.rollback(status);
+			mv.addObject("error_msg", e.getMessage());
+			
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> : " + e.getMessage());
+			e.printStackTrace();
+		}
 		
 		return mv;
 	}

@@ -34,7 +34,12 @@
 		var a = document.getElementsByName("pdt_step51_" + i + "_" + j);
 		a[0].value = pdtStep.value;
 	}
-	function goProUpdate(part){
+	function goProUpdate(part, odt_cont){
+		if(odt_cont > 0){
+			alert("주문내역이 존재하여 삭제할수 없습니다!");
+			return;
+		}
+		
 		if (document.pro_insert.pro_pcl_no.value == "")  {
 	        alert("분류코드를 선택하세요!");
 	        document.pro_insert.pro_pcl_no.focus();
@@ -126,7 +131,7 @@
 			<span onclick="javascript:goProUpdate(1);" class="dana_button01">수정</span>
 		</td>
 		<td>
-			<span onclick="javascript:goProUpdate(2);" class="dana_button01">삭제</span>
+			<span onclick="javascript:goProUpdate(2,${odt_cont});" class="dana_button01">삭제</span>
 		</td>
 		</tr>
 		</table>
