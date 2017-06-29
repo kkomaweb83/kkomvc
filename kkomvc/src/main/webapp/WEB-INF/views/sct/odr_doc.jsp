@@ -27,6 +27,7 @@ var dlv_zonecode = document.getElementsByName("dlv_zonecode");
 var dlv_sendaddr = document.getElementsByName("dlv_sendaddr");
 var dlv_sendaddr2 = document.getElementsByName("dlv_sendaddr2");
 var dlv_msg = document.getElementsByName("dlv_msg");
+var odr_vbj_no = document.getElementsByName("odr_vbj_no");
 
 	$(function() {
 
@@ -150,6 +151,10 @@ var dlv_msg = document.getElementsByName("dlv_msg");
 	    	useMileage[0].value = "0";
 	    }
 	    
+	    if(odr_vbj_no[0].value == ""){
+	    	odr_vbj_no[0].value = "0";
+	    }
+	    
 	    return true;
 	}
 	function checkForNumber() {
@@ -201,6 +206,7 @@ var dlv_msg = document.getElementsByName("dlv_msg");
 	<form action="${ct_path}/odr_doc.do?dana=odr_doc" method="post" name="odr_doc_form" onsubmit="return doChk();">
 		<input type="hidden" value="${login.mem_no }" name="mem_no" />
 		<input type="hidden" value="${sctProMuti }" name="sct_pro_muti" />
+		<input type="hidden" value="${odr_vbj_no}" name="odr_vbj_no" />
 	
 	<div style="font-size: 11pt;
 				background-color: #FFFFFF;

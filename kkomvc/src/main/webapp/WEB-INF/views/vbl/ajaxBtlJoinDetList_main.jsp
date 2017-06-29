@@ -65,10 +65,8 @@
 
 <div class="title_div3" style="width: 95%;">
 	<div style="float: right;">
-	<a href="javascript:goSctOdr();">	
+	<a href="javascript:goSctOdr('${btlJoinContent.vbj_no}');">	
 	<img src="${ct_path}/img/btn_buy.gif" border="0"></a>&nbsp;
-	<a href="javascript:goSctmultiInsert();">
-	<img src="${ct_path}/img/btn_cart.gif" border="0"></a>
 	</div>
 </div>
 

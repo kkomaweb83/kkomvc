@@ -111,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, null
 			, #{odr_condition}
 			, null
+			, #{odr_vbj_no}
 		)
 	</insert>
 	

@@ -36,8 +36,8 @@ public class BtlVo {
 	private String totDisprice;
 	// vir_bill_board
 	private String vbb_no;
-	
 	private int tot_cont;
+	private String cs_date_chk;
 	
 	public String getVbb_no() {
 		return vbb_no;
@@ -219,5 +219,11 @@ public class BtlVo {
 	}
 	public void setTot_cont(int tot_cont) {
 		this.tot_cont = tot_cont;
+	}
+	public String getCs_date_chk() {
+		return cs_date_chk;
+	}
+	public void setCs_date_chk(String cs_date_chk) {
+		this.cs_date_chk = cs_date_chk;
 	}
 }

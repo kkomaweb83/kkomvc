@@ -79,6 +79,11 @@
 		});
 	}
 	function ajaxBtlDetJoin(vbb_no, answer){
+		if("${cs_date_chk}" == "N"){
+			alert("기간이 지난 베틀 입니다.");
+			return;
+		}
+		
 		if(answer == "y"){
 			alert("이미 베틀에 참여한 견적서 입니다.");
 			return;
@@ -139,6 +144,14 @@
 			}
 		});
 	}
+	
+	function goBtlEnd(){
+		if("${cs_date_chk}" == "Y"){
+			alert("아직 베틀 기간이 남아있습니다.");
+			return;
+		}
+	}
+	
 	document.onload=init();
 </script>
 </head>
@@ -159,10 +172,14 @@
 	
 	<section id="admin_section">
 	
-	<div class="title_div1">
+	<div class="title_div1" style="float: left; width: 80%;">
 		<span style="font-size: 5px;">&nbsp;</span><br/>
 		<span class="title_box1">☞ 배틀 견적서 관리</span><br/>
 		<span style="font-size: 0px;">&nbsp;</span>
+	</div>
+	
+	<div style="width: 120px; text-align: center; float: right;" class="vbl_btn01">
+	<span onclick="javascript:goBtlEnd();" class="dana_button01"><span>마감</span></span>
 	</div>
 	
 	<!-- pro_admin_list -->

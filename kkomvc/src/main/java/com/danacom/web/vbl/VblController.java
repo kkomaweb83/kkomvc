@@ -594,7 +594,8 @@ public class VblController {
 		
 		BtlVo btl = vblDao.getBtlView(btl_Command);
 		
-		request.setAttribute("btl", btl);
+		mv.addObject("btl", btl);
+		mv.addObject("cs_date_chk", btl.getCs_date_chk());
 		
 		String returnUrl = "vbl/btlDetPrejoin";
 		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/btlDetPrejoin_main";

@@ -79,6 +79,11 @@
 		});
 	}
 	function ajaxBtlDetJoin(vbb_no, answer){
+		if("${cs_date_chk}" == "N"){
+			alert("기간이 지난 베틀 입니다.");
+			return;
+		}
+		
 		if(answer == "y"){
 			alert("이미 베틀에 참여한 견적서 입니다.");
 			return;
@@ -104,6 +109,11 @@
 		getAjaxVbbList();
 	}
 	function ajaxBtlJoinDowngrade(vbj_no,btl_no,vbj_title){
+		if("${cs_date_chk}" == "N"){
+			alert("기간이 지난 베틀 입니다.");
+			return;
+		}
+		
 		var tabs = "";
 		tabs = $( "#tabs" ).tabs();
 		tabs.tabs({ active: 0 });
@@ -140,7 +150,7 @@
 		getAjaxVbbList();
 	}
 	
-	function goSctOdr(){
+	function goSctOdr(vbj_no){
 		
 		if (!document.getElementsByName("pst_pro_no")[0])  {
 	        alert("바로구매할 부품을 1개 이상 선택하세요!");
@@ -149,7 +159,7 @@
 	 	
 		$("#dana").val("sct_odr_doc");
 	 	
-		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.do";
+		document.vblPro_Search.action = "${ct_path}/sct_odr_doc.do?odr_vbj_no="+vbj_no;
 		document.vblPro_Search.submit();	
 	}
 	

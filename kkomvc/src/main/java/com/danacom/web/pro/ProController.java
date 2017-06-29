@@ -402,6 +402,7 @@ public class ProController {
 		mv.addObject("myCoupon", null);		
 		mv.addObject("userMil", userMil);		
 		mv.addObject("sctProMuti", sctProMuti);		
+		mv.addObject("odr_vbj_no", request.getParameter("odr_vbj_no"));		
 		
 		return mv;
 	}

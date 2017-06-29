@@ -59,6 +59,7 @@ public class OdrDocVo {
 	private String odr_condition2;
 	
 	private int sct_pro_muti;
+	private String odr_vbj_no;
 	
 	public String getDlv_sendaddr() {
 		return dlv_sendaddr;
@@ -341,6 +342,12 @@ public class OdrDocVo {
 	}
 	public void setDlv_sendaddr2(String dlv_sendaddr2) {
 		this.dlv_sendaddr2 = dlv_sendaddr2;
+	}
+	public String getOdr_vbj_no() {
+		return odr_vbj_no;
+	}
+	public void setOdr_vbj_no(String odr_vbj_no) {
+		this.odr_vbj_no = odr_vbj_no;
 	}
 
 }

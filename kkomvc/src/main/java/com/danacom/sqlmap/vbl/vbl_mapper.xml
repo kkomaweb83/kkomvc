@@ -284,15 +284,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getBtlView" resultType="com.danacom.mybatis.vbl.BtlVo" parameterType="com.danacom.mybatis.vbl.BtlVo">
+		<![CDATA[
 		SELECT
 			BTL_NO,
 			TO_CHAR(BTL_SDATE, 'yyyy/mm/dd') AS BTL_SDATE,
 			TO_CHAR(BTL_CDATE, 'yyyy/mm/dd') AS BTL_CDATE,
+			CASE WHEN TO_CHAR(SYSDATE,'yyyymmdd') >= TO_CHAR(BTL_SDATE, 'yyyymmdd') 
+                      AND TO_CHAR(SYSDATE,'yyyymmdd') <= TO_CHAR(BTL_CDATE, 'yyyymmdd') 
+                 THEN 'Y' ELSE 'N' END AS CS_DATE_CHK,
 			BTL_CONTENT,
 			BTL_TITLE
 		FROM BATTLE
 		WHERE BTL_NO = #{btl_no}
 		AND ROWNUM = 1
+		]]>
 	</select>
 	
 	<select id="getBtlDetList" resultType="com.danacom.mybatis.vbl.BtlVo" parameterType="com.danacom.mybatis.vbl.BtlVo">
