@@ -57,7 +57,12 @@
 		document.mkr_insert.submit();	
 	}
 
-	function doMkrDelete(){
+	function doMkrDelete(pro_cont){
+		if(pro_cont > 0){
+			alert("상품내역이 존재하여 삭제할수 없습니다!");
+			return;
+		}
+		
 		document.mkr_insert.action = "${ct_path}/mkr_delete.do?dana=mkr_delete";
 		document.mkr_insert.submit();	
 	}
@@ -105,7 +110,7 @@
 		</c:if>
 		<c:if test="${mkrCom.mkr_insert == 'n'}">
 		<td><span onclick="javascript:doMkrUpdate();" class="dana_button01">수정</span></td>
-		<td><span onclick="javascript:doMkrDelete();" class="dana_button01">삭제</span></td>
+		<td><span onclick="javascript:doMkrDelete(${pro_cont});" class="dana_button01">삭제</span></td>
 		</c:if>
 		</tr>
 		</table>

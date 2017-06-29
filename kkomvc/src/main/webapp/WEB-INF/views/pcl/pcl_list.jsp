@@ -141,7 +141,20 @@
 			}
 		});
 	}
-	function doPclDelete(){
+	function doPclDelete(low_cont, pdt_cnt, pro_cnt){
+		if(low_cont > 0){
+			alert("하위 상품분류가 존재하여 삭제할수 없습니다!");
+			return;
+		}
+		if(pdt_cnt > 0){
+			alert("상품 상세정보가 존재하여 삭제할수 없습니다!");
+			return;
+		}
+		if(pro_cnt > 0){
+			alert("상품 정보가 존재하여 삭제할수 없습니다!");
+			return;
+		}
+		
 		$("#dana").val("pcl_delete");
 		$("#insert","#pcl_insert").val("y");
 		$.ajax({

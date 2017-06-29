@@ -21,7 +21,7 @@
 <style type="text/css">
 .midLayout
 {
-	margin: 10px 10px 10px 200px;
+	margin: 30px 10px 30px 280px;
 	top: 150px;
 	left: 50%;
 	text-align: left;
@@ -40,20 +40,19 @@
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
-    margin-left: 120px;
+    margin-left: 10px;
     padding-top: 30px; height: 0; overflow: hidden;
 }
  
 .video-container iframe,
 .video-container object,
 .video-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
-
  
 </style>
 <script type="text/javascript">
@@ -66,13 +65,12 @@
 <body>
 <div style="width: 960px; margin:0 auto;">
 
-	<div style="margin-top: 10px;">
+	<div style="margin: 10px;">
 		<nav id="top_lnb">
 			<ul>
 				<li><a href="javascript:goYoutube('S6kzBetOweo')">기획서 동영상</a></li>
 				<li><a href="javascript:goYoutube('4Iv4LwItqjE')">시연 동영상</a></li>
-				<li><a href="#">기획서 다운</a></li>
-				<li><a href="#">소스 깃허브</a></li>
+				<li><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>
 			</ul>
 		</nav>
 	</div>

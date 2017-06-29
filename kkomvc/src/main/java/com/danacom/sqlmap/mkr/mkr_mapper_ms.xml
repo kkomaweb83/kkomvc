@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="mkrVO" resultType="com.danacom.mybatis.mkr.MakerVo" parameterType="String">
 		SELECT 
 			MKR_NO, MKR_NAME, MKR_PCL_NO
+			, IFNULL((SELECT COUNT(Z.PRO_NO) FROM PRODUCT Z WHERE Z.PRO_MKR_NO = MKR_NO),0) AS TOT_CONT
 		FROM MAKER 
 		WHERE MKR_NO = #{mkr_no}
 	</select>

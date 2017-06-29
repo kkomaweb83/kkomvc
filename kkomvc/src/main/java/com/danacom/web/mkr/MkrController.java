@@ -55,6 +55,7 @@ public class MkrController {
 		request.setAttribute("mkrVO", mkrVO);
 		request.setAttribute("mkr_insert", "y");
 		request.setAttribute("mkr_pcl_no", mkr_pcl_no);
+		request.setAttribute("pro_cont", mkrVO.getTot_cont()); // 상품여부 확인 : 존재하면 삭제불가
 		
 		return mkr_list(request, response);
 	}

@@ -32,7 +32,7 @@
 <body>
 
 <div id="top_title">
-<a href="<%=cp %>/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
+<a href="<%=cp %>/"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
 </div>
 
 <c:if test="${login.mem_admin_autho =='y'}">

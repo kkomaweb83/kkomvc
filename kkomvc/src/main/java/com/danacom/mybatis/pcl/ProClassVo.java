@@ -21,6 +21,8 @@ public class ProClassVo {
 	
 	private ProductVo proVO;
 	private int ppt_no;
+	private int pdt_cnt;
+	private int pro_cnt;
 	
 	public ProClassVo() {
 	}
@@ -119,6 +121,22 @@ public class ProClassVo {
 
 	public void setPpt_no(int ppt_no) {
 		this.ppt_no = ppt_no;
+	}
+
+	public int getPdt_cnt() {
+		return pdt_cnt;
+	}
+
+	public void setPdt_cnt(int pdt_cnt) {
+		this.pdt_cnt = pdt_cnt;
+	}
+
+	public int getPro_cnt() {
+		return pro_cnt;
+	}
+
+	public void setPro_cnt(int pro_cnt) {
+		this.pro_cnt = pro_cnt;
 	}
 	
 }

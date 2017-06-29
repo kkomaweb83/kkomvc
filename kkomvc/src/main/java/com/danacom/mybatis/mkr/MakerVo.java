@@ -12,6 +12,8 @@ public class MakerVo {
 	private String pcl_name;
 	private List list;
 	
+	private int tot_cont;
+	
 	public int getMkr_no() {
 		return mkr_no;
 	}
@@ -47,6 +49,12 @@ public class MakerVo {
 	}
 	public void setMkr_insert(String mkr_insert) {
 		this.mkr_insert = mkr_insert;
+	}
+	public int getTot_cont() {
+		return tot_cont;
+	}
+	public void setTot_cont(int tot_cont) {
+		this.tot_cont = tot_cont;
 	}
 	
 }

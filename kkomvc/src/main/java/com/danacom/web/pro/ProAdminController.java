@@ -266,6 +266,7 @@ public class ProAdminController {
 		mv.addObject("pmg_file_s", pmg_file_s);
 		mv.addObject("pmg_file_b", pmg_file_b);
 		mv.addObject("odt_cont", proVo.getTot_cont()); // 주문여부 확인 : 존재하면 삭제불가
+		mv.addObject("sct_cont", proVo.getCis_no()); // 장바구니여부 확인 : 존재하면 삭제불가
 		
 		return mv;
 	}

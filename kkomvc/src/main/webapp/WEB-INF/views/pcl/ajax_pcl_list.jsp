@@ -48,7 +48,7 @@
 		</c:if>
 		<c:if test="${insert == 'n'}">
 		<td><span onclick="javascript:doPclUpdate();" class="dana_button01">수정</span></td>
-		<td><span onclick="javascript:doPclDelete();" class="dana_button01">삭제</span></td>
+		<td><span onclick="javascript:doPclDelete(${low_cont},${pdt_cnt},${pro_cnt});" class="dana_button01">삭제</span></td>
 		</c:if>
 		</tr>
 		</table>

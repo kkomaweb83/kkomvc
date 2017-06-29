@@ -139,6 +139,9 @@ public class PclController {
 		mv.addObject("insert",insert);
 		mv.addObject("pclVO",pclVO);
 		mv.addObject("pcllist",list);
+		mv.addObject("low_cont", pclVO.getPpt_no()); // 하위상품분류 존재 확인 : 존재하면 삭제불가
+		mv.addObject("pdt_cnt", pclVO.getPdt_cnt()); // 상품정보 존재 확인 : 존재하면 삭제불가
+		mv.addObject("pro_cnt", pclVO.getPro_cnt()); // 상품 존재 확인 : 존재하면 삭제불가
 		
 		return mv;
 	}
