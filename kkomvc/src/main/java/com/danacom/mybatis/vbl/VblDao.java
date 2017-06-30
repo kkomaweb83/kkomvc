@@ -162,4 +162,12 @@ public class VblDao extends BaseDao {
 		template.update("gradeVbjUpdate", btl_Command);
 	}
 
+	public void updateBtlMemMil(Map<String, Object> btl_mil) {
+		template.update("updateBtlMemMil", btl_mil);
+	}
+
+	public void updateVblBtlJoin(Map<String, Object> btl_mil) {
+		template.update("updateVblBtlJoin", btl_mil);
+	}
+
 }

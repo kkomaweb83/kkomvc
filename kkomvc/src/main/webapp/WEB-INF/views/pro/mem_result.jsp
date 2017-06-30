@@ -60,7 +60,7 @@
 		</tr>
 		<tr>
 			<td colspan="4" align="center">
-				<div class="box_button1"><a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101">HOME</a></div>
+				<div class="box_button1"><a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101">메인화면</a></div>
 			</td>
 		</tr>
 	</table>

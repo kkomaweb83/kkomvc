@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -601,6 +603,7 @@ public class VblController {
 		if(reurl != null && reurl.equals("main")) returnUrl = "vbl/btlDetPrejoin_main";
 		
 		mv.setViewName(returnUrl);
+		mv.addObject("btl_mil", request.getParameter("btl_mil"));
 		
 		return mv;
 	}
@@ -727,4 +730,67 @@ public class VblController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/ajaxBtlEnd.do")
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public ModelAndView ajaxBtlEnd(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView();
+		
+		TransactionStatus status = null;
+		
+		try{
+			
+			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+	        status = transactionManager.getTransaction(def);
+		
+			String reurl = request.getParameter("reurl");
+			BtlVo top_btlvo = null;
+			int totDisprice = 0;
+			int btl_mem_mil = 0;
+			double t_mil = 0.05;
+			
+			BtlVo btl_Command = new BtlVo();
+			btl_Command.setBtl_no(request.getParameter("btl_no"));
+			
+			// 우승 견적서 조회
+			List<BtlVo> btlDetList = vblDao.getBtlDetList(btl_Command);
+			if(btlDetList != null && btlDetList.size() > 0){
+				top_btlvo = (BtlVo)btlDetList.get(0);
+			}
+			// 지급 마일리지 계산 - 최소금액 5000
+			totDisprice = Integer.parseInt(top_btlvo.getTotDisprice());
+			if(totDisprice >= 0){
+				btl_mem_mil = 5000;
+			}else{
+				btl_mem_mil = (int)(totDisprice*t_mil);
+				if(btl_mem_mil < 5000){
+					btl_mem_mil = 5000;
+				}
+			}
+			
+			Map<String, Object> btl_mil = new HashMap<>();
+			btl_mil.put("vbj_no", top_btlvo.getVbj_no());
+			btl_mil.put("mem_mil", btl_mem_mil);
+			btl_mil.put("btl_no", btl_Command.getBtl_no());
+			vblDao.updateBtlMemMil(btl_mil);
+			vblDao.updateVblBtlJoin(btl_mil);
+			
+			String returnUrl = "redirect:/btlDetPrejoin.do?dana=ajaxBtlDetList&reurl=admin";
+			
+			mv.setViewName(returnUrl);
+			mv.addObject("btl_no", request.getParameter("btl_no"));
+			mv.addObject("btl_mil", "Y");
+			
+			transactionManager.commit(status);
+		
+		}catch (Exception e) {
+			transactionManager.rollback(status);
+			mv.addObject("error_msg", e.getMessage());
+			
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> : " + e.getMessage());
+			e.printStackTrace();
+		}
+	
+		return mv;
+	}		
+		
 }

@@ -291,7 +291,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			TO_CHAR(BTL_CDATE, 'yyyy/mm/dd') AS BTL_CDATE,
 			CASE WHEN TO_CHAR(SYSDATE,'yyyymmdd') >= TO_CHAR(BTL_SDATE, 'yyyymmdd') 
                       AND TO_CHAR(SYSDATE,'yyyymmdd') <= TO_CHAR(BTL_CDATE, 'yyyymmdd') 
-                 THEN 'Y' ELSE 'N' END AS CS_DATE_CHK,
+                 THEN 'Y' ELSE 'N' END AS CS_DATE_CHK, BTL_END, 
 			BTL_CONTENT,
 			BTL_TITLE
 		FROM BATTLE
@@ -436,6 +436,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			VBJ_GRADE = VBJ_GRADE - 5
 			</if>
 		WHERE VBJ_NO = #{vbj_no}
+	</update>
+	
+	<update id="updateBtlMemMil" parameterType="hashmap">
+		UPDATE
+		MEM_COM SET
+			MEM_MIL = MEM_MIL + #{mem_mil}
+		WHERE MEM_NO IN(SELECT ODR_MEM_NO FROM ORDERS WHERE ODR_VBJ_NO = #{vbj_no})
+	</update>
+	
+	<update id="updateVblBtlJoin" parameterType="hashmap">
+		UPDATE
+		BATTLE SET
+			BTL_END = 'Y'
+		WHERE BTL_NO = #{btl_no}
 	</update>
 	
 </mapper>

@@ -38,6 +38,7 @@ public class BtlVo {
 	private String vbb_no;
 	private int tot_cont;
 	private String cs_date_chk;
+	private String btl_end;
 	
 	public String getVbb_no() {
 		return vbb_no;
@@ -225,5 +226,11 @@ public class BtlVo {
 	}
 	public void setCs_date_chk(String cs_date_chk) {
 		this.cs_date_chk = cs_date_chk;
+	}
+	public String getBtl_end() {
+		return btl_end;
+	}
+	public void setBtl_end(String btl_end) {
+		this.btl_end = btl_end;
 	}
 }

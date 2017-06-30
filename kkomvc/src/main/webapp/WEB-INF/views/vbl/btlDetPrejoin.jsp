@@ -18,7 +18,10 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		 $("#tabs").tabs();
+		if("${btl_mil}" == "Y"){
+			alert("베틀 마감 마일리지가 지급 되었습니다.");
+		}
+		$("#tabs").tabs();
 	});
 	
 	function ajaxBtlJoinDetList(vbj_no){
@@ -145,11 +148,28 @@
 		});
 	}
 	
-	function goBtlEnd(){
+	function goBtlEnd(vbj_no){
 		if("${cs_date_chk}" == "Y"){
 			alert("아직 베틀 기간이 남아있습니다.");
 			return;
 		}
+		
+		location.replace("${ct_path}/ajaxBtlEnd.do?dana=ajaxBtlEnd&btl_no=${btl.btl_no}&reurl=admin");
+		
+		/*
+		$.ajax({
+			url : "${ct_path}/ajaxBtlEnd.do",
+			type : "post",
+			data : {dana:'ajaxBtlEnd',btl_no:'${btl.btl_no}',reurl:'admin'},
+			dataType : "html",
+			success : function(data) {
+				$("#ajaxBtlJoinList").html(data);
+			},
+			error : function() {
+				alert("실패");
+			}
+		});
+		*/
 	}
 	
 	document.onload=init();
@@ -179,7 +199,12 @@
 	</div>
 	
 	<div style="width: 120px; text-align: center; float: right;" class="vbl_btn01">
+	<c:if test="${btl.btl_end != 'Y'}">
 	<span onclick="javascript:goBtlEnd();" class="dana_button01"><span>마감</span></span>
+	</c:if>
+	<c:if test="${btl.btl_end == 'Y'}">
+	<span class="dana_button01"><span>마감 되었습니다.</span></span>
+	</c:if>
 	</div>
 	
 	<!-- pro_admin_list -->

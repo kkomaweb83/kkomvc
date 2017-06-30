@@ -11,8 +11,12 @@
 <title>컴퓨터 쇼핑몰의 최강자 DanaCom</title>
 <script type="text/javascript">
 	$(function() {
-		if("${param.login_chk_msg}"){
-			alert("${param.login_chk_msg}");
+		if("${param.login_chk_msg}" == "lo_err01"){
+			alert("해당 ID가 존재하지 않습니다.");
+		}else if("${param.login_chk_msg}" == "lo_err02"){
+			alert("해당 PW가 같지 않습니다.");
+		}else if("${param.login_chk_msg}" == "lo_err03"){
+			alert("해당 ID가 여러개 존재 합니다.");
 		}
 	});
 	
@@ -32,7 +36,7 @@
 <body>
 
 <div id="top_title">
-<a href="<%=cp %>/"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
+<a href="<%=cp %>/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="<%=cp %>/img/top_main01.gif" alt="다나컴" /></a>
 </div>
 
 <c:if test="${login.mem_admin_autho =='y'}">
@@ -44,12 +48,13 @@
 </c:if>
 <nav id="top_ltb_user">
 	<ul>
-		<li>사용자 -> kko01/111</a></li>
-		<li>관리자 -> admin/111</a></li>
+		<li>사용자 -> kko01/111</li>
+		<li>관리자 -> admin/111</li>
 	</ul>
 </nav>
 
 <nav id="top_gnb">
+	<%--
 	<ul>
 		<li>
 			<span>통합검색</span>
@@ -57,6 +62,10 @@
 			<span class="box_button3">검색</span>
 		</li>
 	</ul>
+	--%>
+	<ul>
+		<li><a href="<%=cp %>/">HOME</a></li>
+	</ul> 
 </nav>
 <nav id="top_lnb">
 	<ul>

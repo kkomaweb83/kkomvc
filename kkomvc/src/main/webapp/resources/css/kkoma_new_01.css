@@ -69,8 +69,20 @@ td.ar{padding-right:5px !important;}
 	left: 5px; top: 5px;
 }
 
-#top_gnb > ul { overflow: hidden; margin: 1px 0; }
+/* #top_gnb > ul { overflow: hidden; margin: 1px 0; }  */
+#top_gnb > ul { overflow: hidden; }
 #top_gnb > ul > li { float: left; }
+#top_gnb > ul > li > a {
+	display: block;
+	padding: 7px 12px 5px 12px;
+	border: 1px solid #FF9900;
+	margin-left: 1px;
+	color: #FF9900;
+}
+#top_gnb > ul > li > a:hover {
+	background: #FF9900;
+	color: white;
+}
 
 #top_lnb > ul { overflow: hidden; }
 #top_lnb > ul > li { float: left; }

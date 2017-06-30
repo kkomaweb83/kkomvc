@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.danacom.mybatis.pro.LoginDao;
 import com.danacom.mybatis.pro.MemComVo;
-import com.danacom.mybatis.pro.Shop_cart;
 
 
 @Controller
@@ -43,7 +42,7 @@ public class LoginController {
 		List<MemComVo> list = loginDao.getLoginChk(mem_id);
 		
 		if(list == null || list.size() == 0){
-			login.setMsg("해당 ID가 존재하지 않습니다.");
+			login.setMsg("lo_err01");
 			login.setCmd(102);
 		}else if(list.size() == 1){
 			login = list.get(0);
@@ -56,11 +55,11 @@ public class LoginController {
 					url = "redirect:/pcl_list.do?dana=pcl_list";
 				}
 			}else{
-				login.setMsg("해당 PW가 같지 않습니다.");
+				login.setMsg("lo_err02");
 				login.setCmd(102);
 			}
 		}else if(list.size() > 1){
-			login.setMsg("해당 ID가 여러개 존재 합니다.");
+			login.setMsg("lo_err03");
 			login.setCmd(102);
 		}
 		if(login.getCmd() == 102){
