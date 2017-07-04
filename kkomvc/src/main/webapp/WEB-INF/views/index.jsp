@@ -68,8 +68,9 @@
 	<div style="margin: 10px;">
 		<nav id="top_lnb">
 			<ul>
-				<li><a href="javascript:goYoutube('S6kzBetOweo')">기획서 동영상</a></li>
-				<li><a href="javascript:goYoutube('4Iv4LwItqjE')">시연 동영상</a></li>
+				<li><a href="javascript:goYoutube('x843Y8JJWc8')">기획서 동영상1</a></li>
+				<li><a href="javascript:goYoutube('lMW94lLtxpI')">기획서 동영상2</a></li>
+				<li><a href="javascript:goYoutube('mFGJi7aKQIU')">시연 동영상</a></li>
 				<li><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>
 			</ul>
 		</nav>
@@ -94,7 +95,7 @@
 	<div class="video-container">
     	<div class="jetpack-video-wrapper">
 	    	<span class="embed-youtube" style="text-align: center; display: block;">
-	    	<iframe id="youtube_kko" class="youtube-player" src="https://www.youtube.com/embed/S6kzBetOweo" allowfullscreen="true" 
+	    	<iframe id="youtube_kko" class="youtube-player" src="https://www.youtube.com/embed/x843Y8JJWc8" allowfullscreen="true" 
 	    		style="margin: 0px; border: 0px currentColor; border-image: none; width: 560px; height: 315px; display: block;" 
 	    		data-height="315" data-width="560" type="text/html" data-ratio="0.5625"></iframe>
 	    	</span>
