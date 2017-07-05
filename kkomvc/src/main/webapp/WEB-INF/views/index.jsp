@@ -19,31 +19,68 @@
 <link rel="stylesheet" type="text/css" href="${ct_path}/css/kkoma_new_01.css" />
 
 <style type="text/css">
-.midLayout
-{
-	margin: 30px 10px 30px 280px;
-	top: 150px;
-	left: 50%;
-	text-align: left;
-	overflow: auto;
+#index_header {
+	width: 960px;
+	margin: 0 auto;
+	height: 145px;
+	position: relative;
 }
-.box_top{
- 	font-size: 9pt;
- 	border-top: gray 1px solid;
- 	border-right: gray 1px solid;
- 	border-bottom: gray 1px solid;
- 	border-left: gray 1px solid;
- 	padding: 5px;
- 	vertical-align: middle;
- 	text-align: center;
- }
+#index_header > #top_title {
+	position: absolute;
+	left: 250px; top: 10px;
+}
+#index_content{
+	width: 700px;
+	margin: 0 auto;
+	border: 0px solid #4374D9;
+	padding-top: 15px;
+}
+.index_title1_r{
+	font-size: 15px;
+	background-color: #4374D9;
+	border: #336699 0px solid;
+	padding: 7px 5px 7px 5px;
+	text-align: center;
+	color: #FFFFFF;
+}
+.index_title1_l{
+	font-size: 15px;
+	background-color: #FF9900;
+	border: #336699 0px solid;
+	padding: 7px 5px 7px 5px;
+	text-align: center;
+	color: #FFFFFF;
+}
+.index_title2_r{
+	padding: 7px 12px 5px 12px;
+	border: 1px solid #4374D9;
+	margin-left: 1px;
+	color: #4374D9;
+	text-align: center;
+}
+.index_title2_l{
+	padding: 7px 12px 5px 12px;
+	border: 1px solid #FF9900;
+	margin-left: 1px;
+	color: #FF9900;
+	text-align: center;
+}
+.index_title2_l > a { color: #FF9900; }
+.index_title2_l > a:hover { color: white; }
+.index_title2_l:hover > a { color: white; }
+.index_title2_l:hover {
+	background: #FF9900;
+	color: white;
+}
+
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
-    margin-left: 10px;
-    padding-top: 30px; height: 0; overflow: hidden;
+    padding-top: 30px; 
+    height: 0; 
+    overflow: hidden;
+    border: 2px solid #FF9900;
 }
- 
 .video-container iframe,
 .video-container object,
 .video-container embed {
@@ -63,47 +100,71 @@
 </script>
 </head> 
 <body>
-<div style="width: 960px; margin:0 auto;">
 
-	<div style="margin: 10px;">
-		<nav id="top_lnb">
-			<ul>
-				<li><a href="javascript:goYoutube('x843Y8JJWc8')">기획서 동영상1</a></li>
-				<li><a href="javascript:goYoutube('lMW94lLtxpI')">기획서 동영상2</a></li>
-				<li><a href="javascript:goYoutube('mFGJi7aKQIU')">시연 동영상</a></li>
-				<li><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>
-			</ul>
-		</nav>
+	<header id="index_header">
+	
+	<div id="top_title">
+		<img src="${ct_path}/img/index02.gif" alt="꼬마web의 놀이터" />
+		<a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
 	</div>
-	<div class="midLayout">
-		<table style="width: 400px; height: 200px;" class="box_top">
-		<tbody>
-			<tr>
-				<td align="center">
-					<img src="${ct_path}/img/index02.gif" alt="꼬마web의 놀이터" />
-				</td>
-			</tr>
-			<tr>
-				<td align="center">
-					<a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
-				</td>
-			</tr>
-		</tbody>
+	
+	<div style="width: 960px; margin: 0 auto; position: absolute; top: 70px;">
+		<table style="width: 960px; padding: 0; border-spacing: 0;">
+		<tr>
+		<td>
+			<table style="width: 480px; padding: 0; border-spacing: 1px;">
+			<tr><td style="width: 480px;" class="index_title1_l">다나컴(DanaCom) 견적서PC 쇼핑몰</td></tr>
+			<tr><td>
+				<table style="width: 100%; padding: 0; border-spacing: 2px;">
+				<tr>
+					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('x843Y8JJWc8')">기획서 동영상1</a></td>
+					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('lMW94lLtxpI')">기획서 동영상2</a></td>
+					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('mFGJi7aKQIU')">시연 동영상</a></td>
+				</tr>
+				</table>
+			</td></tr>
+			</table>
+		</td>
+		
+		<td>
+			<table style="width: 480px; padding: 0; border-spacing: 1px;">
+			<tr><td style="width: 480px;" class="index_title1_r">꼬마web의 주식 공부방 ☞ 개발중 입니다!</td></tr>
+			<tr><td>
+				<table style="width: 100%; padding: 0; border-spacing: 2px;">
+				<tr>
+					<td class="index_title2_l" style="width: 33.3%;"><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></td>
+					<td class="index_title2_r" style="width: 33.3%;">기획서 동영상</td>
+					<td class="index_title2_r" style="width: 33.3%;">시연 동영상</td>
+				</tr>
+				</table>
+			</td></tr>
+			</table>
+		</td>
+		</tr>
 		</table>
 	</div>
+	
+	</header>
+	
+	<div id="index_content">
 	
 	<div class="video-container">
     	<div class="jetpack-video-wrapper">
 	    	<span class="embed-youtube" style="text-align: center; display: block;">
 	    	<iframe id="youtube_kko" class="youtube-player" src="https://www.youtube.com/embed/x843Y8JJWc8" allowfullscreen="true" 
-	    		style="margin: 0px; border: 0px currentColor; border-image: none; width: 560px; height: 315px; display: block;" 
+	    		style="margin: 0px; border: 0px currentColor; border-image: none; width: 100%; height: 100%; display: block;" 
 	    		data-height="315" data-width="560" type="text/html" data-ratio="0.5625"></iframe>
 	    	</span>
     	</div>
 	</div>
 	
-
-</div>
+	<div style="height: 20px;"></div>
+	
+	</div>
+	
+	<footer>
+	
+	</footer>
 
 </body>
 </html>
