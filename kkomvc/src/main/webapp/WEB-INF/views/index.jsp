@@ -38,28 +38,34 @@
 .index_title1_r{
 	font-size: 15px;
 	background-color: #4374D9;
-	border: #336699 0px solid;
-	padding: 7px 5px 7px 5px;
+	border: #FF9900 1px solid;
+	padding: 9px 5px 9px 5px;
 	text-align: center;
 	color: #FFFFFF;
 }
 .index_title1_l{
 	font-size: 15px;
 	background-color: #FF9900;
-	border: #336699 0px solid;
-	padding: 7px 5px 7px 5px;
+	border: #336699 1px solid;
+	padding: 9px 5px 9px 5px;
 	text-align: center;
 	color: #FFFFFF;
+	cursor: pointer;
+}
+.index_title1_l:hover {
+	background: white;
+	color: #4374D9;
+	border: #4374D9 1px solid;
 }
 .index_title2_r{
-	padding: 7px 12px 5px 12px;
+	padding: 9px 12px 9px 12px;
 	border: 1px solid #4374D9;
 	margin-left: 1px;
 	color: #4374D9;
 	text-align: center;
 }
 .index_title2_l{
-	padding: 7px 12px 5px 12px;
+	padding: 9px 12px 9px 12px;
 	border: 1px solid #FF9900;
 	margin-left: 1px;
 	color: #FF9900;
@@ -97,6 +103,9 @@
 		var newSrc = "https://www.youtube.com/embed/" + url;
 		document.getElementById("youtube_kko").src = newSrc;
 	}
+	function goDanaCom(){
+		location.href = "${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101";
+	}
 </script>
 </head> 
 <body>
@@ -113,7 +122,7 @@
 		<tr>
 		<td>
 			<table style="width: 480px; padding: 0; border-spacing: 1px;">
-			<tr><td style="width: 480px;" class="index_title1_l">다나컴(DanaCom) 견적서PC 쇼핑몰</td></tr>
+			<tr><td style="width: 480px;" class="index_title1_l" onclick="goDanaCom()">다나컴(DanaCom) 견적서PC 쇼핑몰</td></tr>
 			<tr><td>
 				<table style="width: 100%; padding: 0; border-spacing: 2px;">
 				<tr>
