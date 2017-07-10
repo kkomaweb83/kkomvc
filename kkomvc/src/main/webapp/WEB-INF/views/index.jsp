@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>꼬마web의 놀이터</title>
 
 <c:set var="ct_path" value="<%= request.getContextPath() %>"/>    
@@ -19,22 +20,62 @@
 <link rel="stylesheet" type="text/css" href="${ct_path}/css/kkoma_new_01.css" />
 
 <style type="text/css">
-#index_header {
-	width: 960px;
-	margin: 0 auto;
-	height: 145px;
-	position: relative;
+
+* {
+    box-sizing: border-box;
 }
-#index_header > #top_title {
-	position: absolute;
-	left: 250px; top: 10px;
+
+[class*="col-"] {
+    width: 100%;
+    float: left;
 }
-#index_content{
-	width: 700px;
-	margin: 0 auto;
-	border: 0px solid #4374D9;
-	padding-top: 15px;
+.col_center{ text-align: center; }
+.col_left { text-align: center; }
+.col_right { text-align: center; }  
+
+@media only screen and (min-width: 768px) {
+	.col_body{
+		width: 590px;
+		margin: 0 auto;
+	}
+	
+	.col-m-1 {width: 8.33%;}
+    .col-m-2 {width: 16.66%;}
+    .col-m-3 {width: 25%;}
+    .col-m-4 {width: 33.33%;}
+    .col-m-5 {width: 41.66%;}
+    .col-m-6 {width: 50%;}
+    .col-m-7 {width: 58.33%;}
+    .col-m-8 {width: 66.66%;}
+    .col-m-9 {width: 75%;}
+    .col-m-10 {width: 83.33%;}
+    .col-m-11 {width: 91.66%;}
+    .col-m-12 {width: 100%;}
 }
+@media only screen and (min-width: 1024px) {
+	.col_body{
+		width: 960px;
+		margin: 0 auto;
+	}
+	
+	.col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+    
+    .col_center{ text-align: center; }
+	.col_left { text-align: left; }
+	.col_right { text-align: right; }
+}
+
 .index_title1_r{
 	font-size: 15px;
 	background-color: #4374D9;
@@ -70,6 +111,7 @@
 	margin-left: 1px;
 	color: #FF9900;
 	text-align: center;
+	float: left;
 }
 .index_title2_l > a { color: #FF9900; }
 .index_title2_l > a:hover { color: white; }
@@ -79,6 +121,12 @@
 	color: white;
 }
 
+.index_content{
+	width: 80%;
+	margin: 0 auto;
+	border: 0px solid #4374D9;
+}
+
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -86,6 +134,7 @@
     height: 0; 
     overflow: hidden;
     border: 2px solid #FF9900;
+    margin-top: 10px;
 }
 .video-container iframe,
 .video-container object,
@@ -108,67 +157,58 @@
 	}
 </script>
 </head> 
-<body>
+<body class="col_body">
 
-	<header id="index_header">
-	
-	<div id="top_title">
+	<div class="col-12 col-m_12">
+	<div class="col-2 col-m-0"></div>
+	<div class="col-4 col-m-6 col_right">
 		<img src="${ct_path}/img/index02.gif" alt="꼬마web의 놀이터" />
+	</div>
+	<div class="col-4 col-m-6 col_left">
 		<a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
 	</div>
-	
-	<div style="width: 960px; margin: 0 auto; position: absolute; top: 70px;">
-		<table style="width: 960px; padding: 0; border-spacing: 0;">
-		<tr>
-		<td>
-			<table style="width: 480px; padding: 0; border-spacing: 1px;">
-			<tr><td style="width: 480px;" class="index_title1_l" onclick="goDanaCom()">다나컴(DanaCom) 견적서PC 쇼핑몰</td></tr>
-			<tr><td>
-				<table style="width: 100%; padding: 0; border-spacing: 2px;">
-				<tr>
-					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('x843Y8JJWc8')">기획서 동영상1</a></td>
-					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('lMW94lLtxpI')">기획서 동영상2</a></td>
-					<td class="index_title2_l" style="width: 33.3%;"><a href="javascript:goYoutube('mFGJi7aKQIU')">시연 동영상</a></td>
-				</tr>
-				</table>
-			</td></tr>
-			</table>
-		</td>
-		
-		<td>
-			<table style="width: 480px; padding: 0; border-spacing: 1px;">
-			<tr><td style="width: 480px;" class="index_title1_r">꼬마web의 주식 공부방 ☞ 개발중 입니다!</td></tr>
-			<tr><td>
-				<table style="width: 100%; padding: 0; border-spacing: 2px;">
-				<tr>
-					<td class="index_title2_l" style="width: 33.3%;"><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></td>
-					<td class="index_title2_r" style="width: 33.3%;">기획서 동영상</td>
-					<td class="index_title2_r" style="width: 33.3%;">시연 동영상</td>
-				</tr>
-				</table>
-			</td></tr>
-			</table>
-		</td>
-		</tr>
-		</table>
+	<div class="col-2 col-m-0"></div>
 	</div>
 	
-	</header>
-	
-	<div id="index_content">
-	
-	<div class="video-container">
-    	<div class="jetpack-video-wrapper">
-	    	<span class="embed-youtube" style="text-align: center; display: block;">
-	    	<iframe id="youtube_kko" class="youtube-player" src="https://www.youtube.com/embed/x843Y8JJWc8" allowfullscreen="true" 
-	    		style="margin: 0px; border: 0px currentColor; border-image: none; width: 100%; height: 100%; display: block;" 
-	    		data-height="315" data-width="560" type="text/html" data-ratio="0.5625"></iframe>
-	    	</span>
-    	</div>
+	<div class="col-12 col-m_12">
+	<div class="col-6 col-m_6">
+		<div style="position: relative;">
+		<ul>
+			<li onclick="goDanaCom()" class="index_title1_l" style="width: 100%; display: block;">다나컴(DanaCom) 견적서PC 쇼핑몰</li>
+		</ul>
+		<ul style="margin-top: 2px;">
+			<li class="index_title2_l" style="width: 33%; float: left;"><a href="javascript:goYoutube('x843Y8JJWc8')">기획서 동영상1</a></li>				
+			<li class="index_title2_l" style="width: 33%; float: left;"><a href="javascript:goYoutube('lMW94lLtxpI')">기획서 동영상2</a></li>				
+			<li class="index_title2_l" style="width: 33%; float: left;"><a href="javascript:goYoutube('mFGJi7aKQIU')">시연 동영상</a></li>				
+		</ul>
+		</div>
+	</div>
+	<div class="col-6 col-m_6">
+		<div style="position: relative;">
+		<ul>
+			<li class="index_title1_r" style="width: 100%; display: block;">꼬마web의 주식 공부방 ☞ 개발중 입니다!</li>
+		</ul>
+		<ul style="margin-top: 2px;">
+			<li class="index_title2_l" style="width: 33%; float: left;"><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>				
+			<li class="index_title2_r" style="width: 33%; float: left;">기획서 동영상</li>				
+			<li class="index_title2_r" style="width: 33%; float: left;">시연 동영상</li>				
+		</ul>	
+		</div>
+	</div>
 	</div>
 	
-	<div style="height: 20px;"></div>
-	
+	<div class="col-12 col-m_12">
+		<div class="index_content">
+		<div class="video-container">
+	    	<div class="jetpack-video-wrapper">
+		    	<span class="embed-youtube" style="text-align: center; display: block;">
+		    	<iframe id="youtube_kko" class="youtube-player" src="https://www.youtube.com/embed/x843Y8JJWc8" allowfullscreen="true" 
+		    		style="margin: 0px; border: 0px currentColor; border-image: none; width: 100%; height: 100%; display: block;" 
+		    		type="text/html" data-ratio="0.5625"></iframe>
+		    	</span>
+	    	</div>
+		</div>
+		</div>
 	</div>
 	
 	<footer>
