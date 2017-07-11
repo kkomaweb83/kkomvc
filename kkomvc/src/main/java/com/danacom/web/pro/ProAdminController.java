@@ -1,7 +1,11 @@
 package com.danacom.web.pro;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -405,6 +409,30 @@ public class ProAdminController {
 		mv.addObject("total_cnt", total_cnt);
 		
 		return mv;
-	}		
+	}
+	
+	@RequestMapping(value="/download.do")
+	public void getDownload(HttpServletRequest request, HttpServletResponse response){
+		
+		try {
+			String path = request.getSession().getServletContext().getRealPath("/resources/product_img");
+			String file_name = request.getParameter("file_name");
+			String encoded_path = URLEncoder.encode(file_name, "utf-8");
+			
+			// 브로우저 설정
+			response.setContentType("application/x-msdownload");
+			response.setHeader("Content-Disposition", "attachment; filename="+encoded_path);
+			
+			File file = new File(path + "/" + new String(file_name.getBytes("utf-8")));
+			FileInputStream fis = new FileInputStream(file);
+			BufferedInputStream in = new BufferedInputStream(fis);
+			
+			OutputStream out = response.getOutputStream();
+			FileCopyUtils.copy(in, out);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 }

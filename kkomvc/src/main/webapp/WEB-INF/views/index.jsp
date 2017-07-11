@@ -190,7 +190,7 @@
 		</ul>
 		<ul style="margin-top: 2px;">
 			<li class="index_title2_l" style="width: 33%; float: left;"><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>				
-			<li class="index_title2_r" style="width: 33%; float: left;">기획서 동영상</li>				
+			<li class="index_title2_l" style="width: 33%; float: left;"><a href="${ct_path}/download.do?file_name=kko_project01.pptx">기획서 다운</a></li>				
 			<li class="index_title2_r" style="width: 33%; float: left;">시연 동영상</li>				
 		</ul>	
 		</div>
