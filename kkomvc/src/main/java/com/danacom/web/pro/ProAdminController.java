@@ -415,7 +415,14 @@ public class ProAdminController {
 	public void getDownload(HttpServletRequest request, HttpServletResponse response){
 		
 		try {
-			String path = request.getSession().getServletContext().getRealPath("/resources/product_img");
+			String img_path = "/resources/product_img";
+			
+			InetAddress ip = InetAddress.getLocalHost();
+			if("183.111.100.173".equals(ip.getHostAddress())){
+				img_path = "/product_img";
+			}
+			
+			String path = request.getSession().getServletContext().getRealPath(img_path);
 			String file_name = request.getParameter("file_name");
 			String encoded_path = URLEncoder.encode(file_name, "utf-8");
 			
