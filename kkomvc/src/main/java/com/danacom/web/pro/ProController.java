@@ -132,7 +132,6 @@ public class ProController {
 	}
 	
 	@RequestMapping(value="/ajax_pro_list.do")
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public ModelAndView ajax_pro_list(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("pro/ajax_pro_main_list");
 		

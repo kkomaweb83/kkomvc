@@ -351,7 +351,6 @@ public class ProAdminController {
 	}
 	
 	@RequestMapping(value="/pro_delete.do", method=RequestMethod.POST)
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
