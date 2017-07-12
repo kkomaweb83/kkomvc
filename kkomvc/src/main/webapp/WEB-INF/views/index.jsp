@@ -19,6 +19,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="${ct_path}/css/kkoma_new_01.css" />
 
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+	if(!wcs_add)
+		var wcs_add = {};
+	wcs_add["wa"] = "1f8792923a8d82";
+	wcs_do();
+</script>
+
 <style type="text/css">
 
 * {
