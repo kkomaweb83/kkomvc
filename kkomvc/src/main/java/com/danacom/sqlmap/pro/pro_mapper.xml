@@ -208,6 +208,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE PMG_PRO_NO = #{pmg_pro_no} AND PMG_IDT_NO = #{pmg_idt_no}
 	</update>
 	
+	<delete id="sctProDelete" parameterType="int">
+		DELETE 
+		FROM SHOP_CART
+		WHERE SCT_PRO_NO = #{proMaxNo}
+	</delete>
+	
 	<delete id="pdtDelete" parameterType="int">
 		DELETE 
 		FROM PRO_DET

@@ -361,19 +361,22 @@ public class ProAdminController {
 		
 			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	        status = transactionManager.getTransaction(def);
-			
+	        
 			proDao.pdtDelete(proMaxNo);
 			proDao.pmgDelete(proMaxNo);
 			proDao.psmDelete(proMaxNo);
 			proDao.proDelete(proMaxNo);
 			
+			// 장바구니 삭제 추가 SCT_PRO_NO
+	        proDao.sctProDelete(proMaxNo);
+			
 			transactionManager.commit(status);
 		
 		}catch (Exception e) {
 			transactionManager.rollback(status);
-			mv.addObject("error_msg", e.getMessage());
+			mv.addObject("error_msg", e);
 			
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> : " + e.getMessage());
+			System.out.println(">>>>>>>>>>>>>>>>>>>>> kkomaweb : " + e);
 			e.printStackTrace();
 		}
 		

@@ -86,4 +86,8 @@ public class ProDao extends BaseDao {
 		return template.selectList("getMemAdminList", requestMap);
 	}
 
+	public void sctProDelete(int proMaxNo) {
+		template.delete("sctProDelete", proMaxNo);
+	}
+
 }

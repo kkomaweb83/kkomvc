@@ -35,10 +35,10 @@
 		a[0].value = pdtStep.value;
 	}
 	function goProUpdate(part, sct_cont, odt_cont){
-		if(sct_cont > 0){
+		/*if(sct_cont > 0){
 			alert("장바구니 내역이 존재하여 삭제할수 없습니다!");
 			return;
-		}
+		}*/
 		if(odt_cont > 0){
 			alert("주문내역이 존재하여 삭제할수 없습니다!");
 			return;
