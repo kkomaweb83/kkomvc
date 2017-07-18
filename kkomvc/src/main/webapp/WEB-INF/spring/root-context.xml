@@ -7,24 +7,6 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
-	<bean id= "transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
-		<property name= "dataSource" ref = "dataSource" />
-	</bean>
-
-	<tx:annotation-driven transaction-manager ="transactionManager" proxy-target-class="true" />
-	
-	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="*insert" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="*update" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="*delete" propagation="REQUIRED" rollback-for="Exception" />
-		</tx:attributes>
-	</tx:advice>
-	
-	<aop:config>
-		<aop:advisor advice-ref="transactionAdvice" pointcut="bean(*Controller)" />
-	</aop:config>
-
 	<!-- DB연결 -->
 	<!-- 오라클 연결 -->
 	<bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -61,5 +43,25 @@
 	</bean>
 	
 	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	
+	<bean id= "transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		<property name= "dataSource" ref = "dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager ="transactionManager" proxy-target-class="true" />
+	
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*insert" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="*update" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="*delete" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.danacom.web.*.*(..))" />
+        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut" />
+    </aop:config>
 
 </beans>

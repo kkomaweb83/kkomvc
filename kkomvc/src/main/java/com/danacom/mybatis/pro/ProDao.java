@@ -74,7 +74,7 @@ public class ProDao extends BaseDao {
 		template.delete("psmDelete", proMaxNo);
 	}
 
-	public void proDelete(int proMaxNo) throws Exception {
+	public void proDelete(int proMaxNo) {
 		template.delete("proDelete", proMaxNo);
 	}
 

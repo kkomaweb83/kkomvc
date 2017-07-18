@@ -351,34 +351,19 @@ public class ProAdminController {
 	}
 	
 	@RequestMapping(value="/pro_delete.do", method=RequestMethod.POST)
-	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request){
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor=Exception.class)
+	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		int proMaxNo = proCommand.getPro_no();
-		TransactionStatus status = null;
+        
+		proDao.pdtDelete(proMaxNo);
+		proDao.pmgDelete(proMaxNo);
+		proDao.psmDelete(proMaxNo);
+		proDao.proDelete(proMaxNo);
 		
-		try{
-		
-			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-	        status = transactionManager.getTransaction(def);
-	        
-			proDao.pdtDelete(proMaxNo);
-			proDao.pmgDelete(proMaxNo);
-			proDao.psmDelete(proMaxNo);
-			proDao.proDelete(proMaxNo);
-			
-			// 장바구니 삭제 추가 SCT_PRO_NO
-	        proDao.sctProDelete(proMaxNo);
-			
-			transactionManager.commit(status);
-		
-		}catch (Exception e) {
-			transactionManager.rollback(status);
-			mv.addObject("error_msg", e);
-			
-			System.out.println(">>>>>>>>>>>>>>>>>>>>> kkomaweb : " + e);
-			e.printStackTrace();
-		}
+		// 장바구니 삭제 추가 SCT_PRO_NO
+        proDao.sctProDelete(proMaxNo);
 		
 		return mv;
 	}
