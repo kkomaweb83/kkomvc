@@ -90,4 +90,12 @@ public class ProDao extends BaseDao {
 		template.delete("sctProDelete", proMaxNo);
 	}
 
+	public void tran_delete(int proMaxNo) {
+		template.delete("pdtDelete", proMaxNo);
+		template.delete("pmgDelete", proMaxNo);
+		template.delete("psmDelete", proMaxNo);
+		template.delete("proDelete", proMaxNo);
+		template.delete("sctProDelete", proMaxNo);
+	}
+
 }

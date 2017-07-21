@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -351,12 +349,14 @@ public class ProAdminController {
 	}
 	
 	@RequestMapping(value="/pro_delete.do", method=RequestMethod.POST)
-	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor=Exception.class)
 	public ModelAndView pro_delete(@ModelAttribute("proCommand")ProductVo proCommand, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/pro_admin_list.do?dana=pro_admin_list&pro_pcl_no="+proCommand.getPro_pcl_no());
 		
 		int proMaxNo = proCommand.getPro_no();
-        
+		
+		// 트랙잭션 테스트
+		//proDao.tran_delete(proMaxNo);
+        		
 		proDao.pdtDelete(proMaxNo);
 		proDao.pmgDelete(proMaxNo);
 		proDao.psmDelete(proMaxNo);
