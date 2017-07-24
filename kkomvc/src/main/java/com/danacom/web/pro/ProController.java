@@ -260,7 +260,10 @@ public class ProController {
 		
 		String sct_part = request.getParameter("sct_part");
 		
-		sctCommand.setSct_count(1);
+		if(sctCommand.getSct_count() < 1){
+			sctCommand.setSct_count(1);
+		}
+		
 		int chk = sctDao.sctInsertChk(sctCommand);
 		if(chk == 0) sctDao.sctInsert(sctCommand);
 		else sctDao.sctCountUpdate(sctCommand);
@@ -354,7 +357,11 @@ public class ProController {
 			sctList = new ArrayList<>();
 			Shop_cart temp2 = new Shop_cart();
 			temp2.setSct_pro_no(sctCommand.getSct_pro_no());
-			temp2.setSct_count(1);
+			if(sctCommand.getSct_count() < 1){
+				temp2.setSct_count(1);
+			}else{
+				temp2.setSct_count(sctCommand.getSct_count());
+			}
 			temp2.setSct_pro_part(sctCommand.getSct_pro_part());
 			temp2.setSct_pro_muti(sctProMuti);
 			temp2.setSct_mem_no(sctCommand.getSct_mem_no());

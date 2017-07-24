@@ -24,47 +24,69 @@
 	</td>
 	<td width="550" valign="middle">
 		<table>
-		<tr><td colspan="2" style="border-bottom: gray 2px solid; font-weight: bold;
-								padding-bottom: 3px; margin-bottom: 3px; font-size: 12pt;">
-		${proVo.pro_name }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">판매가격</td>
-		<td style="width: 400px;" class="main_box_view1">
-		${proVo.pro_ch_price }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">적립금</td>
-		<td class="main_box_view1">
-		${proVo.pro_milege }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">제조사</td>
-		<td class="main_box_view1">
-		${proVo.mkr_name }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">상품등록일</td>
-		<td class="main_box_view1">
-		${proVo.pro_regdate }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">상품코드</td>
-		<td class="main_box_view1">
-		${proVo.pro_no }</td></tr>
-		<tr><td style="font-weight: bold; width: 150px;" class="main_box_viewt">요약정보</td>
-		<td class="main_box_view1">
-		${proVo.psm_conent }</td></tr>
-		<tr><td colspan="2" style="text-align: center; padding-top: 5px;">
-		<c:if test="${login.cmd != 101}">
-		<img src="${ct_path}/img/btn_buy.gif" border="0">
-		</c:if>
-		<c:if test="${login.cmd == 101}">
-		<a href="${ct_path}/sct_odr_doc.do?dana=sct_odr_doc&sct_pro_no=${proVo.pro_no }
-																&sct_pro_part=1
-																&sct_pro_muti=2
-																&sct_mem_no=${login.mem_no }">
-		
-		<img src="${ct_path}/img/btn_buy.gif" border="0"></a>
-		</c:if>&nbsp;
-		<c:if test="${login.cmd != 101}">
-		<img src="${ct_path}/img/btn_cart.gif" border="0">
-		</c:if>
-		<c:if test="${login.cmd == 101}">
-		<a href="javascript:goShopCart(${proVo.pro_no }, ${login.mem_no}, 1);">
-		<img src="${ct_path}/img/btn_cart.gif" border="0"></a>
-		</c:if>
-		</td></tr>
+		<tr>
+			<td colspan="2" style="border-bottom: gray 2px solid; font-weight: bold;
+								padding-bottom: 3px; margin-bottom: 3px; font-size: 12pt;">${proVo.pro_name }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">판매가격</td>
+			<td style="width: 400px;" class="main_box_view1">${proVo.pro_ch_price }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">적립금</td>
+			<td class="main_box_view1">${proVo.pro_milege }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">제조사</td>
+			<td class="main_box_view1">${proVo.mkr_name }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">상품등록일</td>
+			<td class="main_box_view1">${proVo.pro_regdate }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">상품코드</td>
+			<td class="main_box_view1">${proVo.pro_no }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">요약정보</td>
+			<td class="main_box_view1">${proVo.psm_conent }</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; width: 150px;" class="main_box_viewt">구매수량</td>
+			<td class="main_box_view1">
+			<input name="cnt_prono" id="cnt_prono" value="1" type="text" readonly="readonly" style="width:20px;" />
+			<img src="${ct_path}/img/btn_cnt.gif" usemap="#MAP_BtnCnt_pro" style="vertical-align: -6px; margin-left:2px;" />
+			<map name="MAP_BtnCnt_pro">
+			<area shape="rect" coords="0,0,9,10" href="javascript:count_change('prono','PLUS')">
+			<area shape="rect" coords="0,10,9,20" href="javascript:count_change('prono','MINUS')"></map>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center; padding-top: 5px;">
+			<c:if test="${login.cmd != 101}">
+			<img src="${ct_path}/img/btn_buy.gif" border="0">
+			</c:if>
+			<c:if test="${login.cmd == 101}">
+			<a href="javascript:goOdrDoc(${proVo.pro_no }, ${login.mem_no}, 1, 2);">
+			<%--
+			<a href="${ct_path}/sct_odr_doc.do?dana=sct_odr_doc&sct_pro_no=${proVo.pro_no }
+																	&sct_pro_part=1
+																	&sct_pro_muti=2
+																	&sct_mem_no=${login.mem_no }">
+			
+			 --%>
+			<img src="${ct_path}/img/btn_buy.gif" border="0"></a>
+			</c:if>&nbsp;
+			<c:if test="${login.cmd != 101}">
+			<img src="${ct_path}/img/btn_cart.gif" border="0">
+			</c:if>
+			<c:if test="${login.cmd == 101}">
+			<a href="javascript:goShopCart(${proVo.pro_no }, ${login.mem_no}, 1, 2);">
+			<img src="${ct_path}/img/btn_cart.gif" border="0"></a>
+			</c:if>
+			</td>
+		</tr>
 		</table>
 	</td>
 </tr>
@@ -74,23 +96,23 @@
 
 <div style="text-align: center; margin-top: 15px; ">
 
-<table style="width: 640px; border-spacing: 1px; background-color: #C4DFE1; margin: auto;">
-	<c:forEach var="bean" items="${pclList}" varStatus="no">
-	<tr bgcolor='#EDF8FA' style="height: 35px; vertical-align: middle;">
-		<td align='center' colspan='2'>
-		<strong><font color="#298494">${bean.pcl_name }</font></strong>
-		</td>
-	</tr>
-	<c:forEach var="bean2" items="${bean.pcl_list}" varStatus="no2">
-	<tr>
-		<td bgcolor="#FFFFFF" width="20%" style="height: 35px; vertical-align: middle;">
-			<font color="#2D98AE">${bean2.pcl_name }</font>
-		</td>
-		<td bgcolor="#FFFFFF" width="30%">${bean2.pcl_next_name }</td>
-	</tr>
-	</c:forEach>
-	</c:forEach>
-</table>
+	<table style="width: 640px; border-spacing: 1px; background-color: #C4DFE1; margin: auto;">
+		<c:forEach var="bean" items="${pclList}" varStatus="no">
+		<tr bgcolor='#EDF8FA' style="height: 35px; vertical-align: middle;">
+			<td align='center' colspan='2'>
+			<strong><font color="#298494">${bean.pcl_name }</font></strong>
+			</td>
+		</tr>
+		<c:forEach var="bean2" items="${bean.pcl_list}" varStatus="no2">
+		<tr>
+			<td bgcolor="#FFFFFF" width="20%" style="height: 35px; vertical-align: middle;">
+				<font color="#2D98AE">${bean2.pcl_name }</font>
+			</td>
+			<td bgcolor="#FFFFFF" width="30%">${bean2.pcl_next_name }</td>
+		</tr>
+		</c:forEach>
+		</c:forEach>
+	</table>
 
 </div>
 

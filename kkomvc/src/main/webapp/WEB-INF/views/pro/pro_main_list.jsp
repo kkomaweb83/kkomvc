@@ -137,14 +137,21 @@
 		});
 	}
 	
+	function goOdrDoc(pro_no, mem_no, sct_pro_part, sct_part){
+		location.href = "${ct_path}/sct_odr_doc.do?dana=sct_odr_doc&sct_pro_no="+pro_no+"&sct_pro_part=1&sct_pro_muti=2&sct_mem_no=${login.mem_no }&sct_count="+$("#cnt_prono").val();
+	}
 	function goShopCart(pro_no, mem_no, sct_pro_part, sct_part){
 		var sctDiv = "proMainViewDiv";
-		if(sct_part == 1) sctDiv = "miniSctListDiv"; 
+		var sct_count = -1;
+		if(sct_part == 1) sctDiv = "miniSctListDiv";
+		if(sct_part == 2){
+			sct_count = $("#cnt_prono").val();
+		}
 		
 		$.ajax({
 			url : "${ct_path}/ajax_sct_insert.do",
 			type : "post",
-			data : {dana:'ajax_sct_insert',sct_pro_no:pro_no,sct_mem_no:mem_no,sct_pro_part:sct_pro_part,sct_part:sct_part},
+			data : {dana:'ajax_sct_insert',sct_pro_no:pro_no,sct_mem_no:mem_no,sct_pro_part:sct_pro_part,sct_part:sct_part,sct_count:sct_count},
 			dataType : "html",
 			success : function(data) {
 				$("#"+sctDiv).html(data);
@@ -278,6 +285,18 @@
 				alert("실패");
 			}
 		});
+	}
+	function count_change(prono, part){
+		var cnt = document.getElementsByName("cnt_"+prono);
+		var temp = 0;
+
+		if(part == "PLUS"){
+			temp = parseInt(cnt[0].value);
+			cnt[0].value = temp+1;
+		}else if(part == "MINUS"){
+			temp = parseInt(cnt[0].value);
+			if(temp > 1) cnt[0].value = temp-1;
+		}
 	}
 </script>
 </head>
