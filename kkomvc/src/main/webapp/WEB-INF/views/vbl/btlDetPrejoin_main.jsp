@@ -152,10 +152,18 @@
 	
 	function goSctOdr(vbj_no){
 		
-		if (!document.getElementsByName("pst_pro_no")[0])  {
-	        alert("바로구매할 부품을 1개 이상 선택하세요!");
-	         return;
+		if(!document.getElementsByName("pst_pro_no")[0]){
+			alert("바로구매할 부품을 1개 이상 선택하세요!");
+	        return;
 	 	}
+		var chk_t = $(".pro_no_chk:checked").length;
+		if(chk_t < 1){
+			alert("바로구매할 부품을 1개 이상 선택하세요!");
+	        return;
+		}
+		
+		var c_pro_no_chk = $(".pro_no_chk:checked").clone();
+		$('#vblPro_Search').append(c_pro_no_chk);
 	 	
 		$("#dana").val("sct_odr_doc");
 	 	

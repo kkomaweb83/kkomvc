@@ -9,6 +9,26 @@
 
 <script type="text/javascript">
 	$(function() {
+		$("#pro_no_all_chk").prop("checked",true);
+		
+		/*  chkbox 전체 선택 및 해제 */
+		$("#pro_no_all_chk").on("click", function(){
+		    if($("#pro_no_all_chk").prop("checked")){
+		        $(".pro_no_chk").prop('checked',true);            
+		    }else{
+		        $(".pro_no_chk").prop('checked',false);
+		    }                
+		});
+		$(".pro_no_chk").on("click", function(){
+		    var chk_all = $(".pro_no_chk").length;
+		    var chk_t = $(".pro_no_chk:checked").length;
+		    if(chk_all == chk_t){
+		    	$("#pro_no_all_chk").prop('checked',true);
+		    }else{
+		    	$("#pro_no_all_chk").prop('checked',false);
+		    }
+		});
+		
 		$("#dialog").dialog({
 			autoOpen:true, //자동으로 열리지않게
 			width:600,
@@ -72,6 +92,7 @@
 
 	
 	<div class="title_box3" style="width: 95%;">
+	<input type="checkbox" id="pro_no_all_chk" />
 	<span style="margin-right: 10px;">☞  견적서 상품 목록</span> 
 	</div>
 	
@@ -79,13 +100,14 @@
 	<c:forEach var="btlPro" items="${btlJoinDetList}">
 		<table style="border-bottom: #336699 1px solid; padding-bottom: 5px; padding-top: 5px; width: 100%;">
 			<tr>
-				<td style="text-align: left; width: 15%;">
-					${btlPro.pcl_name }
+				<td style="text-align: left; width: 17%;">
+					<input type="checkbox" name="pro_no_chk" class="pro_no_chk" value="${btlPro.pro_no}" checked="checked" style="margin: 0px;" />
+					<span>${btlPro.pcl_name }</span>
 				</td>
 				<td style="text-align: center; width: 18%;">
 					<img src="${ct_path}/product_img/${btlPro.pmg_file }" style="width: 60px; height: 60px; border: 0px;" />
 				</td>
-				<td style="text-align: left; width: 47%;">
+				<td style="text-align: left; width: 45%;">
 					<table>
 						<tr>
 							<td style="font-weight: bold;" align="left">

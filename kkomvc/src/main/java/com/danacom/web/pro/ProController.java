@@ -1,6 +1,8 @@
 package com.danacom.web.pro;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -348,6 +350,20 @@ public class ProController {
 	public ModelAndView sct_odr_doc(@ModelAttribute("sctCommand")Shop_cart sctCommand, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("sct/odr_doc");
 		
+		System.out.println("==================시작========================");
+		System.out.println("요청 주소  : "+ request.getRequestURI() + "\n");
+		String key = null;
+		Enumeration<String> e = request.getParameterNames();
+		while(e.hasMoreElements()){
+			key = e.nextElement();
+			String[] str = request.getParameterValues(key);
+			for(int i=0; i<str.length; i++){
+				System.out.println("##### 그냥 - " + key + "["+i+"]  : " + str[i]);
+				//System.out.println("##### 변경 - " + key + "["+i+"]  : " + (new String(str[i].getBytes("ISO-8859-1"), "utf-8")));
+			}
+		}
+		System.out.println("==================끝======================="); 
+		
 		int sctProMuti = sctCommand.getSct_pro_muti();
 		List<Shop_cart> sctList = null;
 		
@@ -371,9 +387,25 @@ public class ProController {
 			String[] temp = sctCommand.getPst_pro_no();
 			String pst_pro_no = "";
 			String pst_quantity = "";
+			String[] pro_no_chk = request.getParameterValues("pro_no_chk");
 			for(int i=0; i<temp.length ; i++){
 				Shop_cart temp3 = new Shop_cart();
 				pst_pro_no = temp[i];
+				
+				// 바로구매 체크박스
+				if(pro_no_chk != null && pro_no_chk.length > 0){
+					boolean pro_no_break = true;
+					for(int k = 0; k < pro_no_chk.length; k++){
+						if(pro_no_chk[k].equals(pst_pro_no)){
+							pro_no_break = false;
+							continue;
+						}
+					}
+					if(pro_no_break){
+						continue;
+					}
+				}
+				
 				pst_quantity = request.getParameter("cnt_" + pst_pro_no);
 				temp3.setSct_pro_no(Integer.parseInt(pst_pro_no));
 				temp3.setSct_count(Integer.parseInt(pst_quantity));
