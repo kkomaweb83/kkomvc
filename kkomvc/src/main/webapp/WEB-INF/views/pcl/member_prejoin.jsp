@@ -139,132 +139,74 @@ input {
 	<div id="content">
 	
 	<!-- 전체 -->
-	<div id="proMainViewDiv" style="width: 960px; margin-left: 5px;">
+	<div id="proMainViewDiv" style="width: 960px; margin: 0 auto; padding-left: 5px;">
 	
 	<form method="post" name="mem_form">
 	<input name="mem_chk" id="mem_chk" type="hidden" value="N" />
 	
-	<table style="border: 1px dotted black; border-spacing:0px; padding: 10px 5px 20px 5px; margin: auto;">
+	<div style="border:1px dotted #FF9900;">
+	<table class="main_table_mem">
+	<thead>
 	<tr>
 		<td>
 		<img src="${ct_path}/img/member_danacom_top02.jpg" />
 		</td>
 	</tr>
+	</thead>
+	<tbody>
 	<tr>
-		<td style="960px;">
-			<table style="width: 863px; border-spacing:0px; margin: auto;">
+		<td>
+			<table class="lngTable2" style="width:90%; margin: 0 auto;">
 			<tr>
-			<td width="863" height="10">			
-				<p><img src="${ct_path}/img/member_agreement_01-08.gif" /></p>
-			</td>
+				<td colspan="2" class="one"><img src="${ct_path}/img/member_agreement_01-08.gif" /></td>
 			</tr>
-			<tr><td style="background-color: #1A6BAB;width: 863px; height: 3px;"><p></p></td></tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 이름</th>
+				<td><input type="text" name="mem_name" maxlength="30" /></td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 회원 아이디</th>
+				<td>
+					<input type="text" onkeyup="chkMemId(this);" name="mem_id" maxlength="30" />
+					<span>5~10자 의 영문,숫자</span>
+					<span id="mem_chk_desc" style="margin-left: 50px; color: red;"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 비밀번호</th>
+				<td>
+					<input type="password" name="mem_pass" maxlength="30" />
+					<span>5~10자 의 영문,숫자</span>
+				</td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 이메일</th>
+				<td><input type="text" name="mem_email" maxlength="40" /></td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 휴대폰 번호</th>
+				<td><input type="text" name="mem_hp" maxlength="30" /></td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 일반주소</th>
+				<td>
+					<input type="text" name="mem_zonecode" id="mem_zonecode" readonly="readonly" />
+					<input type="text" name="mem_addr" id="mem_addr" readonly="readonly" />
+					<input type="text" name="mem_addr2" id="mem_addr2" maxlength="50" />
+					<span onclick="addr_serarch();" class="main_table_mem_button">검색</span>
+				</td>
+			</tr>
+			<tr>
+				<th><img src="${ct_path}/img/member_n_icon.gif" border="0"> 일반 전화번호</th>
+				<td><input type="text" name="mem_tel" maxlength="15" /></td>
+			</tr>
 			</table>
 		</td>
 	</tr>
-	<tr>
-		<td>
-		<table style="width: 863px; border-spacing:0px; margin: auto;">
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"> </p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p align=center>&nbsp;</p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">이름</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="15" name="mem_name" maxlength="30" /></p></td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"></p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p align=center>&nbsp;</p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">회원 아이디</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" onkeyup="chkMemId(this);" 
-					style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-						border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="15" name="mem_id" maxlength="30" />
-				<span>5~10자 의 영문,숫자</span>
-				<span id="mem_chk_desc" style="margin-left: 50px; color: red;"></span>
-				</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"> </p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p align=center>&nbsp;</p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">비밀번호</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="19" name="mem_pass" type="password" maxlength="30" />
-				<span>5~10자 의 영문,숫자</span>
-				</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"></p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p>&nbsp;</p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">이메일</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="25" name="mem_email" maxlength="40" /></p></td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"> </p></td>
-			<td style="  border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p align=center>&nbsp; </p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">휴대폰 번호</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="25" name="mem_hp" maxlength="30" /></p></td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"> </p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p>&nbsp;</p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height="30">
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">일반주소</span></font></b>
-				</p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid"width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid; width: 60px; text-align: center;" 
-					name="mem_zonecode" id="mem_zonecode" readonly="readonly" />
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid; width: 500px;" name="mem_addr" id="mem_addr" readonly="readonly" />
-				<span style="display: inline-block; margin-top: 5px; margin-left: 12px;">
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid; width: 525px;" name="mem_addr2" id="mem_addr2" maxlength="50" />
-				</span>	
-				<span style="padding: 4px 9px 3px 9px; border: 1px solid #8BBDFF; color: #ffffff; background: #8BBDFF; cursor: pointer;" onclick="addr_serarch();">검색</span>
-				</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="border-left: rgb(226,226,226) 1px solid;  border-bottom: rgb(226,226,226) 1px solid" width="36" bgColor=#f6f7f9 height=30>
-				<p align="right"><img src="${ct_path}/img/member_n_icon.gif" border="0"> </p></td>
-			<td style="border-bottom: rgb(226,226,226) 1px solid" width="18" bgColor=#f6f7f9 height=30><p align=center>&nbsp;</p></td>
-			<td style=" border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="117" bgColor=#f6f7f9 height=30>
-				<p align="left"><b><font color=black face="돋움"><span style="font-size:9pt;">일반 전화번호</span></font></b></p></td>
-			<td style="border-right: rgb(226,226,226) 1px solid; border-bottom: rgb(226,226,226) 1px solid" width="689" bgColor=white height=30>
-				<p align="left">&nbsp;&nbsp;
-				<input type="text" style="border-right: rgb(204,204,204) 1px solid; border-top: rgb(204,204,204) 1px solid; 
-					border-left: rgb(204,204,204) 1px solid; border-bottom: rgb(204,204,204) 1px solid" size="25" name="mem_tel" maxlength="15" /></p></td>
-		</tr>
-		</table>
-		</td>
-	</tr>
+	</tbody>
 	</table>
+	</div>
+	
 	<p align="center"><img src="${ct_path}/img/member_agreement_ok1.gif" onclick="onMemJoin();" style="cursor: pointer;" /></p>
 	</form>	
 	

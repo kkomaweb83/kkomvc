@@ -17,7 +17,7 @@
 
 <div style="border: #FF9900 1px solid; margin-left: 10px;">
 
-<table style="padding-bottom: 5px; padding-top: 5px; width: 100%;">
+<table class="main_table">
 <tr>
 	<td width="350" align="center">
 	<img src="${ct_path}/product_img/${proVo.pmg_file }" style="width: 300px; height: 300px; border: 0px;">

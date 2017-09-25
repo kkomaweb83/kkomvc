@@ -583,3 +583,24 @@ table.lngTable select{
  	vertical-align: middle;
  	text-align: center;
  }
+ 
+/**
+* TABLE
+* 
+**/
+.main_table { padding-bottom: 5px; padding-top: 5px; width: 100%; }
+.main_table_mem { padding-bottom: 5px; padding-top: 5px; width: 100%; }
+.main_table_mem tbody td { padding: 7px 5px 7px 5px; }
+.main_table_mem tbody td.one { border: 0px; border-bottom: 10px solid #3162C7; }
+.main_table_mem table.lngTable2 th { text-align: left; padding-left: 15px; background-color: #EAEAEA; border-color: #FFF2E6 }
+.main_table_mem table.lngTable2 th img { margin-right: 7px; }
+.main_table_mem table.lngTable2 td input { width: 200px; }
+.main_table_mem table.lngTable2 td input#mem_zonecode { width: 70px; }
+.main_table_mem table.lngTable2 td input#mem_addr { width: 80%; }
+.main_table_mem table.lngTable2 td input#mem_addr2 { width: 85%; margin-top: 5px; }
+.main_table_mem_button {
+	padding: 5px 11px 5px 11px;
+	background: #8BBDFF;
+	color: white;
+	cursor: pointer;
+}
