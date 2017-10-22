@@ -91,6 +91,7 @@
 	padding: 9px 5px 9px 5px;
 	text-align: center;
 	color: #FFFFFF;
+	cursor: pointer;
 }
 .index_title1_l{
 	font-size: 15px;
@@ -100,6 +101,11 @@
 	text-align: center;
 	color: #FFFFFF;
 	cursor: pointer;
+}
+.index_title1_r:hover {
+	background: white;
+	color: #FF9900;
+	border: #FF9900 1px solid;
 }
 .index_title1_l:hover {
 	background: white;
@@ -163,6 +169,9 @@
 	function goDanaCom(){
 		location.href = "${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101";
 	}
+	function goCompanylist(){
+		location.href = "${ct_path}/company_list.do";
+	}
 </script>
 </head> 
 <body class="col_body">
@@ -170,7 +179,7 @@
 	<div class="col-12 col-m_12">
 	<div class="col-2 col-m-0"></div>
 	<div class="col-4 col-m-6 col_right">
-		<img src="${ct_path}/img/index02.gif" alt="꼬마web의 놀이터" />
+		<a href="${ct_path}/"><img src="${ct_path}/img/index02.gif" alt="꼬마web의 놀이터" /></a>
 	</div>
 	<div class="col-4 col-m-6 col_left">
 		<a href="${ct_path}/pro_main_prelist.do?dana=pro_main_prelist&pro_pcl_no=0101"><img src="${ct_path}/img/top_main01.gif" alt="다나컴" /></a>
@@ -194,7 +203,7 @@
 	<div class="col-6 col-m_6">
 		<div style="position: relative;">
 		<ul>
-			<li class="index_title1_r" style="width: 100%; display: block;">꼬마web의 주식 공부방 ☞ 개발중 입니다!</li>
+			<li onclick="goCompanylist()" class="index_title1_r" style="width: 100%; display: block;">꼬마web의 주식 공부방 ☞ 개발중 입니다!</li>
 		</ul>
 		<ul style="margin-top: 2px;">
 			<li class="index_title2_l" style="width: 33%; float: left;"><a href="https://github.com/kkomaweb83/kkomvc" target="_blank">소스 깃허브</a></li>				
